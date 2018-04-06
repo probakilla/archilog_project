@@ -1,0 +1,1 @@
+#### SHAPE-EDITOR@CODE@C++ ####
