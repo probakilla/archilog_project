@@ -1,6 +1,6 @@
 # CMakeLists.txt
 
-cmake_minimum_required (VERSION 2.4)
+cmake_minimum_required (VERSION 2.8)
 project (shape_editor)
 
 enable_language (CXX)
@@ -11,13 +11,22 @@ set (CMAKE_CXX_STANDARD 11)
 set (CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/lib)
 set (CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/lib)
 
+# SRC dirs
 set (SRCS_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
 set (MODEL_SRC_DIR ${SRCS_DIR}/model)
+set (VIEW_SRC_DIR ${SRCS_DIR}/view)
 
+# Include dirs
 set (INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
 set (MODEL_INC_DIR ${INCLUDE_DIR}/model)
+set (VIEW_INC_DIR ${INCLUDE_DIR}/view)
 
-include_directories (${MODEL_INC_DIR})
+include_directories (${VIEW_INC_DIR} ${MODEL_INC_DIR})
+
+# Qt Libs
+set (CMAKE_AUTOMOC ON)
+find_package(Qt4 REQUIRED QtCore QtGui)
+include (${QT_USE_FILE})
 
 message ("-- CXX flag '-Wall -Wextra -Werror' enabled.")
 
@@ -62,15 +71,6 @@ add_custom_target (
   WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
   COMMAND ctags -R
   COMMAND echo "-- tags file built in ${CMAKE_SOURCE_DIR}")
-
-# Cleaning tmp files AND cleaning
-add_custom_target (
-  clean-tmp
-  COMMAND ${CMAKE_MAKE_PROGRAM}
-  COMMAND ${CMAKE_MAKE_PROGRAM} clean
-  WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-  COMMAND find . -type f -name '*~' -delete 2> /dev/null
-  COMMAND find . -type f -name '\#*' -delete 2> /dev/null)
 
 # Adding files to clean target
 set_property (

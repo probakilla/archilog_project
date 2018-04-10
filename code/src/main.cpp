@@ -1,3 +1,7 @@
-#include <cstdlib>
+#include "main_window.hpp"
 
-int main () { return EXIT_SUCCESS; }
+int main (int argc, char** argv)
+{
+  view::main_window app;
+  app.run (argc, argv);
+}
