@@ -2,7 +2,7 @@
 
 namespace model
 {
-  AbstractShape::AbstractShape (point pos) :
+  AbstractShape::AbstractShape (Point pos) :
    m_position (pos), m_rotation_center (pos)
   {}
 }
