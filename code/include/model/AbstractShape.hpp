@@ -1,5 +1,5 @@
-#ifndef ABSTRACT_SHAPE_HPP
-#define ABSTRACT_SHAPE_HPP
+#ifndef ABSTRACTSHAPE_HPP
+#define ABSTRACTSHAPE_HPP
 
 #include "ShapeInterface.hpp"
 
@@ -22,23 +22,23 @@ namespace model
   };
 
   //!< Factorisation for shape classes
-  class abstract_shape : public ShapeInterface
+  class AbstractShape : public ShapeInterface
   {
   public:
     //!< Default destructor
-    virtual ~abstract_shape () = default;
+    virtual ~AbstractShape () = default;
 
   protected:
     /*!
-     * @brief Constructor of model::abstract_shape
+     * @brief Constructor of model::AbstractShape
      *
      * @param pos The default position of the shape.
      */
-    abstract_shape (Point pos);
+    AbstractShape (Point pos);
 
     Point m_position;            //!< Current position of the shape
     Point m_rotation_center;     //!< Center of rotation of the shape
     hex m_color = DEFAULT_COLOR; //!< Color in hexadecimal of the shape
   };
 }
-#endif /* !defined(ABSTRACT_SHAPE_HPP) */
+#endif /* !defined(ABSTRACTSHAPE_HPP) */

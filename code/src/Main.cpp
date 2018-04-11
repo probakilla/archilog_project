@@ -1,7 +1,7 @@
-#include "main_window.hpp"
+#include "MainWindow.hpp"
 
 int main (int argc, char** argv)
 {
-  view::main_window app;
+  view::MainWindow app;
   app.run (argc, argv);
 }

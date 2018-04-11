@@ -2,4 +2,4 @@
 
 add_library (
   view
-  main_window.cpp)
+  MainWindow.cpp)
