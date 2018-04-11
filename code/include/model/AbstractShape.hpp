@@ -14,9 +14,29 @@ namespace model
   //!< Structure of a 2D Point
   struct Point
   {
+  public:
     Point (int x = DEFAULT_X, int y = DEFAULT_Y);
     ~Point () = default;
+    
+    //!< Getter on abscissa
+    int get_x () const;
 
+    //!< Getter on ordinate
+    int get_y () const;
+
+    //!< Setter on abscissa
+    void set_x (const int& x);
+
+    //!< Setter on abscissa
+    void set_y (const int& y);
+
+    //!< Affectation operator
+    Point& operator= (const Point& point);
+
+    //!< Comparison operator
+    bool operator== (const Point& point) const; 
+
+  private:
     int m_x; /*!< abscissa */
     int m_y; /*!< ordinades */
   };
