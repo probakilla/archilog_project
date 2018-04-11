@@ -18,9 +18,19 @@ namespace shape
      * @param pos Default position
      * @param height Default height
      * @param width Default width
+     */
+    Rectangle (double height = DEFAULT_HEIGHT, double width = DEFAULT_WIDTH,
+               double rounding = DEFAULT_ROUNDING);
+
+    /*!
+     * @brief Constructor of the shape::Rectangle
+     *
+     * @param pos Default position
+     * @param height Default height
+     * @param width Default width
      * @param rounding Default rounding coefficent
      */
-    Rectangle (Point pos, double height = DEFAULT_HEIGHT,
+    Rectangle (const Point& pos, double height = DEFAULT_HEIGHT,
                double width = DEFAULT_WIDTH,
                double rounding = DEFAULT_ROUNDING);
 

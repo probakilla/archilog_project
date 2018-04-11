@@ -14,16 +14,16 @@ namespace shape
   //!< Structure of a 2D Point
   struct Point
   {
-  public:    
+  public:
     Point (double x = DEFAULT_X, double y = DEFAULT_Y);
     Point (const Point& point);
     ~Point () = default;
 
     //!< Getter on abscissa
-    double get_x () const;
+    double x () const;
 
     //!< Getter on ordinate
-    double get_y () const;
+    double y () const;
 
     //!< Setter on abscissa
     void set_x (double x);
@@ -47,21 +47,46 @@ namespace shape
   {
   public:
     //!< Destructor, deletes points members
-    virtual ~AbstractShape ();
+    virtual ~AbstractShape () = default;
 
-    virtual AbstractShape& operator= (const AbstractShape& shape) = 0;
+    //!< Getter on position
+    Point position () const;
+
+    //!< Getter on rotation center
+    Point rotation_center () const;
+
+    //!< Getter on color
+    int color () const;
+
+    //!< Setter on position
+    void set_position (const Point& point);
+
+    //!< Setter on rotation center
+    void set_rotation_center (const Point& point);
+
+    //!< Setter on color
+    void set_color (hex color);
 
   protected:
+    /*!
+     * @brief Empty constructor of shape::AbstractShape
+     *
+     * Set the position to (0, 0) and the color to white.
+     */
+    AbstractShape ();
+
     /*!
      * @brief Constructor of shape::AbstractShape
      *
      * @param pos The default position of the shape.
+     * @param color The color in hexadecimal of the shape.
      */
-    AbstractShape (Point pos);
+    AbstractShape (const Point& pos, hex color = DEFAULT_COLOR);
 
-    Point m_position;            //!< Current position of the shape
-    Point m_rotation_center;     //!< Center of rotation of the shape
-    hex m_color = DEFAULT_COLOR; //!< Color in hexadecimal of the shape
+  private:
+    Point m_position;        //!< Current position of the shape
+    Point m_rotation_center; //!< Center of rotation of the shape
+    hex m_color;             //!< Color in hexadecimal of the shape
   };
 }
 #endif /* !defined(ABSTRACTSHAPE_HPP) */

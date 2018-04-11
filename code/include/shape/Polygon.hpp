@@ -14,9 +14,18 @@ namespace shape
     /*!
      * @brief Constructor of shape::Polygon
      *
-     * @param pos Default position
-     * @param nb_sides Default number of sides
-     * @param side_length Default side length
+     * @param nb_sides The number of sides
+     * @param side_length The length of the 
+     */
+    Polygon (int nb_sides = DEFAULT_NB_SIDES,
+             double side_length = DEFAULT_SIDE_LENGTH);
+
+    /*!
+     * @brief Constructor of shape::Polygon
+     *
+     * @param nb_sides The number of sides
+     * @param side_length The length of the sides
+     * @param pos The position of the shape::Polygon
      */
     Polygon (const Point& pos, int nb_sides = DEFAULT_NB_SIDES,
              double side_length = DEFAULT_SIDE_LENGTH);
@@ -25,8 +34,8 @@ namespace shape
     ~Polygon () = default;
 
   private:
-    int m_nb_sides;       //!< Number of sides of the shape::Polygon
-    double m_side_length; //!< Length of each side of the shape::Polygon
+    int m_nb_sides;       //!< The number of sides of the shape::Polygon.
+    double m_side_length; //!< The length of each sides of the shape::Polygon.
   };
 }
 #endif /* !defined(POLYGON_HPP) */
