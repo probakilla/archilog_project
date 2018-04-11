@@ -4,22 +4,26 @@ namespace shape
 {
   // Point structure
 
-  Point::Point (int x, int y) : m_x (x), m_y (y) {}
+  Point::Point (double x, double y) : m_x (x), m_y (y) {}
 
-  int Point::get_x () { return m_x; }
+  Point::Point (const Point& point) : m_x (point.get_x ()), m_y (point.get_y ())
+  {}
 
-  int Point::get_y () { return m_y; }
+  double Point::get_x () { return m_x; }
 
-  void Point::set_x (const int& x) { m_x = x; }
+  double Point::get_y () { return m_y; }
 
-  void Point::set_y (const int& y) { m_y = y; }
+  void Point::set_x (double x) { m_x = x; }
+
+  void Point::set_y (double y) { m_y = y; }
 
   Point& Point::operator= (const Point& point)
   {
     m_x = point.get_x ();
     m_y = point.get_y ();
+    return *this;
   }
-
+  
   bool Point::operator== (const Point& point)
   {
     if (point.get_x == m_x)

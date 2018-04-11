@@ -18,7 +18,8 @@ namespace shape
      * @param nb_sides Default number of sides
      * @param side_length Default side length
      */
-    Polygon (Point pos, int nb_sides, double side_length);
+    Polygon (const Point& pos, int nb_sides = DEFAULT_NB_SIDES,
+             double side_length = DEFAULT_SIDE_LENGTH);
 
     //!< Default destructor
     ~Polygon () = default;

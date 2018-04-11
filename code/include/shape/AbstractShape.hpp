@@ -14,21 +14,22 @@ namespace shape
   //!< Structure of a 2D Point
   struct Point
   {
-  public:
-    Point (int x = DEFAULT_X, int y = DEFAULT_Y);
+  public:    
+    Point (double x = DEFAULT_X, double y = DEFAULT_Y);
+    Point (const Point& point);
     ~Point () = default;
 
     //!< Getter on abscissa
-    int get_x () const;
+    double get_x () const;
 
     //!< Getter on ordinate
-    int get_y () const;
+    double get_y () const;
 
     //!< Setter on abscissa
-    void set_x (const int& x);
+    void set_x (double x);
 
     //!< Setter on abscissa
-    void set_y (const int& y);
+    void set_y (double y);
 
     //!< Affectation operator
     Point& operator= (const Point& point);
@@ -37,8 +38,8 @@ namespace shape
     bool operator== (const Point& point) const;
 
   private:
-    int m_x; //!< abscissa
-    int m_y; //!< ordinades
+    double m_x; //!< abscissa
+    double m_y; //!< ordinades
   };
 
   //!< Factorisation for shape classes
