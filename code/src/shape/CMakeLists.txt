@@ -1,7 +1,7 @@
-set (MODEL_SRCS
+set (SHAPE_SRCS
   Polygon.cpp
   PolygonFactory.cpp
   Rectangle.cpp
   RectangleFactory.cpp)
 
-add_library (model ${MODEL_SRCS})
+add_library (shape ${SHAPE_SRCS})

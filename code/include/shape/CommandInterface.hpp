@@ -1,7 +1,7 @@
 #ifndef COMMANDINTERFACE_HPP
 #define COMMANDINTERFACE_HPP
 
-namespace model
+namespace shape
 {
   class CommandInterface
   {};

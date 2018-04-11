@@ -7,7 +7,7 @@
 #define DEFAULT_Y 0
 #define DEFAULT_COLOR 0xffffff
 
-namespace model
+namespace shape
 {
   using hex = int;
 
@@ -17,7 +17,7 @@ namespace model
   public:
     Point (int x = DEFAULT_X, int y = DEFAULT_Y);
     ~Point () = default;
-    
+
     //!< Getter on abscissa
     int get_x () const;
 
@@ -34,23 +34,25 @@ namespace model
     Point& operator= (const Point& point);
 
     //!< Comparison operator
-    bool operator== (const Point& point) const; 
+    bool operator== (const Point& point) const;
 
   private:
-    int m_x; /*!< abscissa */
-    int m_y; /*!< ordinades */
+    int m_x; //!< abscissa
+    int m_y; //!< ordinades
   };
 
   //!< Factorisation for shape classes
   class AbstractShape : public ShapeInterface
   {
   public:
-    //!< Default destructor
-    virtual ~AbstractShape () = default;
+    //!< Destructor, deletes points members
+    virtual ~AbstractShape ();
+
+    virtual AbstractShape& operator= (const AbstractShape& shape) = 0;
 
   protected:
     /*!
-     * @brief Constructor of model::AbstractShape
+     * @brief Constructor of shape::AbstractShape
      *
      * @param pos The default position of the shape.
      */

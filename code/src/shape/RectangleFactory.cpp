@@ -1,6 +1,6 @@
 #include "RectangleFactory.hpp"
 
-namespace model
+namespace shape
 {
   RectangleFactory::RectangleFactory () {}
 

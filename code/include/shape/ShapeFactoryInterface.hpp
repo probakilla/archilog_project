@@ -1,9 +1,10 @@
 #ifndef SHAPEFACTORYINTERFACE_HPP
 #define SHAPEFACTORYINTERFACE_HPP
 
-#include "ShapeInterface.hpp"
+#include "Polygon.hpp"
+#include "Rectangle.hpp"
 
-namespace model
+namespace shape
 {
   class ShapeFactoryInterface
   {};

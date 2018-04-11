@@ -6,13 +6,13 @@
 #define DEFAULT_NB_SIDES 4
 #define DEFAULT_SIDE_LENGTH 10.0
 
-namespace model
+namespace shape
 {
   class Polygon : public AbstractShape
   {
   public:
     /*!
-     * @brief Constructor of model::Polygon
+     * @brief Constructor of shape::Polygon
      *
      * @param pos Default position
      * @param nb_sides Default number of sides
@@ -24,8 +24,8 @@ namespace model
     ~Polygon () = default;
 
   private:
-    int m_nb_sides;       //!< Number of sides of the model::Polygon
-    double m_side_length; //!< Length of each side of the model::Polygon
+    int m_nb_sides;       //!< Number of sides of the shape::Polygon
+    double m_side_length; //!< Length of each side of the shape::Polygon
   };
 }
 #endif /* !defined(POLYGON_HPP) */

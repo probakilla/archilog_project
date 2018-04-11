@@ -7,13 +7,13 @@
 #define DEFAULT_WIDTH 8.0
 #define DEFAULT_ROUNDING 0.0
 
-namespace model
+namespace shape
 {
   class Rectangle : public AbstractShape
   {
   public:
     /*!
-     * @brief Constructor of the model::Rectangle
+     * @brief Constructor of the shape::Rectangle
      *
      * @param pos Default position
      * @param height Default height
@@ -28,8 +28,8 @@ namespace model
     ~Rectangle () = default;
 
   private:
-    double m_height;         /*!< Height of the model::Rectangle */
-    double m_width;          /*!< Width of the model::Rectangle */
+    double m_height;         /*!< Height of the shape::Rectangle */
+    double m_width;          /*!< Width of the shape::Rectangle */
     double m_rounding_coeff; /*!< Coefficient for the corner rounding*/
   };
 }

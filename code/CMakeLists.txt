@@ -13,15 +13,15 @@ set (CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/lib)
 
 # SRC dirs
 set (SRCS_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
-set (MODEL_SRC_DIR ${SRCS_DIR}/model)
+set (SHAPE_SRC_DIR ${SRCS_DIR}/shape)
 set (VIEW_SRC_DIR ${SRCS_DIR}/view)
 
 # Include dirs
 set (INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
-set (MODEL_INC_DIR ${INCLUDE_DIR}/model)
+set (SHAPE_INC_DIR ${INCLUDE_DIR}/shape)
 set (VIEW_INC_DIR ${INCLUDE_DIR}/view)
 
-include_directories (${VIEW_INC_DIR} ${MODEL_INC_DIR})
+include_directories (${VIEW_INC_DIR} ${SHAPE_INC_DIR})
 
 # Qt Libs
 set (CMAKE_AUTOMOC ON)
@@ -53,8 +53,8 @@ add_subdirectory (src)
 # Getting all project src and header files.
 file (GLOB_RECURSE PROJECT_FILES
   ${SRCS_DIR}/*.cpp
-  ${MODEL_SRC_DIR}/*.cpp
-  ${MODEL_INC_DIR}/*.hpp)
+  ${SHAPE_SRC_DIR}/*.cpp
+  ${SHAPE_INC_DIR}/*.hpp)
 
 # Automated format with .clang-format
 add_custom_target (

@@ -1,6 +1,6 @@
 #include "Rectangle.hpp"
 
-namespace model
+namespace shape
 {
   Rectangle::Rectangle (Point pos, double height, double width,
                         double rounding) :

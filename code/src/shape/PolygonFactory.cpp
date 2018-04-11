@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-namespace model
+namespace shape
 {
   PolygonFactory::PolygonFactory () {}
 

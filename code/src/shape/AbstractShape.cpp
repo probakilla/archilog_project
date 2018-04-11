@@ -1,6 +1,6 @@
 #include "AbstractShape.hpp"
 
-namespace model
+namespace shape
 {
   // Point structure
 
@@ -29,8 +29,14 @@ namespace model
   }
 
   // AbstractShape
-  
+
   AbstractShape::AbstractShape (Point pos) :
    m_position (pos), m_rotation_center (pos)
   {}
+
+  AbstractShape::~AbstractShape ()
+  {
+    delete m_position;
+    delete m_rotation_center;
+  }
 }

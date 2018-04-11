@@ -3,7 +3,7 @@
 
 #include "ShapeFactoryInterface.hpp"
 
-namespace model
+namespace shape
 {
   class PolygonFactory : public ShapeFactoryInterface
   {
