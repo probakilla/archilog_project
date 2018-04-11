@@ -1,7 +1,7 @@
 #ifndef ABSTRACT_SHAPE_HPP
 #define ABSTRACT_SHAPE_HPP
 
-#include "shape_interface.hpp"
+#include "ShapeInterface.hpp"
 
 #define DEFAULT_X 0
 #define DEFAULT_Y 0
@@ -11,18 +11,18 @@ namespace model
 {
   using hex = int;
 
-  //!< Structure of a 2D point
-  struct point
+  //!< Structure of a 2D Point
+  struct Point
   {
-    point (int x = DEFAULT_X, int y = DEFAULT_Y);
-    ~point () = default;
+    Point (int x = DEFAULT_X, int y = DEFAULT_Y);
+    ~Point () = default;
 
     int m_x; /*!< abscissa */
     int m_y; /*!< ordinades */
   };
 
   //!< Factorisation for shape classes
-  class abstract_shape : public shape_interface
+  class abstract_shape : public ShapeInterface
   {
   public:
     //!< Default destructor
@@ -34,10 +34,10 @@ namespace model
      *
      * @param pos The default position of the shape.
      */
-    abstract_shape (point pos);
+    abstract_shape (Point pos);
 
-    point m_position;            //!< Current position of the shape
-    point m_rotation_center;     //!< Center of rotation of the shape
+    Point m_position;            //!< Current position of the shape
+    Point m_rotation_center;     //!< Center of rotation of the shape
     hex m_color = DEFAULT_COLOR; //!< Color in hexadecimal of the shape
   };
 }

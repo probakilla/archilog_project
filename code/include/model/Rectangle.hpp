@@ -1,7 +1,7 @@
 #ifndef RECTANGLE_HPP
 #define RECTANGLE_HPP
 
-#include "abstract_shape.hpp"
+#include "AbstractShape.hpp"
 
 #define DEFAULT_HEIGHT 8.0
 #define DEFAULT_WIDTH 8.0
@@ -9,27 +9,27 @@
 
 namespace model
 {
-  class rectangle : public abstract_shape
+  class Rectangle : public AbstractShape
   {
   public:
     /*!
-     * @brief Constructor of the model::rectangle
+     * @brief Constructor of the model::Rectangle
      *
      * @param pos Default position
      * @param height Default height
      * @param width Default width
      * @param rounding Default rounding coefficent
      */
-    rectangle (point pos, double height = DEFAULT_HEIGHT,
+    Rectangle (Point pos, double height = DEFAULT_HEIGHT,
                double width = DEFAULT_WIDTH,
                double rounding = DEFAULT_ROUNDING);
 
     //!< Default destructor.
-    ~rectangle () = default;
+    ~Rectangle () = default;
 
   private:
-    double m_height;         /*!< Height of the model::rectangle */
-    double m_width;          /*!< Width of the model::rectangle */
+    double m_height;         /*!< Height of the model::Rectangle */
+    double m_width;          /*!< Width of the model::Rectangle */
     double m_rounding_coeff; /*!< Coefficient for the corner rounding*/
   };
 }
