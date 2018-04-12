@@ -33,8 +33,8 @@ namespace shape
 
   Point& Point::operator= (const Point& point)
   {
-    m_x = point.x ();
-    m_y = point.y ();
+    m_x = point.m_x;
+    m_y = point.m_y;
     return *this;
   }
 
