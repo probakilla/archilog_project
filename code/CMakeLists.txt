@@ -65,7 +65,9 @@ add_subdirectory (src)
 file (GLOB_RECURSE PROJECT_FILES
   ${SRCS_DIR}/*.cpp
   ${SHAPE_SRC_DIR}/*.cpp
-  ${SHAPE_INC_DIR}/*.hpp)
+  ${SHAPE_INC_DIR}/*.hpp
+  ${TESTS_DIR}/*.cpp
+  ${TESTS_DIR}/*.hpp)
 
 # Automated format with .clang-format
 add_custom_target (
