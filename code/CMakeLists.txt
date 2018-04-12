@@ -1,10 +1,10 @@
 # CMakeLists.txt
 
-cmake_minimum_required (VERSION 2.8)
+cmake_minimum_required (VERSION 2.6)
 project (shape_editor)
 
 enable_language (CXX)
-add_compile_options (-Wall -Wextra -Werror)
+set (CMAKE_CXX_FLAGS "-Wall -Wextra -Werror")
 set (CMAKE_CXX_STANDARD 11)
 
 # Custom directory var
@@ -28,27 +28,36 @@ set (CMAKE_AUTOMOC ON)
 find_package(Qt4 REQUIRED QtCore QtGui)
 include (${QT_USE_FILE})
 
-message ("-- CXX flag '-Wall -Wextra -Werror' enabled.")
-
 # Debug option flag
 option (DEBUG "DEBUG" OFF)
+option (TESTS "TESTS" OFF)
 
 # No option enabled
-if (DEBUG STREQUAL "OFF")
+if (DEBUG STREQUAL "OFF" AND TESTS STREQUAL "OFF")
+  set (CMAKE_CXX_FLAGS "-Wall -Wextra -Werror -O2")
   message ("-- No option enabled")
-  message ("-- CXX flag '-O2' enabled")
-  add_compile_options (-O2)
+  message ("-- CXX flag ${CMAKE_CXX_FLAGS} enabled")
 endif ()
   
 
 # Debug enabled
 if (DEBUG STREQUAL "ON")
-  message ("-- Option DEBUG=ON")
-  message ("-- CXX flag '-g' added")
-  add_compile_options (-g)
+  set (CMAKE_CXX_FLAGS "-Wall -Wextra -Werror -g")
+  message ("-- Option DDEBUG=ON")
+  message ("-- CXX flags '${CMAKE_CXX_FLAGS}' enabled")
 endif () # Debug option
 
+# Tests enabled
+if (TESTS STREQUAL "ON")
+  enable_testing ()
+  set (CMAKE_CXX_FLAGS "-Wall -Wextra -Werror -g")
+  message ("-- Option DTESTS=ON")
+  message ("-- CXX Flags '${CMAKE_CXX_FLAGS}' enabled")
+  add_subdirectory (tests)
+endif () # Tests option
+
 add_subdirectory (src)
+
 
 # Getting all project src and header files.
 file (GLOB_RECURSE PROJECT_FILES
@@ -83,5 +92,7 @@ set_property (
   ${CMAKE_SOURCE_DIR}/lib
   ${CMAKE_SOURCE_DIR}/bin)
 
-# Re-seting the options to default value
+
+# Re-seting the options todefault value
 unset (DEBUG)
+unset (TESTS)

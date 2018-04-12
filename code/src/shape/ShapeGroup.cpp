@@ -1,4 +1,5 @@
 #include "ShapeGroup.hpp"
+
 namespace shape
 {
   ShapeGroup::ShapeGroup () {}
