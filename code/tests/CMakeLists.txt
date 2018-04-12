@@ -1,5 +1,4 @@
 # tests/CMakeLists.txt
-enable_testing ()
 
 file (GLOB TEST_SRCS RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "*.cpp")
 

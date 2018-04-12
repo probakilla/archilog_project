@@ -15,6 +15,8 @@ set (CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/lib)
 set (SRCS_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
 set (SHAPE_SRC_DIR ${SRCS_DIR}/shape)
 set (VIEW_SRC_DIR ${SRCS_DIR}/view)
+set (TESTS_DIR ${CMAKE_CURRENT_SOURCE_DIR}/tests)
+set (DOC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../doc)
 
 # Include dirs
 set (INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
@@ -81,6 +83,13 @@ add_custom_target (
   COMMAND ctags -R
   COMMAND echo "-- tags file built in ${CMAKE_SOURCE_DIR}")
 
+# Automated doc generation
+add_custom_target (
+  doc
+  WORKING_DIRECTORY ${DOC_DIR}
+  COMMAND doxygen doxygen.config
+  COMMAND xdg-open doc/html/index.html)
+
 # Adding files to clean target
 set_property (
   DIRECTORY
@@ -90,7 +99,8 @@ set_property (
   ${CMAKE_SOURCE_DIR}/tags
   # Cleaning extra directories
   ${CMAKE_SOURCE_DIR}/lib
-  ${CMAKE_SOURCE_DIR}/bin)
+  ${CMAKE_SOURCE_DIR}/bin
+  ${DOC_DIR}/doc)
 
 
 # Re-seting the options todefault value
