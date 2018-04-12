@@ -50,13 +50,13 @@ namespace shape
     virtual ~AbstractShape () = default;
 
     //!< Getter on position
-    Point position () const;
+    Point get_position () const;
 
     //!< Getter on rotation center
-    Point rotation_center () const;
+    Point get_rotation_center () const;
 
     //!< Getter on color
-    int color () const;
+    int get_color () const;
 
     //!< Setter on position
     void set_position (const Point& point);
@@ -66,6 +66,12 @@ namespace shape
 
     //!< Setter on color
     void set_color (hex color);
+
+    virtual void add_shape (const ShapeInterface& shape);
+
+    virtual void remove_shape (const ShapeInterface& shape);
+
+    virtual bool operator== (const AbstractShape& shape);
 
   protected:
     /*!

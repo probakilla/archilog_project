@@ -1,5 +1,19 @@
 #include "AbstractShape.hpp"
 
+#include <exception>
+#include <iostream>
+#include <string>
+
+class NotImplementedException : public std::exception
+{
+  const char* what () const throw () { return "Not implemented function."; }
+};
+
+#define DOES_NOTHING(shape) \
+  {                         \
+    (void) shape;           \
+  }
+
 namespace shape
 {
   // Point structure
@@ -26,8 +40,7 @@ namespace shape
   bool Point::operator== (const Point& point) const
   {
     if (point.x () == m_x)
-      if (point.y () == m_y)
-        return true;
+      return (point.y () == m_y);
     return false;
   }
 
@@ -45,11 +58,14 @@ namespace shape
   {}
 
   // Getters
-  Point AbstractShape::position () const { return m_position; }
+  Point AbstractShape::get_position () const { return m_position; }
 
-  Point AbstractShape::rotation_center () const { return m_rotation_center; }
+  Point AbstractShape::get_rotation_center () const
+  {
+    return m_rotation_center;
+  }
 
-  int AbstractShape::color () const { return m_color; }
+  int AbstractShape::get_color () const { return m_color; }
 
   // Setters
   void AbstractShape::set_position (const Point& point) { m_position = point; }
@@ -60,4 +76,28 @@ namespace shape
   }
 
   void AbstractShape::set_color (hex color) { m_color = color; }
+
+  // Other methods
+
+  // Preprocessor command to avoid unsued compile error.
+  void AbstractShape::add_shape (__attribute__ ((unused))
+                                 const ShapeInterface& shape)
+  {
+    throw NotImplementedException ();
+  }
+
+  // Preprocessor command to avoid unsued compile error.
+  void AbstractShape::remove_shape (__attribute__ ((unused))
+                                    const ShapeInterface& shape)
+  {
+    throw NotImplementedException ();
+  }
+
+  bool AbstractShape::operator== (const AbstractShape& shape)
+  {
+    if (m_position == shape.get_position ())
+      if (m_rotation_center == shape.get_rotation_center ())
+        return (m_color == shape.get_color ());
+    return false;
+  }
 }
