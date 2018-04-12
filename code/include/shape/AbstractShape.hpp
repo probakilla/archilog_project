@@ -71,7 +71,9 @@ namespace shape
 
     virtual void remove_shape (const ShapeInterface& shape);
 
-    virtual bool operator== (const AbstractShape& shape);
+    virtual bool operator== (const ShapeInterface& shape) override;
+
+    virtual AbstractShape& operator= (const AbstractShape& shape);
 
   protected:
     /*!

@@ -37,6 +37,10 @@ namespace shape
     //!< Default destructor.
     ~Rectangle () = default;
 
+    Rectangle& operator= (const Rectangle& rec);
+
+    bool operator== (const ShapeInterface& shape) override;
+
   private:
     double m_height;         /*!< Height of the shape::Rectangle */
     double m_width;          /*!< Width of the shape::Rectangle */

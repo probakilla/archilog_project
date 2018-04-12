@@ -33,6 +33,10 @@ namespace shape
     //!< Default destructor
     ~Polygon () = default;
 
+    Polygon& operator= (const Polygon& poly);
+
+    bool operator== (const ShapeInterface& shape) override;
+
   private:
     int m_nb_sides;       //!< The number of sides of the shape::Polygon.
     double m_side_length; //!< The length of each sides of the shape::Polygon.

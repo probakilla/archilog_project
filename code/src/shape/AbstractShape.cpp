@@ -3,6 +3,7 @@
 #include <exception>
 #include <iostream>
 #include <string>
+#include <typeinfo>
 
 class NotImplementedException : public std::exception
 {
@@ -93,11 +94,22 @@ namespace shape
     throw NotImplementedException ();
   }
 
-  bool AbstractShape::operator== (const AbstractShape& shape)
+  bool AbstractShape::operator== (const ShapeInterface& shape)
   {
-    if (m_position == shape.get_position ())
-      if (m_rotation_center == shape.get_rotation_center ())
-        return (m_color == shape.get_color ());
-    return false;
+    if (typeid (*this) != typeid (shape))
+      return false;
+    return m_position ==
+            static_cast<const AbstractShape&> (shape).get_position () &&
+           m_rotation_center ==
+            static_cast<const AbstractShape&> (shape).get_rotation_center () &&
+           m_color == static_cast<const AbstractShape&> (shape).get_color ();
+  }
+
+  AbstractShape& AbstractShape::operator= (const AbstractShape& shape)
+  {
+    m_position = shape.get_position ();
+    m_rotation_center = shape.get_rotation_center ();
+    m_color = shape.get_color ();
+    return *this;
   }
 }
