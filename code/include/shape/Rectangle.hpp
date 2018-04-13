@@ -24,6 +24,15 @@ namespace shape
     //!< Comparison operator.
     bool operator== (const ShapeInterface& shape) override;
 
+    //!< Getter on height.
+    double get_height () const;
+
+    //!< Getter on width.
+    double get_width () const;
+
+    //!< Getter on rounding coeff.
+    double get_rounding_coeff () const;
+
   protected:
     /*!
      * @brief Constructor of the shape::Rectangle
@@ -48,15 +57,6 @@ namespace shape
     Rectangle (const Point& pos, double height = DEFAULT_HEIGHT,
                double width = DEFAULT_WIDTH,
                double rounding = DEFAULT_ROUNDING);
-
-    //!< Getter on height.
-    double get_height () const;
-
-    //!< Getter on width.
-    double get_width () const;
-
-    //!< Getter on rounding coeff.
-    double get_rounding_coeff () const;
 
   private:
     double m_height;         /*!< Height of the shape::Rectangle */

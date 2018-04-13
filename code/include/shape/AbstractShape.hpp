@@ -56,6 +56,18 @@ namespace shape
 
     virtual AbstractShape& operator= (const AbstractShape& shape);
 
+    //!< Getter on position
+    Point get_position () const;
+
+    //!< Getter on rotation center
+    Point get_rotation_center () const;
+
+    //!< Setter on position
+    void set_position (const Point& point);
+
+    //!< Setter on rotation center
+    void set_rotation_center (const Point& point);
+
   protected:
     /*!
      * @brief Empty constructor of shape::AbstractShape
@@ -70,18 +82,6 @@ namespace shape
      * @param pos The default position of the shape.
      */
     AbstractShape (const Point& pos);
-
-    //!< Getter on position
-    Point get_position () const;
-
-    //!< Getter on rotation center
-    Point get_rotation_center () const;
-
-    //!< Setter on position
-    void set_position (const Point& point);
-
-    //!< Setter on rotation center
-    void set_rotation_center (const Point& point);
 
   private:
     Point m_position;        //!< Current position of the shape

@@ -38,7 +38,7 @@ namespace shape
     }
     return false;
   }
-  
+
   bool ShapeGroup::operator== (const ShapeGroup& group)
   {
     if (m_group.size () != group.m_group.size ())

@@ -10,6 +10,15 @@ namespace shape
   class AbstractPolygon : public AbstractShape
   {
   public:
+    //!< Default destructor.
+    ~AbstractPolygon () = default;
+
+    //!< Getter on AbstractPolygon::m_color
+    hex get_color () const;
+
+    //!< Setter on AbstractPolygon::m_color
+    void set_color (hex color);
+
   protected:
     //!< Empty constructor of shape::AbstractPolygon
     AbstractPolygon ();
@@ -21,15 +30,6 @@ namespace shape
      * @param color Defines the color of the polygon
      */
     AbstractPolygon (const Point& pos, hex color = DEFAULT_COLOR);
-
-    //!< Default destructor.
-    ~AbstractPolygon () = default;
-
-    //!< Getter on AbstractPolygon::m_color
-    hex get_color () const;
-
-    //!< Setter on AbstractPolygon::m_color
-    void set_color (hex color);
 
   private:
     hex m_color; //!< Color in hexadecimal of the polygon
