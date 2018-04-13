@@ -13,6 +13,12 @@ namespace shape
    m_height (height), m_width (width), m_rounding_coeff (rounding)
   {}
 
+  double Rectangle::get_height () const { return m_height; }
+
+  double Rectangle::get_width () const { return m_width; }
+
+  double Rectangle::get_rounding_coeff () const { return m_rounding_coeff; }
+
   Rectangle& Rectangle::operator= (const Rectangle& rec)
   {
     AbstractShape::operator= (rec);

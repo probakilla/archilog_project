@@ -27,4 +27,8 @@ namespace shape
         return true;
     return false;
   }
+
+  int Polygon::get_nb_sides () const { return m_nb_sides; }
+
+  double Polygon::get_side_length () const { return m_side_length; }
 }

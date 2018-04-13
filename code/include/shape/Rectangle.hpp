@@ -47,6 +47,12 @@ namespace shape
                double width = DEFAULT_WIDTH,
                double rounding = DEFAULT_ROUNDING);
 
+    double get_height () const;
+
+    double get_width () const;
+
+    double get_rounding_coeff () const;
+
   private:
     double m_height;         /*!< Height of the shape::Rectangle */
     double m_width;          /*!< Width of the shape::Rectangle */
