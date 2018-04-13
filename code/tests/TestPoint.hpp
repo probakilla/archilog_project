@@ -1,10 +1,10 @@
 #ifndef TESTPOINT_HH
 #define TESTPOINT_HH
 
+#include "AbstractShape.hpp"
+
 #include <cppunit/TestCase.h>
 #include <cppunit/extensions/HelperMacros.h>
-
-#include "AbstractShape.hpp"
 
 namespace test
 {
@@ -17,7 +17,6 @@ namespace test
     CPPUNIT_TEST_SUITE_END ();
 
   public:
-
     /*!
      * @brief Test for the constructors of shape::Point
      *

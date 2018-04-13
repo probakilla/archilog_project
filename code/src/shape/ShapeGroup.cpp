@@ -49,8 +49,8 @@ namespace shape
 
     for (unsigned int i = 0; i < m_group.size (); ++i)
     {
-      if (m_group [i] != group.m_group [i])
-	return false;
+      if (m_group[i] != group.m_group[i])
+        return false;
     }
     return true;
   }

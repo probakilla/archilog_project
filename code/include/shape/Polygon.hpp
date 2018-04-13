@@ -11,11 +11,19 @@ namespace shape
   class Polygon : public AbstractPolygon
   {
   public:
+    //!< Default destructor
+    ~Polygon () = default;
+
+    Polygon& operator= (const Polygon& poly);
+
+    bool operator== (const ShapeInterface& shape) override;
+
+  protected:
     /*!
      * @brief Constructor of shape::Polygon
      *
-     * @param nb_sides The number of sides
-     * @param side_length The length of the
+     * @param nb_sides (optional) The number of sides
+     * @param side_length (optional) The length of the
      */
     Polygon (int nb_sides = DEFAULT_NB_SIDES,
              double side_length = DEFAULT_SIDE_LENGTH);
@@ -24,18 +32,11 @@ namespace shape
      * @brief Constructor of shape::Polygon
      *
      * @param nb_sides The number of sides
-     * @param side_length The length of the sides
-     * @param pos The position of the shape::Polygon
+     * @param side_length (optional) The length of the sides
+     * @param pos (optional) The position of the shape::Polygon
      */
     Polygon (const Point& pos, int nb_sides = DEFAULT_NB_SIDES,
              double side_length = DEFAULT_SIDE_LENGTH);
-
-    //!< Default destructor
-    ~Polygon () = default;
-
-    Polygon& operator= (const Polygon& poly);
-
-    bool operator== (const ShapeInterface& shape) override;
 
   private:
     int m_nb_sides;       //!< The number of sides of the shape::Polygon.
