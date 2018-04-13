@@ -2,6 +2,8 @@
 
 file (GLOB TEST_SRCS RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "*.cpp")
 
+message ("-- ${CMAKE_CURRENT_SOURCE_DIR} -- ${TEST_SRCS}")
+
 # Building a test for each test src.
 foreach (TEST_FILE ${TEST_SRCS})
   string (REPLACE ".cpp" "" TEST_NAME ${TEST_FILE})

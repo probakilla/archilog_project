@@ -30,24 +30,9 @@ set (CMAKE_AUTOMOC ON)
 find_package(Qt4 REQUIRED QtCore QtGui)
 include (${QT_USE_FILE})
 
-# Debug option flag
+# Debug option flags
 option (DEBUG "DEBUG" OFF)
 option (TESTS "TESTS" OFF)
-
-# No option enabled
-if (DEBUG STREQUAL "OFF" AND TESTS STREQUAL "OFF")
-  set (CMAKE_CXX_FLAGS "-Wall -Wextra -Werror -O2")
-  message ("-- No option enabled")
-  message ("-- CXX flag ${CMAKE_CXX_FLAGS} enabled")
-endif ()
-  
-
-# Debug enabled
-if (DEBUG STREQUAL "ON")
-  set (CMAKE_CXX_FLAGS "-Wall -Wextra -Werror -g")
-  message ("-- Option DDEBUG=ON")
-  message ("-- CXX flags '${CMAKE_CXX_FLAGS}' enabled")
-endif () # Debug option
 
 # Tests enabled
 if (TESTS STREQUAL "ON")
@@ -57,6 +42,20 @@ if (TESTS STREQUAL "ON")
   message ("-- CXX Flags '${CMAKE_CXX_FLAGS}' enabled")
   add_subdirectory (tests)
 endif () # Tests option
+
+# No option enabled
+if (DEBUG STREQUAL "OFF" AND TESTS STREQUAL "OFF")
+  set (CMAKE_CXX_FLAGS "-Wall -Wextra -Werror -O2")
+  message ("-- No option enabled")
+  message ("-- CXX flag ${CMAKE_CXX_FLAGS} enabled")
+endif ()
+
+# Debug enabled
+if (DEBUG STREQUAL "ON")
+  set (CMAKE_CXX_FLAGS "-Wall -Wextra -Werror -g")
+  message ("-- Option DDEBUG=ON")
+  message ("-- CXX flags '${CMAKE_CXX_FLAGS}' enabled")
+endif () # Debug option
 
 add_subdirectory (src)
 
@@ -82,7 +81,7 @@ add_custom_target (
 add_custom_target (
   tags
   WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-  COMMAND ctags -R
+  COMMAND ctags -R -e
   COMMAND echo "-- tags file built in ${CMAKE_SOURCE_DIR}")
 
 # Automated doc generation
@@ -98,10 +97,8 @@ set_property (
   APPEND
   PROPERTY
   ADDITIONAL_MAKE_CLEAN_FILES
-  ${CMAKE_SOURCE_DIR}/tags
+  ${CMAKE_SOURCE_DIR}/TAGS
   # Cleaning extra directories
-  ${CMAKE_SOURCE_DIR}/lib
-  ${CMAKE_SOURCE_DIR}/bin
   ${DOC_DIR}/doc)
 
 
