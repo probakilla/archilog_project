@@ -1,11 +1,11 @@
 #ifndef QTPOLYGON_HPP
 #define QTPOLYGON_HPP
 
-#include "AbstractPolygon.hpp"
+#include "Polygon.hpp"
 
 namespace shape
 {
-  class QtPolygon : public AbstractPolygon
+  class QtPolygon : public Polygon
   {
   public:
     /*!

@@ -3,7 +3,6 @@
 
 #include "AbstractShape.hpp"
 
-//#include <list>
 #include <vector>
 
 namespace shape
@@ -12,6 +11,9 @@ namespace shape
   {
   public:
     ShapeGroup ();
+
+    ShapeGroup (const Point& pos);
+
     ~ShapeGroup ();
 
     /*!

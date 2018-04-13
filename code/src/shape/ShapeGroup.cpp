@@ -4,8 +4,15 @@
 
 namespace shape
 {
-  ShapeGroup::ShapeGroup () {}
-  ShapeGroup::~ShapeGroup () {}
+  ShapeGroup::ShapeGroup () : AbstractShape () {}
+
+  ShapeGroup::ShapeGroup (const Point& pos) : AbstractShape (pos) {}
+
+  ShapeGroup::~ShapeGroup ()
+  {
+    for (const auto& it : m_gorup)
+      delete it;
+  }
 
   void ShapeGroup::add_shape (ShapeInterface* shape)
   {
