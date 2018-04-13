@@ -14,8 +14,10 @@ namespace shape
     //!< Default destructor
     ~Polygon () = default;
 
+    //!< Copy operator.
     Polygon& operator= (const Polygon& poly);
 
+    //!< Comparison operator.
     bool operator== (const ShapeInterface& shape) override;
 
   protected:
@@ -39,8 +41,10 @@ namespace shape
     Polygon (const Point& pos, int nb_sides = DEFAULT_NB_SIDES,
              double side_length = DEFAULT_SIDE_LENGTH);
 
-  protected:
+    //!< Getter on nb_sides.
     int get_nb_sides () const;
+
+    //!< Getter on side length.
     double get_side_length () const;
 
   private:

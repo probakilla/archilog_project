@@ -18,8 +18,10 @@ namespace shape
     //!< Default destructor.
     ~Rectangle () = default;
 
+    //!< Copy operator.
     Rectangle& operator= (const Rectangle& rec);
 
+    //!< Comparison operator.
     bool operator== (const ShapeInterface& shape) override;
 
   protected:
@@ -47,10 +49,13 @@ namespace shape
                double width = DEFAULT_WIDTH,
                double rounding = DEFAULT_ROUNDING);
 
+    //!< Getter on height.
     double get_height () const;
 
+    //!< Getter on width.
     double get_width () const;
 
+    //!< Getter on rounding coeff.
     double get_rounding_coeff () const;
 
   private:

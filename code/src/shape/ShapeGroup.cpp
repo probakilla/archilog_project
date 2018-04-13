@@ -10,8 +10,8 @@ namespace shape
 
   ShapeGroup::~ShapeGroup ()
   {
-    for (const auto& it : m_gorup)
-      delete it;
+    for (const auto& it : m_group)
+      delete &it;
   }
 
   void ShapeGroup::add_shape (ShapeInterface* shape)
