@@ -10,12 +10,6 @@ namespace shape
 
     virtual bool remove_shape (const ShapeInterface& shape) = 0;
 
-    virtual void draw () = 0;
-
-    virtual void translate () = 0;
-
-    virtual void rotate () = 0;
-
     virtual bool operator== (const ShapeInterface& shape) = 0;
   };
 }

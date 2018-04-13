@@ -38,25 +38,7 @@ namespace shape
     }
     return false;
   }
-
-  void ShapeGroup::draw ()
-  {
-    for (const auto& it : m_group)
-      it->draw ();
-  }
-
-  void ShapeGroup::translate ()
-  {
-    for (const auto& it : m_group)
-      it->translate ();
-  }
-
-  void ShapeGroup::rotate ()
-  {
-    for (auto const& it : m_group)
-      it->rotate ();
-  }
-
+  
   bool ShapeGroup::operator== (const ShapeGroup& group)
   {
     if (m_group.size () != group.m_group.size ())

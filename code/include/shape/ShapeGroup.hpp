@@ -32,15 +32,6 @@ namespace shape
      */
     bool remove_shape (ShapeInterface* shape);
 
-    //!< Draw all list members.
-    void draw ();
-
-    //!< Translate all list member.
-    void translate ();
-
-    //!< Rotate all list members.
-    void rotate ();
-
     //!< Overload the == operator
     bool operator== (const ShapeGroup& group);
 
