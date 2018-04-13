@@ -3,8 +3,11 @@
 
 #include "AbstractPolygon.hpp"
 
+//!< Default height value for the rectangle
 #define DEFAULT_HEIGHT 8.0
+//!< Default width value for the rectangle
 #define DEFAULT_WIDTH 8.0
+//!< Default rounding coeff for the rectangle
 #define DEFAULT_ROUNDING 0.0
 
 namespace shape
@@ -12,28 +15,6 @@ namespace shape
   class Rectangle : public AbstractPolygon
   {
   public:
-    /*!
-     * @brief Constructor of the shape::Rectangle
-     *
-     * @param pos Default position
-     * @param height Default height
-     * @param width Default width
-     */
-    Rectangle (double height = DEFAULT_HEIGHT, double width = DEFAULT_WIDTH,
-               double rounding = DEFAULT_ROUNDING);
-
-    /*!
-     * @brief Constructor of the shape::Rectangle
-     *
-     * @param pos Default position
-     * @param height Default height
-     * @param width Default width
-     * @param rounding Default rounding coefficent
-     */
-    Rectangle (const Point& pos, double height = DEFAULT_HEIGHT,
-               double width = DEFAULT_WIDTH,
-               double rounding = DEFAULT_ROUNDING);
-
     //!< Default destructor.
     ~Rectangle () = default;
 
@@ -44,6 +25,30 @@ namespace shape
     bool operator== (const ShapeInterface& shape) override;
 
   protected:
+    /*!
+     * @brief Constructor of the shape::Rectangle
+     *
+     * @param height (optional) The height of the shape::Rectangle
+     * @param width (optional) The width of the shape::Rectangle
+     * @param rounding (optional) The rounding coefficent of the
+     * shape::Rectangle
+     */
+    Rectangle (double height = DEFAULT_HEIGHT, double width = DEFAULT_WIDTH,
+               double rounding = DEFAULT_ROUNDING);
+
+    /*!
+     * @brief Constructor of the shape::Rectangle
+     *
+     * @param pos Default position of the shape::Rectangle
+     * @param height (optional) The height of the shape::Rectangle
+     * @param width (optional) The width of the shape::Rectangle
+     * @param rounding (optional) The rounding coefficent of the
+     * shape::Rectangle
+     */
+    Rectangle (const Point& pos, double height = DEFAULT_HEIGHT,
+               double width = DEFAULT_WIDTH,
+               double rounding = DEFAULT_ROUNDING);
+
     //!< Getter on height.
     double get_height () const;
 
