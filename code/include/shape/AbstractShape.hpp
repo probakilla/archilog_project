@@ -5,7 +5,6 @@
 
 #define DEFAULT_X 0
 #define DEFAULT_Y 0
-#define DEFAULT_COLOR 0xffffff
 
 namespace shape
 {
@@ -49,24 +48,6 @@ namespace shape
     //!< Destructor, deletes points members
     virtual ~AbstractShape () = default;
 
-    //!< Getter on position
-    Point get_position () const;
-
-    //!< Getter on rotation center
-    Point get_rotation_center () const;
-
-    //!< Getter on color
-    int get_color () const;
-
-    //!< Setter on position
-    void set_position (const Point& point);
-
-    //!< Setter on rotation center
-    void set_rotation_center (const Point& point);
-
-    //!< Setter on color
-    void set_color (hex color);
-
     virtual void add_shape (const ShapeInterface& shape);
 
     virtual void remove_shape (const ShapeInterface& shape);
@@ -87,14 +68,24 @@ namespace shape
      * @brief Constructor of shape::AbstractShape
      *
      * @param pos The default position of the shape.
-     * @param color The color in hexadecimal of the shape.
      */
-    AbstractShape (const Point& pos, hex color = DEFAULT_COLOR);
+    AbstractShape (const Point& pos);
+
+    //!< Getter on position
+    Point get_position () const;
+
+    //!< Getter on rotation center
+    Point get_rotation_center () const;
+
+    //!< Setter on position
+    void set_position (const Point& point);
+
+    //!< Setter on rotation center
+    void set_rotation_center (const Point& point);
 
   private:
     Point m_position;        //!< Current position of the shape
     Point m_rotation_center; //!< Center of rotation of the shape
-    hex m_color;             //!< Color in hexadecimal of the shape
   };
 }
 #endif /* !defined(ABSTRACTSHAPE_HPP) */

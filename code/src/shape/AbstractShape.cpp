@@ -47,15 +47,15 @@ namespace shape
 
   // AbstractShape
 
-  AbstractShape::AbstractShape () : m_color (DEFAULT_COLOR)
+  AbstractShape::AbstractShape ()
   {
     Point default_pos (0, 0);
     m_position = default_pos;
     m_rotation_center = default_pos;
   }
 
-  AbstractShape::AbstractShape (const Point& pos, hex color) :
-   m_position (pos), m_rotation_center (pos), m_color (color)
+  AbstractShape::AbstractShape (const Point& pos) :
+   m_position (pos), m_rotation_center (pos)
   {}
 
   // Getters
@@ -66,8 +66,6 @@ namespace shape
     return m_rotation_center;
   }
 
-  int AbstractShape::get_color () const { return m_color; }
-
   // Setters
   void AbstractShape::set_position (const Point& point) { m_position = point; }
 
@@ -75,8 +73,6 @@ namespace shape
   {
     m_rotation_center = point;
   }
-
-  void AbstractShape::set_color (hex color) { m_color = color; }
 
   // Other methods
 
@@ -101,15 +97,13 @@ namespace shape
     return m_position ==
             static_cast<const AbstractShape&> (shape).get_position () &&
            m_rotation_center ==
-            static_cast<const AbstractShape&> (shape).get_rotation_center () &&
-           m_color == static_cast<const AbstractShape&> (shape).get_color ();
+            static_cast<const AbstractShape&> (shape).get_rotation_center ();
   }
 
   AbstractShape& AbstractShape::operator= (const AbstractShape& shape)
   {
     m_position = shape.get_position ();
     m_rotation_center = shape.get_rotation_center ();
-    m_color = shape.get_color ();
     return *this;
   }
 }
