@@ -2,3 +2,6 @@ TAGS
 bin/
 build/
 lib/
+*~
+#*#
+.#*
