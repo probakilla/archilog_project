@@ -1,7 +1,7 @@
 #ifndef RECTANGLE_HPP
 #define RECTANGLE_HPP
 
-#include "AbstractShape.hpp"
+#include "AbstractPolygon.hpp"
 
 #define DEFAULT_HEIGHT 8.0
 #define DEFAULT_WIDTH 8.0
@@ -9,7 +9,7 @@
 
 namespace shape
 {
-  class Rectangle : public AbstractShape
+  class Rectangle : public AbstractPolygon
   {
   public:
     /*!

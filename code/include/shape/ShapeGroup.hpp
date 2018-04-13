@@ -3,7 +3,8 @@
 
 #include "AbstractShape.hpp"
 
-#include <list>
+//#include <list>
+#include <vector>
 
 namespace shape
 {
@@ -18,17 +19,29 @@ namespace shape
      *
      * @param shape The shape::ShapeInterface to add to the group.
      */
-    //void add_shape (const ShapeInterface& shape);
+    void add_shape (ShapeInterface* shape);
 
     /*!
      * @brief Removes a shape::ShapeInterface from the group
      *
      * @param shape The shape::ShapeInterface to remove from the group
      */
-    //void remove_shape (const ShapeInterface& shape);
+    void remove_shape (ShapeInterface* shape);
+
+    //!< Draw all list members.
+    void draw ();
+
+    //!< Translate all list member.
+    void translate ();
+
+    //!< Rotate all list members.
+    void rotate ();
+
+    //!< Overload the == operator
+    bool operator== (const ShapeGroup& group);
 
   private:
-    //std::list<ShapeInterface> m_group;
+    std::vector<ShapeInterface*> m_group;
   };
 }
 #endif /* !defined(SHAPEGROUP_HPP) */

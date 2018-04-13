@@ -1,20 +1,19 @@
 #ifndef POLYGON_HPP
 #define POLYGON_HPP
 
-#include "AbstractShape.hpp"
+#include "AbstractPolygon.hpp"
 
 #define DEFAULT_NB_SIDES 4
 #define DEFAULT_SIDE_LENGTH 10.0
 
 namespace shape
 {
-  class Polygon : public AbstractShape
+  class Polygon : public AbstractPolygon
   {
   public:
     /*!
      * @brief Constructor of shape::Polygon
      *
-     * @param nb_sides The number of sides
      * @param side_length The length of the shape::Polygon 
      */
     Polygon (int nb_sides = DEFAULT_NB_SIDES,
