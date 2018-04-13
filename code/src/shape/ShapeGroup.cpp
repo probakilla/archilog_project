@@ -14,21 +14,29 @@ namespace shape
       delete &it;
   }
 
-  void ShapeGroup::add_shape (ShapeInterface* shape)
+  bool ShapeGroup::add_shape (ShapeInterface* shape)
   {
     bool found =
      (std::find (m_group.begin (), m_group.end (), shape) != m_group.end ());
     if (!found)
+    {
       m_group.push_back (shape);
+      return true;
+    }
+    return false;
   }
 
-  void ShapeGroup::remove_shape (ShapeInterface* shape)
+  bool ShapeGroup::remove_shape (ShapeInterface* shape)
   {
     std::vector<ShapeInterface*>::iterator it = m_group.begin ();
 
     it = std::find (m_group.begin (), m_group.end (), shape);
     if (it != m_group.end ())
+    {
       m_group.erase (it);
+      return true;
+    }
+    return false;
   }
 
   void ShapeGroup::draw ()

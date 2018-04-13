@@ -20,15 +20,17 @@ namespace shape
      * @brief Add a shape::ShapeInterface to the group
      *
      * @param shape The shape::ShapeInterface to add to the group.
+     * @return true if the element is added, otherwise false.
      */
-    void add_shape (ShapeInterface* shape);
+    bool add_shape (ShapeInterface* shape);
 
     /*!
      * @brief Removes a shape::ShapeInterface from the group
      *
      * @param shape The shape::ShapeInterface to remove from the group
+     * @return true if the element is removed, oserwise false.
      */
-    void remove_shape (ShapeInterface* shape);
+    bool remove_shape (ShapeInterface* shape);
 
     //!< Draw all list members.
     void draw ();

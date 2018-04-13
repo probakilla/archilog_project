@@ -6,9 +6,9 @@ namespace shape
   class ShapeInterface
   {
   public:
-    virtual void add_shape (const ShapeInterface& shape) = 0;
+    virtual bool add_shape (const ShapeInterface& shape) = 0;
 
-    virtual void remove_shape (const ShapeInterface& shape) = 0;
+    virtual bool remove_shape (const ShapeInterface& shape) = 0;
 
     virtual void draw () = 0;
 

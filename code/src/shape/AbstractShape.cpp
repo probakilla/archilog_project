@@ -77,14 +77,14 @@ namespace shape
   // Other methods
 
   // Preprocessor command to avoid unsued compile error.
-  void AbstractShape::add_shape (__attribute__ ((unused))
+  bool AbstractShape::add_shape (__attribute__ ((unused))
                                  const ShapeInterface& shape)
   {
     throw NotImplementedException ();
   }
 
   // Preprocessor command to avoid unsued compile error.
-  void AbstractShape::remove_shape (__attribute__ ((unused))
+  bool AbstractShape::remove_shape (__attribute__ ((unused))
                                     const ShapeInterface& shape)
   {
     throw NotImplementedException ();

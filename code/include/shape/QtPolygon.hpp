@@ -26,7 +26,7 @@ namespace shape
      * @param pos The position of the shape::Polygon
      */
     QtPolygon (const Point& pos, int nb_sides = DEFAULT_NB_SIDES,
-	       double side_length = DEFAULT_SIDE_LENGTH);
+               double side_length = DEFAULT_SIDE_LENGTH);
 
     //!< Default destructor
     ~QtPolygon () = default;

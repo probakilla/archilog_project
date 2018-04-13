@@ -48,9 +48,9 @@ namespace shape
     //!< Destructor, deletes points members
     virtual ~AbstractShape () = default;
 
-    virtual void add_shape (const ShapeInterface& shape);
+    virtual bool add_shape (const ShapeInterface& shape);
 
-    virtual void remove_shape (const ShapeInterface& shape);
+    virtual bool remove_shape (const ShapeInterface& shape);
 
     virtual bool operator== (const ShapeInterface& shape) override;
 
