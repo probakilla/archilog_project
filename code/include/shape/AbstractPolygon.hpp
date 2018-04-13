@@ -10,7 +10,6 @@ namespace shape
   class AbstractPolygon : public AbstractShape
   {
   public:
-
   protected:
     //!< Empty constructor of shape::AbstractPolygon
     AbstractPolygon ();

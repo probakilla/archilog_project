@@ -6,17 +6,11 @@ namespace shape
    AbstractShape (), m_color (DEFAULT_COLOR)
   {}
 
-  AbstractPolygon::AbstractPolygon (const Point& point, hex color) :
-    AbstractShape (pos), m_color (color)
+  AbstractPolygon::AbstractPolygon (const Point& pos, hex color) :
+   AbstractShape (pos), m_color (color)
   {}
 
-  hex AbstractPolygon::get_color () const
-  {
-    return m_color;
-  }
+  hex AbstractPolygon::get_color () const { return m_color; }
 
-  void AbstractPolygon::set_color (hex color)
-  {
-    m_color = color;
-  }
+  void AbstractPolygon::set_color (hex color) { m_color = color; }
 }
