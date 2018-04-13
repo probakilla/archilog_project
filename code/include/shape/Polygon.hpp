@@ -11,22 +11,6 @@ namespace shape
   class Polygon : public AbstractPolygon
   {
   public:
-    //!< Default destructor
-    ~Polygon () = default;
-
-    //!< Copy operator.
-    Polygon& operator= (const Polygon& poly);
-
-    //!< Comparison operator.
-    bool operator== (const ShapeInterface& shape) override;
-
-    //!< Getter on nb_sides.
-    int get_nb_sides () const;
-
-    //!< Getter on side length.
-    double get_side_length () const;
-
-  protected:
     /*!
      * @brief Constructor of shape::Polygon
      *
@@ -46,6 +30,20 @@ namespace shape
      */
     Polygon (const Point& pos, int nb_sides = DEFAULT_NB_SIDES,
              double side_length = DEFAULT_SIDE_LENGTH);
+    //!< Default destructor
+    ~Polygon () = default;
+
+    //!< Copy operator.
+    Polygon& operator= (const Polygon& poly);
+
+    //!< Comparison operator.
+    bool operator== (const ShapeInterface& shape) override;
+
+    //!< Getter on nb_sides.
+    int get_nb_sides () const;
+
+    //!< Getter on side length.
+    double get_side_length () const;
 
   private:
     int m_nb_sides;       //!< The number of sides of the shape::Polygon.

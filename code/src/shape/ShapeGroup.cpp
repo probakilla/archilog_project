@@ -8,12 +8,6 @@ namespace shape
 
   ShapeGroup::ShapeGroup (const Point& pos) : AbstractShape (pos) {}
 
-  ShapeGroup::~ShapeGroup ()
-  {
-    for (const auto& it : m_group)
-      delete &it;
-  }
-
   bool ShapeGroup::add_shape (ShapeInterface* shape)
   {
     bool found =
@@ -38,6 +32,8 @@ namespace shape
     }
     return false;
   }
+
+  std::vector<ShapeInterface*> ShapeGroup::get_group () { return m_group; }
 
   bool ShapeGroup::operator== (const ShapeGroup& group)
   {

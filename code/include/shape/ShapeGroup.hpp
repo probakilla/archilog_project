@@ -14,8 +14,6 @@ namespace shape
 
     ShapeGroup (const Point& pos);
 
-    ~ShapeGroup ();
-
     /*!
      * @brief Add a shape::ShapeInterface to the group
      *
@@ -31,6 +29,9 @@ namespace shape
      * @return true if the element is removed, oserwise false.
      */
     bool remove_shape (ShapeInterface* shape);
+
+    //!< Getter on ShapeGroup::m_group
+    std::vector<ShapeInterface*> get_group ();
 
     //!< Overload the == operator
     bool operator== (const ShapeGroup& group);
