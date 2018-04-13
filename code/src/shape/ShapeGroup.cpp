@@ -17,16 +17,11 @@ namespace shape
 
   void ShapeGroup::remove_shape (ShapeInterface* shape)
   {
-    int cpt = 0;
-    for (const auto& it : m_group)
-    {
-      if (it == shape)
-      {
-        m_group.erase (m_group.begin () + cpt);
-        break;
-      }
-      ++cpt;
-    }
+    std::vector<ShapeInterface*>::iterator it = m_group.begin ();
+
+    it = std::find (m_group.begin (), m_group.end (), shape);
+    if (it != m_group.end ())
+      m_group.erase (it);
   }
 
   void ShapeGroup::draw ()
