@@ -1,10 +1,10 @@
 # src/CMakeLists.txt
 
 add_subdirectory (shape)
-add_subdirectory (view)
+add_subdirectory (widget)
 
 add_library (editor Main.cpp ${MOC_OUTFILES})
-target_link_libraries (editor shape view)
+target_link_libraries (editor shape widget)
 
 add_executable (shape_editor Main.cpp)
 target_link_libraries (shape_editor editor Qt4::QtGui Qt4::QtCore)

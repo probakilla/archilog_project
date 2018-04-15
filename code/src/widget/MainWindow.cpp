@@ -3,7 +3,7 @@
 #include <QApplication>
 #include <QMainWindow>
 
-namespace view
+namespace widget
 {
   MainWindow::MainWindow () {}
 

@@ -5,3 +5,11 @@ lib/
 *~
 #*#
 .#*
+tests/CMakeCache.txt
+tests/CMakeFiles
+tests/Makefile
+tests/Testing
+tests/cmake_install.cmake
+tests/src/
+tests/tests/
+tests/CTestTestfile.cmake

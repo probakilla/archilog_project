@@ -1,7 +1,7 @@
 #ifndef MAINWINDOW_HPP
 #define MAINWINDOW_HPP
 
-namespace view
+namespace widget
 {
   class MainWindow
   {

@@ -2,6 +2,6 @@
 
 int main (int argc, char** argv)
 {
-  view::MainWindow app;
+  widget::MainWindow app;
   app.run (argc, argv);
 }

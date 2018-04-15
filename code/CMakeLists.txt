@@ -14,16 +14,16 @@ set (CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/lib)
 # SRC dirs
 set (SRCS_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
 set (SHAPE_SRC_DIR ${SRCS_DIR}/shape)
-set (VIEW_SRC_DIR ${SRCS_DIR}/view)
+set (WIDGET_SRC_DIR ${SRCS_DIR}/widget)
 set (TESTS_DIR ${CMAKE_CURRENT_SOURCE_DIR}/tests)
 set (DOC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../doc)
 
 # Include dirs
 set (INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
 set (SHAPE_INC_DIR ${INCLUDE_DIR}/shape)
-set (VIEW_INC_DIR ${INCLUDE_DIR}/view)
+set (WIDGET_INC_DIR ${INCLUDE_DIR}/widget)
 
-include_directories (${VIEW_INC_DIR} ${SHAPE_INC_DIR})
+include_directories (${WIDGET_INC_DIR} ${SHAPE_INC_DIR})
 
 # Qt Libs
 set (CMAKE_AUTOMOC ON)
@@ -103,5 +103,6 @@ set_property (
 
 
 # Re-seting the options todefault value
-unset (DEBUG)
-unset (TESTS)
+unset (TESTS CACHE)
+unset (DEBUG CACHE)
+
