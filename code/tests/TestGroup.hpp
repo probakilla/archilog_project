@@ -34,7 +34,7 @@ namespace test
     void test_equal ();
 
   private:
-    shape::ShapeGroup fixture;
+    shape::ShapeGroup m_fixture;
   };
 }
 #endif /* !defined(TESTGROUP_HPP) */

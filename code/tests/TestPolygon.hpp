@@ -22,8 +22,15 @@ namespace test
      */
     void test_operators ();
 
+    /*!
+		 * @brief Test the memento of the shape::Polygon.
+		 *
+		 * Test the method create_memento and set_memento of the shape::Polygon.
+		 */
+    void test_memento ();
+
   private:
-    shape::Polygon fixture;
+    shape::Polygon m_fixture;
   };
 }
 #endif /* !defined(TESTPOLYGON_HPP) */

@@ -23,7 +23,7 @@ namespace test
     void test_operators ();
 
   private:
-    shape::Rectangle fixture;
+    shape::Rectangle m_fixture;
   };
 }
 #endif /* !defined(TESTRECTANGLE_HPP) */
