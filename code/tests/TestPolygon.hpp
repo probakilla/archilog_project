@@ -13,7 +13,7 @@ namespace test
     CPPUNIT_TEST_SUITE (TestPolygon);
     CPPUNIT_TEST (test_operators);
     CPPUNIT_TEST_SUITE_END ();
-    
+
   public:
     /*!
      * @brief Test the operators overloading of shape::Polygon

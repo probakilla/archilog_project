@@ -12,7 +12,7 @@ namespace shape
 
   Polygon& Polygon::operator= (const Polygon& poly)
   {
-    AbstractShape::operator= (poly);
+    AbstractPolygon::operator= (poly);
     m_nb_sides = poly.m_nb_sides;
     m_side_length = poly.m_side_length;
     return *this;
@@ -20,7 +20,7 @@ namespace shape
 
   bool Polygon::operator== (const ShapeInterface& shape)
   {
-    if (!AbstractShape::operator== (shape))
+    if (!AbstractPolygon::operator== (shape))
       return false;
     if (m_nb_sides == static_cast<const Polygon&> (shape).m_nb_sides)
       if (m_side_length == static_cast<const Polygon&> (shape).m_side_length)
@@ -31,4 +31,11 @@ namespace shape
   int Polygon::get_nb_sides () const { return m_nb_sides; }
 
   double Polygon::get_side_length () const { return m_side_length; }
+
+  void Polygon::set_nb_sides (int nb_sides) { m_nb_sides = nb_sides; }
+
+  void Polygon::set_side_length (double side_length)
+  {
+    m_side_length = side_length;
+  }
 }

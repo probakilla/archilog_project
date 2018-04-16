@@ -19,6 +19,12 @@ namespace shape
     //!< Setter on AbstractPolygon::m_color
     void set_color (hex color);
 
+    //!< Copy operator.
+    AbstractPolygon& operator= (const AbstractPolygon& poly);
+
+    //!< Comparison operator.
+    bool operator== (const ShapeInterface& shape) override;
+
   protected:
     //!< Empty constructor of shape::AbstractPolygon
     AbstractPolygon ();

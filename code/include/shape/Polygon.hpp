@@ -45,6 +45,12 @@ namespace shape
     //!< Getter on side length.
     double get_side_length () const;
 
+    //! Setter on nb_sides.
+    void set_nb_sides (int nb_sides);
+
+    //! Setter on side length.
+    void set_side_length (double side_length);
+
   private:
     int m_nb_sides;       //!< The number of sides of the shape::Polygon.
     double m_side_length; //!< The length of each sides of the shape::Polygon.

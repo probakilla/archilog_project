@@ -57,6 +57,15 @@ namespace shape
     //!< Getter on rounding coeff.
     double get_rounding_coeff () const;
 
+    //!< Setter on height.
+    void set_height (double height);
+
+    //!< Setter on width.
+    void set_width (double width);
+
+    //!< Setter on rounding coeff.
+    void set_rounding_coeff (double rounding_coeff);
+
   private:
     double m_height;         /*!< Height of the shape::Rectangle */
     double m_width;          /*!< Width of the shape::Rectangle */

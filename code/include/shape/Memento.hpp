@@ -6,18 +6,18 @@
 namespace shape
 {
   /*!
-	 * @brief Class shape::Memento following the design pattern Memento.
-	 *
-	 * @tparam T Type to store the state.
-	 */
+   * @brief Class shape::Memento following the design pattern Memento.
+   *
+   * @tparam T Type to store the state.
+   */
   template <typename T> class Memento : public MementoInterface
   {
   public:
     /*!
-		 * @brief Constructor of the shape::Memento
-		 *
-		 * @param state The object's state we want to store.
-		 */
+     * @brief Constructor of the shape::Memento
+     *
+     * @param state The object's state we want to store.
+     */
     Memento (T state) : m_state (state) {}
 
     //!< Default destructor.
