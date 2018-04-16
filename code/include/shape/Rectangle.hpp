@@ -2,6 +2,7 @@
 #define RECTANGLE_HPP
 
 #include "AbstractPolygon.hpp"
+#include "Memento.hpp"
 
 //!< Default height value for the rectangle
 #define DEFAULT_HEIGHT 8.0
@@ -65,6 +66,24 @@ namespace shape
 
     //!< Setter on rounding coeff.
     void set_rounding_coeff (double rounding_coeff);
+
+    /*!
+     * @brief Create a Memento of shape::rectangle.
+     *
+     * Create a Memento of shape::rectangle, that store a copy
+     * of the object shape::rectangle.
+     * @return The memento of shape::rectangle.
+     */
+    Memento<Rectangle> create_memento () const;
+
+    /*!
+     * @brief Restaure the state of shape::rectangle.
+     *
+     * Restaure the state of shape::rectangle with the one in the
+     * shape::Memento.
+     * @param m The memento used to restaure the state.
+     */
+    void set_memento (Memento<Rectangle> m);
 
   private:
     double m_height;         /*!< Height of the shape::Rectangle */

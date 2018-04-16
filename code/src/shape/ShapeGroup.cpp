@@ -35,8 +35,11 @@ namespace shape
 
   std::vector<ShapeInterface*> ShapeGroup::get_group () { return m_group; }
 
-  bool ShapeGroup::operator== (const ShapeGroup& group)
+  bool ShapeGroup::operator== (const ShapeInterface& shape)
   {
+    if (!(AbstractShape::operator== (shape)))
+      return false;
+    ShapeGroup group = static_cast<const ShapeGroup&> (shape);
     if (m_group.size () != group.m_group.size ())
       return false;
 
@@ -46,5 +49,22 @@ namespace shape
         return false;
     }
     return true;
+  }
+
+  ShapeGroup& ShapeGroup::operator= (const ShapeGroup& group)
+  {
+    AbstractShape::operator= (group);
+    m_group = group.m_group;
+    return *this;
+  }
+
+  Memento<ShapeGroup> ShapeGroup::create_memento () const
+  {
+    return Memento<ShapeGroup> (*this);
+  }
+
+  void ShapeGroup::set_memento (Memento<ShapeGroup> m)
+  {
+    *this = m.get_state ();
   }
 }

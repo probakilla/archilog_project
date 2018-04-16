@@ -38,4 +38,11 @@ namespace shape
   {
     m_side_length = side_length;
   }
+
+  Memento<Polygon> Polygon::create_memento () const
+  {
+    return Memento<Polygon> (*this);
+  }
+
+  void Polygon::set_memento (Memento<Polygon> m) { *this = m.get_state (); }
 }

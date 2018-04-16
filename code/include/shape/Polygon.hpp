@@ -2,6 +2,7 @@
 #define POLYGON_HPP
 
 #include "AbstractPolygon.hpp"
+#include "Memento.hpp"
 
 #define DEFAULT_NB_SIDES 4
 #define DEFAULT_SIDE_LENGTH 10.0
@@ -50,6 +51,24 @@ namespace shape
 
     //! Setter on side length.
     void set_side_length (double side_length);
+
+    /*!
+     * @brief Create a Memento of shape::polygon.
+     *
+     * Create a Memento of shape::polygon, that store a copy
+     * of the object shape::polygon.
+     * @return The memento of shape::polygon.
+     */
+    Memento<Polygon> create_memento () const;
+
+    /*!
+     * @brief Restaure the state of shape::polygon.
+     *
+     * Restaure the state of shape::polygon with the one in the
+     * shape::Memento.
+     * @param m The memento used to restaure the state.
+     */
+    void set_memento (Memento<Polygon> m);
 
   private:
     int m_nb_sides;       //!< The number of sides of the shape::Polygon.

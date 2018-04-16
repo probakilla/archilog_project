@@ -48,4 +48,11 @@ namespace shape
           return true;
     return false;
   }
+
+  Memento<Rectangle> Rectangle::create_memento () const
+  {
+    return Memento<Rectangle> (*this);
+  }
+
+  void Rectangle::set_memento (Memento<Rectangle> m) { *this = m.get_state (); }
 }
