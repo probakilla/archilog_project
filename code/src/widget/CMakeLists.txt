@@ -1,5 +1,5 @@
 # src/widget/CMakeLists.txt
 
-add_library (
-  widget
-  MainWindow.cpp)
+file (GLOB WIDGET_SRCS *.cpp)
+
+add_library (widget ${WIDGET_SRCS})
