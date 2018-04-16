@@ -9,11 +9,11 @@ namespace test
   void TestPolygon::test_operators ()
   {
     shape::Polygon poly (1, 1.0);
-    CPPUNIT_ASSERT (!(fixture == poly));
+    CPPUNIT_ASSERT (!(m_fixture == poly));
 
     shape::Polygon poly_copy = poly;
     CPPUNIT_ASSERT (poly_copy == poly);
-    CPPUNIT_ASSERT (!(poly == fixture));
+    CPPUNIT_ASSERT (!(poly == m_fixture));
     //!< Different color.
     poly_copy.set_color (42);
     CPPUNIT_ASSERT_MESSAGE ("Comparison failed with different color.",
@@ -52,6 +52,19 @@ namespace test
 
     shape::Polygon poly_pts_copy = poly_pts;
     CPPUNIT_ASSERT (poly_pts_copy == poly_pts);
+  }
+
+  void TestPolygon::test_memento ()
+  {
+    shape::Memento<shape::Polygon> mem = m_fixture.create_memento ();
+    shape::Polygon m_fixture_copy = m_fixture;
+    CPPUNIT_ASSERT (m_fixture == mem.get_state ());
+    m_fixture.set_color (69);
+    m_fixture.set_side_length (7);
+    m_fixture.set_nb_sides (3);
+    CPPUNIT_ASSERT (!(m_fixture == mem.get_state ()));
+    m_fixture.set_memento (mem);
+    CPPUNIT_ASSERT (m_fixture == m_fixture_copy);
   }
 }
 

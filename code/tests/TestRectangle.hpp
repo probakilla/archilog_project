@@ -22,8 +22,16 @@ namespace test
      */
     void test_operators ();
 
+    /*!
+     * @brief Test the Rectangle::create_memento and Rectangle::set_memento.
+     *
+     * Test to create a memento off a shape::Rectangle, and restore the
+     * shape::Rectangle.
+     */
+    void test_memento ();
+
   private:
-    shape::Rectangle fixture;
+    shape::Rectangle m_fixture;
   };
 }
 #endif /* !defined(TESTRECTANGLE_HPP) */

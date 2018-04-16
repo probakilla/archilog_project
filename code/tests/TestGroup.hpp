@@ -17,8 +17,8 @@ namespace test
 
   public:
     /*!
-     * @brief Test the ShapeGroup::add_shape and ShapeGroup::remove_shape 
-     * methods
+     * @brief Test the ShapeGroup::add_shape and ShapeGroup::remove_shape
+     * methods.
      *
      * Test to add a shape::Rectangle, a shape::Polygon and an other
      * shape::ShapeGroup and try to remove them after.
@@ -26,15 +26,23 @@ namespace test
     void test_add_remove_shape ();
 
     /*!
-     * @brief Test the operator== overload of the shape::ShapeGroup
+     * @brief Test the operator== overload of the shape::ShapeGroup.
      *
      * Test the operator== overload after adding each type of shape including
-     * shape::ShapeGroup
+     * shape::ShapeGroup.
      */
     void test_equal ();
 
+    /*!
+     * @brief Test the ShapeGroup::create_memento and ShapeGroup::set_memento.
+     *
+     * Test to create a memento off a shape::ShapeGroup, and restore the
+     * shape::ShapeGroup.
+     */
+    void test_memento ();
+
   private:
-    shape::ShapeGroup fixture;
+    shape::ShapeGroup m_fixture;
   };
 }
 #endif /* !defined(TESTGROUP_HPP) */

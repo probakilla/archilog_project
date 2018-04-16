@@ -14,55 +14,66 @@ namespace test
   void TestGroup::test_add_remove_shape ()
   {
     shape::Rectangle rect;
-    CPPUNIT_ASSERT (fixture.add_shape (&rect));
+    CPPUNIT_ASSERT (m_fixture.add_shape (&rect));
 
     shape::Polygon poly;
-    CPPUNIT_ASSERT (fixture.add_shape (&poly));
+    CPPUNIT_ASSERT (m_fixture.add_shape (&poly));
 
     shape::ShapeGroup sub_group;
     CPPUNIT_ASSERT (sub_group.add_shape (&rect));
     CPPUNIT_ASSERT (sub_group.add_shape (&poly));
-    CPPUNIT_ASSERT (fixture.add_shape (&sub_group));
+    CPPUNIT_ASSERT (m_fixture.add_shape (&sub_group));
 
-    std::vector<shape::ShapeInterface*> vector_test = fixture.get_group ();
+    std::vector<shape::ShapeInterface*> vector_test = m_fixture.get_group ();
     CPPUNIT_ASSERT (vector_test[0] == &rect);
     CPPUNIT_ASSERT (vector_test[1] == &poly);
     CPPUNIT_ASSERT (vector_test[2] == &sub_group);
 
-    CPPUNIT_ASSERT (fixture.remove_shape (&rect));
-    CPPUNIT_ASSERT (fixture.remove_shape (&poly));
-    CPPUNIT_ASSERT (fixture.remove_shape (&sub_group));
+    CPPUNIT_ASSERT (m_fixture.remove_shape (&rect));
+    CPPUNIT_ASSERT (m_fixture.remove_shape (&poly));
+    CPPUNIT_ASSERT (m_fixture.remove_shape (&sub_group));
   }
 
   void TestGroup::test_equal ()
   {
     shape::ShapeGroup group;
-    CPPUNIT_ASSERT (group == fixture);
+    CPPUNIT_ASSERT (group == m_fixture);
 
     shape::Rectangle rect;
     group.add_shape (&rect);
-    CPPUNIT_ASSERT (!(group == fixture));
+    CPPUNIT_ASSERT (!(group == m_fixture));
 
-    fixture.add_shape (&rect);
-    CPPUNIT_ASSERT (group == fixture);
+    m_fixture.add_shape (&rect);
+    CPPUNIT_ASSERT (group == m_fixture);
 
     shape::Polygon poly;
     group.add_shape (&poly);
-    CPPUNIT_ASSERT (!(poly == fixture));
+    CPPUNIT_ASSERT (!(poly == m_fixture));
 
-    fixture.add_shape (&poly);
-    CPPUNIT_ASSERT (group == fixture);
+    m_fixture.add_shape (&poly);
+    CPPUNIT_ASSERT (group == m_fixture);
 
     shape::ShapeGroup sub_group;
     sub_group.add_shape (&rect);
     sub_group.add_shape (&poly);
     CPPUNIT_ASSERT (sub_group == group);
 
-    fixture.add_shape (&sub_group);
-    CPPUNIT_ASSERT (!(group == fixture));
+    m_fixture.add_shape (&sub_group);
+    CPPUNIT_ASSERT (!(group == m_fixture));
 
     group.add_shape (&sub_group);
-    CPPUNIT_ASSERT (group == fixture);
+    CPPUNIT_ASSERT (group == m_fixture);
+  }
+
+  void TestGroup::test_memento ()
+  {
+    shape::Memento<shape::ShapeGroup> mem = m_fixture.create_memento ();
+    shape::ShapeGroup m_fixture_copy = m_fixture;
+    CPPUNIT_ASSERT (m_fixture == mem.get_state ());
+    m_fixture.add_shape (new shape::Rectangle ());
+    CPPUNIT_ASSERT (!(m_fixture == mem.get_state ()));
+    m_fixture.set_memento (mem);
+    CPPUNIT_ASSERT (m_fixture == m_fixture_copy);
   }
 }
 

@@ -9,11 +9,11 @@ namespace test
   void TestRectangle::test_operators ()
   {
     shape::Rectangle rect (1.0, 1.0, 1.0);
-    CPPUNIT_ASSERT (!(fixture == rect));
+    CPPUNIT_ASSERT (!(m_fixture == rect));
 
     shape::Rectangle rect_copy = rect;
     CPPUNIT_ASSERT (rect_copy == rect);
-    CPPUNIT_ASSERT (!(rect == fixture));
+    CPPUNIT_ASSERT (!(rect == m_fixture));
     //!< Different color.
     rect_copy.set_color (42);
     CPPUNIT_ASSERT_MESSAGE ("Comparison failed with different color.",
@@ -58,6 +58,20 @@ namespace test
 
     shape::Rectangle rect_pts_copy = rect_pts;
     CPPUNIT_ASSERT (rect_pts_copy == rect_pts);
+  }
+
+  void TestRectangle::test_memento ()
+  {
+    shape::Memento<shape::Rectangle> mem = m_fixture.create_memento ();
+    shape::Rectangle m_fixture_copy = m_fixture;
+    CPPUNIT_ASSERT (m_fixture == mem.get_state ());
+    m_fixture.set_color (69);
+    m_fixture.set_height (9);
+    m_fixture.set_width (7);
+    m_fixture.set_rounding_coeff (3);
+    CPPUNIT_ASSERT (!(m_fixture == mem.get_state ()));
+    m_fixture.set_memento (mem);
+    CPPUNIT_ASSERT (m_fixture == m_fixture_copy);
   }
 }
 

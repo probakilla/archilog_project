@@ -22,8 +22,16 @@ namespace test
      */
     void test_operators ();
 
+    /*!
+     * @brief Test the Polygon::create_memento and Polygon::set_memento.
+     *
+     * Test to create a memento off a shape::Polygon, and restore the
+     * shape::Polygon.
+     */
+    void test_memento ();
+
   private:
-    shape::Polygon fixture;
+    shape::Polygon m_fixture;
   };
 }
 #endif /* !defined(TESTPOLYGON_HPP) */
