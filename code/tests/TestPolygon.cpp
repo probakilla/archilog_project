@@ -1,5 +1,7 @@
 #include "TestPolygon.hpp"
 
+#include "Memento.hpp"
+
 #include <cppunit/ui/text/TextTestRunner.h>
 
 namespace test
