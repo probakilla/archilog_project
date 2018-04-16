@@ -19,9 +19,18 @@ namespace shape
 
   double Rectangle::get_rounding_coeff () const { return m_rounding_coeff; }
 
+  void Rectangle::set_height (double height) { m_height = height; }
+
+  void Rectangle::set_width (double width) { m_width = width; }
+
+  void Rectangle::set_rounding_coeff (double rounding_coeff)
+  {
+    m_rounding_coeff = rounding_coeff;
+  }
+
   Rectangle& Rectangle::operator= (const Rectangle& rec)
   {
-    AbstractShape::operator= (rec);
+    AbstractPolygon::operator= (rec);
     m_height = rec.m_height;
     m_width = rec.m_width;
     m_rounding_coeff = rec.m_rounding_coeff;
@@ -30,7 +39,7 @@ namespace shape
 
   bool Rectangle::operator== (const ShapeInterface& shape)
   {
-    if (!AbstractShape::operator== (shape))
+    if (!AbstractPolygon::operator== (shape))
       return false;
     if (m_height == static_cast<const Rectangle&> (shape).m_height)
       if (m_width == static_cast<const Rectangle&> (shape).m_width)
