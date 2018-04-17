@@ -1,18 +1,18 @@
-#include "Window.hpp"
+#include "Bridge.hpp"
 
 namespace widget
 {
-  Window::Window (WindowFactoryInterface* factory)
+  Bridge::Bridge (WindowFactoryInterface* factory)
   {
     m_imp = factory->create_window ();
   }
 
-  Window::~Window ()
+  Bridge::~Bridge ()
   {
     delete m_imp;
   }
 
-  void Window::show ()
+  void Bridge::show ()
   {
     m_imp->show ();
   }

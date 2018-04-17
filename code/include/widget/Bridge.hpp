@@ -1,5 +1,5 @@
-#ifndef WINDOW_HPP
-#define WINDOW_HPP
+#ifndef BRIDGE_HPP
+#define BRIDGE_HPP
 
 #include "WindowInterface.hpp"
 #include "WindowFactoryInterface.hpp"
@@ -12,19 +12,19 @@ namespace widget
    * This is the interface of the bridge design pattern. Its implementation is
    * WindowInterface. Defines the actions of the user.
    */
-  class Window
+  class Bridge
   {
   public:
     /*!
-     * @brief Constructor of widget::Window
+     * @brief Constructor of widget::Bridge
      *
      * Initialize the implementation of the bridge using a factory.
      * @param factory A factory creating the wanted implementation.
      */
-    Window (WindowFactoryInterface* factory);
+    Bridge (WindowFactoryInterface* factory);
 
-    //!< Deleting Window::m_imp member
-    ~Window ();
+    //!< Deleting Bridge::m_imp member
+    ~Bridge ();
 
     //!< Displaying the implementation of the bridge.
     virtual void show ();
@@ -33,4 +33,4 @@ namespace widget
     WindowInterface* m_imp;
   };
 }
-#endif /* !defined(WINDOW_HPP) */
+#endif /* !defined(BRIDGE_HPP) */

@@ -14,3 +14,4 @@ tests/cmake_install.cmake
 tests/src/
 tests/tests/
 tests/CTestTestfile.cmake
+include/config.hh

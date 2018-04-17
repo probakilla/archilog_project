@@ -1,5 +1,5 @@
 #include "QtWindowFactory.hpp"
-#include "QtMainWindow.hpp"
+#include "QtWindow.hpp"
 
 namespace widget
 {
@@ -7,6 +7,6 @@ namespace widget
 
   WindowInterface* QtWindowFactory::create_window ()
   {
-    return new QtMainWindow;
+    return new QtWindow;
   }
 }

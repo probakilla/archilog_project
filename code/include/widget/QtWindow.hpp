@@ -1,57 +1,32 @@
 #ifndef QTWINDOW_HPP
 #define QTWINDOW_HPP
 
-#include <QGraphicsView>
-#include <QGridLayout>
-#include <QLabel>
-#include <QMainWindow>
-#include <QPixmap>
-#include <QPushButton>
-#include <QToolBar>
+#include "WindowInterface.hpp"
+#include "QtDisplay.hpp"
 
 namespace widget
 {
   /*!
-   * @brief Class used for the display using Qt library
+   * @brief Implementation of a Window using Qt library
    *
-   * Class derived from QMainWindow where all the display will be
+   * This is an implementation of WindowInterface following the Bridge
+   * design pattern. This implementation uses the Qt library.
    */
-  class QtWindow : public QMainWindow
+  class QtWindow : public WindowInterface
   {
   public:
-    /*!
-     * @brief Initialize all members
-     *
-     * Initialize all member and set images of buttons, and putting them
-     * in a layout for display purposes.
-     */
+    //!< Creatin a new QtDisplay
     QtWindow ();
 
-    //!< Deleting all members
+    //!< Deleting the QtWindow::m_window member
     ~QtWindow ();
 
-    //!< Displaying m_window
+    //!< Displaying the QtWindow::m_window member
     void show ();
 
   private:
-    //!< The window where the layout is
-    QWidget* m_window;
-    //!< The layout where all widgets are
-    QGridLayout* m_layout;
-    //!< The label of the trash at the bottom of the toolbar
-    QLabel* m_bin_label;
-    //!< The save button
-    QPushButton* m_save_button;
-    //!< The load button
-    QPushButton* m_load_button;
-    //!< The undo button
-    QPushButton* m_undo_button;
-    //!< The redo button
-    QPushButton* m_redo_button;
-    //!< The white panel where shape will appear
-    QGraphicsView* m_view;
-    //!< The toolbar where the thumbnails of the shape will be stored
-    QToolBar* m_tool;
+    //!< The widget::QtDisplay used for the application display
+    QtDisplay* m_window;
   };
 }
-#endif /* !defined(QTWINDOW_HPP) */
+#endif // !defined(QTWINDOW_HPP)
