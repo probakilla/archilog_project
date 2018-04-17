@@ -3,6 +3,7 @@
 
 #include "WindowInterface.hpp"
 #include "QtDisplay.hpp"
+#include "Rectangle.hpp"
 
 namespace widget
 {
@@ -18,11 +19,13 @@ namespace widget
     //!< Creatin a new QtDisplay
     QtWindow ();
 
-    //!< Deleting the QtWindow::m_window member
+    //!< Deleting the QtWindow::m_window mezzmber
     ~QtWindow ();
 
     //!< Displaying the QtWindow::m_window member
     void show ();
+
+    void draw_rectangle (const shape::Rectangle& rect);
 
   private:
     //!< The widget::QtDisplay used for the application display

@@ -3,7 +3,8 @@
 
 #include "AbstractShape.hpp"
 
-#define DEFAULT_COLOR 0xffffff
+//!< Default = black color
+#define DEFAULT_COLOR 0x00000000
 
 namespace shape
 {

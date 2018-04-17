@@ -7,13 +7,12 @@ namespace widget
     m_imp = factory->create_window ();
   }
 
-  Bridge::~Bridge ()
-  {
-    delete m_imp;
-  }
+  Bridge::~Bridge () { delete m_imp; }
 
-  void Bridge::show ()
+  void Bridge::show () { m_imp->show (); }
+
+  void Bridge::draw_rectangle (const shape::Rectangle& rect)
   {
-    m_imp->show ();
+    m_imp->draw_rectangle (rect);
   }
 }
