@@ -1,0 +1,6 @@
+#ifndef CONFIG_HPP
+#define CONFIG_HPP
+
+#cmakedefine RESSOURCES_LOCATION @RESSOURCES_LOCATION@
+
+#endif /* CONFIG_HPP */

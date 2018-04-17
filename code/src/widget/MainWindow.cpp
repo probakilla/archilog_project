@@ -1,6 +1,6 @@
 #include "MainWindow.hpp"
 
-#include "config.hh"
+#include "config.hpp"
 
 #include <QGridLayout>
 #include <QIcon>

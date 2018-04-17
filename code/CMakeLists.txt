@@ -13,8 +13,8 @@ set (CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/lib)
 
 # Ressources dir
 set (RESSOURCES_LOCATION \"${CMAKE_CURRENT_SOURCE_DIR}/ressources/\")
-configure_file (${CMAKE_SOURCE_DIR}/include/config.hh.cmake
-  ${CMAKE_SOURCE_DIR}/include/config.hh)
+configure_file (${CMAKE_SOURCE_DIR}/include/config.hpp.cmake
+  ${CMAKE_SOURCE_DIR}/include/config.hpp)
 
 # SRC dirs
 set (SRCS_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
