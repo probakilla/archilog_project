@@ -1,7 +1,7 @@
-#include "QtWindow.hpp"
+#include "QtDisplay.hpp"
+
 #include "config.hpp"
 
-#include <QIcon>
 #include <string>
 
 //!< The size of the icon IN the QPushButton
@@ -46,6 +46,9 @@ namespace widget
     m_redo_button = new QPushButton;
     m_tool = addToolBar ("tools");
     m_view = new QGraphicsView;
+    m_scene = new QGraphicsScene (this);
+    m_view->setScene (m_scene);
+    m_shapes = new QVector<QGraphicsItem*>;
 
     m_window->setMinimumSize (800, 600);
 
@@ -84,10 +87,22 @@ namespace widget
     delete m_load_button;
     delete m_undo_button;
     delete m_redo_button;
+    delete m_scene;
     delete m_view;
+    delete m_shapes;
     // Must be deleted in last
     delete m_window;
   }
 
   void QtDisplay::show () { m_window->show (); }
+
+  void QtDisplay::draw_rectangle (const shape::Rectangle& rect)
+  {
+    shape::Point pos = rect.get_position ();
+    QColor color = rect.get_color ();
+    QGraphicsRectItem* rect_item = new QGraphicsRectItem (0, 0, 100, 100);
+    rect_item->setBrush (color);
+    m_scene->addItem (rect_item);
+    m_shapes->append (rect_item);
+  }
 }

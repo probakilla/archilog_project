@@ -1,13 +1,9 @@
 #ifndef QTDISPLAY_HPP
 #define QTDISPLAY_HPP
 
-#include <QGraphicsView>
-#include <QGridLayout>
-#include <QLabel>
-#include <QMainWindow>
-#include <QPixmap>
-#include <QPushButton>
-#include <QToolBar>
+#include "Rectangle.hpp"
+
+#include <QtGui>
 
 namespace widget
 {
@@ -33,6 +29,15 @@ namespace widget
     //!< Displaying m_window
     void show ();
 
+    /*!
+     * @brief Draw a line in the QtDisplay::m_scene
+     *
+     * Draw a line between shape::Point start and end.
+     * @param start The start of the line
+     * @param end The end of the line
+     */
+    void draw_rectangle (const shape::Rectangle& rect);
+
   private:
     //!< The window where the layout is
     QWidget* m_window;
@@ -50,8 +55,12 @@ namespace widget
     QPushButton* m_redo_button;
     //!< The white panel where shape will appear
     QGraphicsView* m_view;
+    //!< Where we draw shapes
+    QGraphicsScene* m_scene;
     //!< The toolbar where the thumbnails of the shape will be stored
     QToolBar* m_tool;
+
+    QVector<QGraphicsItem*>* m_shapes;
   };
 }
 #endif /* !defined(QTDISPLAY_HPP) */

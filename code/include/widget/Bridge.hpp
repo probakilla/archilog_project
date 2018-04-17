@@ -1,8 +1,9 @@
 #ifndef BRIDGE_HPP
 #define BRIDGE_HPP
 
-#include "WindowInterface.hpp"
+#include "Rectangle.hpp"
 #include "WindowFactoryInterface.hpp"
+#include "WindowInterface.hpp"
 
 namespace widget
 {
@@ -28,6 +29,9 @@ namespace widget
 
     //!< Displaying the implementation of the bridge.
     virtual void show ();
+
+    //!< Drawing a rectangle in the Bridge::m_imp
+    virtual void draw_rectangle (const shape::Rectangle& rect);
 
   private:
     WindowInterface* m_imp;

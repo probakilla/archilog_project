@@ -1,6 +1,8 @@
 #ifndef WINDOWINTERFACE_HPP
 #define WINDOWINTERFACE_HPP
 
+#include "Rectangle.hpp"
+
 namespace widget
 {
   /*!
@@ -17,6 +19,8 @@ namespace widget
 
     //!< Display the program
     virtual void show () = 0;
+
+    virtual void draw_rectangle (const shape::Rectangle& rect) = 0;
   };
 }
 
