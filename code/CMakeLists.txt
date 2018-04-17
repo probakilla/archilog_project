@@ -11,6 +11,11 @@ set (CMAKE_CXX_STANDARD 11)
 set (CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/lib)
 set (CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/lib)
 
+# Ressources dir
+set (RESSOURCES_LOCATION \"${CMAKE_CURRENT_SOURCE_DIR}/ressources/\")
+configure_file (${CMAKE_SOURCE_DIR}/include/config.hh.cmake
+  ${CMAKE_SOURCE_DIR}/include/config.hh)
+
 # SRC dirs
 set (SRCS_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
 set (SHAPE_SRC_DIR ${SRCS_DIR}/shape)
@@ -23,7 +28,7 @@ set (INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
 set (SHAPE_INC_DIR ${INCLUDE_DIR}/shape)
 set (WIDGET_INC_DIR ${INCLUDE_DIR}/widget)
 
-include_directories (${WIDGET_INC_DIR} ${SHAPE_INC_DIR})
+include_directories (include/ ${WIDGET_INC_DIR} ${SHAPE_INC_DIR})
 
 # Qt Libs
 set (CMAKE_AUTOMOC ON)

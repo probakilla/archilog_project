@@ -1,5 +1,7 @@
 #include "MainWindow.hpp"
 
+#include "config.hh"
+
 #include <QGridLayout>
 #include <QIcon>
 #include <QLabel>
@@ -9,6 +11,8 @@
 
 #define ICON_SIZE 32
 #define BUTTON_SIZE 40
+//!< Path to the ressources directory.
+#define RESSOURCES_PATH std::string (RESSOURCES_LOCATION)
 
 namespace widget
 {
@@ -30,7 +34,10 @@ namespace widget
     window->setMinimumSize (800, 600);
     m_scene = new QGraphicsView;
 
-    QPixmap tmp ("../ressources/bin.png");
+    char trash_path[strlen (RESSOURCES_LOCATION) + strlen ("bin.png")];
+    strcat (trash_path, RESSOURCES_LOCATION);
+    strcat (trash_path, "bin.png");
+    QPixmap tmp (trash_path);
     QPixmap trash = tmp.scaled (QSize (BUTTON_SIZE, BUTTON_SIZE));
 
     QToolBar* tools = addToolBar ("tools");
@@ -40,19 +47,19 @@ namespace widget
 
     // Save button
     m_save_button = new QPushButton;
-    set_button_image (m_save_button, "../ressources/save.png");
+    set_button_image (m_save_button, RESSOURCES_PATH + "save.png");
 
     // Load button
     m_load_button = new QPushButton;
-    set_button_image (m_load_button, "../ressources/load.png");
+    set_button_image (m_load_button, RESSOURCES_PATH + "load.png");
 
     // Undo button
     m_undo_button = new QPushButton;
-    set_button_image (m_undo_button, "../ressources/undo.png");
+    set_button_image (m_undo_button, RESSOURCES_PATH + "undo.png");
 
     // Redo button
     m_redo_button = new QPushButton;
-    set_button_image (m_redo_button, "../ressources/redo.png");
+    set_button_image (m_redo_button, RESSOURCES_PATH + "redo.png");
 
     QGridLayout* layout = new QGridLayout;
     layout->addWidget (m_save_button, 0, 0);
