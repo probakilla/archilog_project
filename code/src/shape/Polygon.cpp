@@ -46,3 +46,5 @@ namespace shape
 
   void Polygon::set_memento (Memento<Polygon> m) { *this = m.get_state (); }
 }
+
+BOOST_CLASS_EXPORT_IMPLEMENT (shape::Polygon);

@@ -68,3 +68,5 @@ namespace shape
     *this = m.get_state ();
   }
 }
+
+BOOST_CLASS_EXPORT_IMPLEMENT(shape::ShapeGroup);

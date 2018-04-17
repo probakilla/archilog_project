@@ -56,3 +56,4 @@ namespace shape
 
   void Rectangle::set_memento (Memento<Rectangle> m) { *this = m.get_state (); }
 }
+BOOST_CLASS_EXPORT_IMPLEMENT (shape::Rectangle);

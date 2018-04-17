@@ -4,7 +4,7 @@ cmake_minimum_required (VERSION 2.6)
 project (shape_editor)
 
 enable_language (CXX)
-set (CMAKE_CXX_FLAGS "-Wall -Wextra -Werror")
+set (CMAKE_CXX_FLAGS "-Wall -Wextra -Werror -lboost_serialization")
 set (CMAKE_CXX_STANDARD 11)
 
 # Custom directory var
@@ -42,7 +42,7 @@ option (TESTS "TESTS" OFF)
 # Tests enabled
 if (TESTS STREQUAL "ON")
   enable_testing ()
-  set (CMAKE_CXX_FLAGS "-Wall -Wextra -Werror -g")
+  set (CMAKE_CXX_FLAGS "-Wall -Wextra -Werror -g -lboost_serialization")
   message ("-- Option DTESTS=ON")
   message ("-- CXX Flags '${CMAKE_CXX_FLAGS}' enabled")
   add_subdirectory (tests)
@@ -50,14 +50,14 @@ endif () # Tests option
 
 # No option enabled
 if (DEBUG STREQUAL "OFF" AND TESTS STREQUAL "OFF")
-  set (CMAKE_CXX_FLAGS "-Wall -Wextra -Werror -O2")
+  set (CMAKE_CXX_FLAGS "-Wall -Wextra -Werror -O2  -lboost_serialization")
   message ("-- No option enabled")
   message ("-- CXX flag ${CMAKE_CXX_FLAGS} enabled")
 endif ()
 
 # Debug enabled
 if (DEBUG STREQUAL "ON")
-  set (CMAKE_CXX_FLAGS "-Wall -Wextra -Werror -g")
+  set (CMAKE_CXX_FLAGS "-Wall -Wextra -Werror -g -lboost_serialization")
   message ("-- Option DDEBUG=ON")
   message ("-- CXX flags '${CMAKE_CXX_FLAGS}' enabled")
 endif () # Debug option

@@ -28,3 +28,4 @@ namespace shape
     return m_color == static_cast<const AbstractPolygon&> (shape).m_color;
   }
 }
+BOOST_CLASS_EXPORT_IMPLEMENT(shape::AbstractPolygon);

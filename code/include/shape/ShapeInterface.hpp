@@ -1,6 +1,9 @@
 #ifndef SHAPEINTERFACE_HPP
 #define SHAPEINTERFACE_HPP
-
+#include <boost/archive/text_iarchive.hpp>
+#include <boost/archive/text_oarchive.hpp>
+#include <boost/serialization/base_object.hpp>
+#include <boost/serialization/export.hpp>
 namespace shape
 {
   class ShapeInterface
@@ -13,6 +16,14 @@ namespace shape
     virtual bool remove_shape (const ShapeInterface& shape) = 0;
 
     virtual bool operator== (const ShapeInterface& shape) = 0;
+
+  private:
+		friend boost::serialization::access;
+    template <class Archive>
+    void serialize (Archive& ar, const unsigned int version)
+    {}
   };
 }
+//BOOST_SERIALIZATION_ASSUME_ABSTRACT(ShapeInterface)
+BOOST_CLASS_EXPORT_KEY (shape::ShapeInterface);
 #endif /* !defined(SHAPEINTERFACE_HPP) */
