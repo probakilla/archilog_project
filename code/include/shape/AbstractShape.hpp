@@ -36,6 +36,13 @@ namespace shape
     //!< Comparison operator
     bool operator== (const Point& point) const;
 
+    template <class Point>
+    void serialize (Point& ar, const unsigned int version)
+    {
+      if (version == 0)
+        ar& m_x& m_y;
+    }
+
   private:
     double m_x; //!< abscissa
     double m_y; //!< ordinades
@@ -67,6 +74,14 @@ namespace shape
 
     //!< Setter on rotation center
     void set_rotation_center (const Point& point);
+		friend boost::serialization::access;
+    template <class Archive>
+    void serialize (Archive& ar, unsigned)
+    {
+			boost::serialization::void_cast_register<AbstractShape, ShapeInterface>();
+			boost::serialization::base_object<ShapeInterface>(*this);
+			ar & m_position & m_rotation_center;
+		}
 
   protected:
     /*!
@@ -88,4 +103,5 @@ namespace shape
     Point m_rotation_center; //!< Center of rotation of the shape
   };
 }
+BOOST_CLASS_EXPORT_KEY (shape::AbstractShape);
 #endif /* !defined(ABSTRACTSHAPE_HPP) */

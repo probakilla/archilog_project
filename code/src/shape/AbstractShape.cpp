@@ -107,3 +107,4 @@ namespace shape
     return *this;
   }
 }
+BOOST_CLASS_EXPORT_IMPLEMENT(shape::AbstractShape);
