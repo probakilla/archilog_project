@@ -4,8 +4,8 @@
 #include "AbstractPolygon.hpp"
 #include "Memento.hpp"
 
-#define DEFAULT_NB_SIDES 4
-#define DEFAULT_SIDE_LENGTH 10.0
+#define DEFAULT_NB_SIDES 5
+#define DEFAULT_SIDE_LENGTH 50.0
 
 namespace shape
 {

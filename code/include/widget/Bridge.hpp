@@ -2,6 +2,7 @@
 #define BRIDGE_HPP
 
 #include "Rectangle.hpp"
+#include "Polygon.hpp"
 #include "WindowFactoryInterface.hpp"
 #include "WindowInterface.hpp"
 
@@ -32,6 +33,9 @@ namespace widget
 
     //!< Drawing a rectangle in the Bridge::m_imp
     virtual void draw_rectangle (const shape::Rectangle& rect);
+
+    //!< Drawing a polygon in the Bridge::m_imp
+    virtual void draw_polygon (const shape::Polygon& poly);
 
   private:
     WindowInterface* m_imp;

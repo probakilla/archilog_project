@@ -12,4 +12,9 @@ namespace widget
   {
     m_window->draw_rectangle (rect);
   }
+
+  void QtWindow::draw_polygon (const shape::Polygon& poly)
+  {
+    m_window->draw_polygon (poly);
+  }
 }

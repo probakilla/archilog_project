@@ -2,7 +2,9 @@
 
 #include "config.hpp"
 
+#include <cmath>
 #include <string>
+#include <vector>
 
 //!< The size of the icon IN the QPushButton
 #define ICON_SIZE 32
@@ -10,6 +12,8 @@
 #define BUTTON_SIZE 40
 //!< Path to the ressources directory.
 #define RESSOURCES_PATH std::string (RESSOURCES_LOCATION)
+
+#define _USE_MATH_DEFINES
 
 namespace widget
 {
@@ -104,5 +108,27 @@ namespace widget
     rect_item->setBrush (color);
     m_scene->addItem (rect_item);
     m_shapes->append (rect_item);
+  }
+
+  void QtDisplay::draw_polygon (const shape::Polygon& poly)
+  {
+    QVector<QPointF> points;
+    int n = poly.get_nb_sides ();
+    // Radius of the exterior circle
+    // ref : https://www.mathopenref.com/polygonradius.html
+    double rad = (poly.get_side_length () / (2 * (sin (180 / n))));
+    // Searching all points coordinates
+    for (int i = 0; i < n; ++i)
+    {
+      points.push_back (
+       QPointF (rad * cos (2 * M_PI * i / n), rad * sin (2 * M_PI * i / n)));
+    }
+
+    QColor color = poly.get_color ();
+    QPolygonF poly_tmp (points);
+    QGraphicsPolygonItem* poly_item = new QGraphicsPolygonItem (poly_tmp);
+    poly_item->setBrush (color);
+    m_scene->addItem (poly_item);
+    m_shapes->append (poly_item);
   }
 }

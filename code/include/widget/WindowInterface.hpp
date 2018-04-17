@@ -2,6 +2,7 @@
 #define WINDOWINTERFACE_HPP
 
 #include "Rectangle.hpp"
+#include "Polygon.hpp"
 
 namespace widget
 {
@@ -20,7 +21,11 @@ namespace widget
     //!< Display the program
     virtual void show () = 0;
 
+    //!< Draw a rectangle
     virtual void draw_rectangle (const shape::Rectangle& rect) = 0;
+
+    //!< Draw a polygon
+    virtual void draw_polygon (const shape::Polygon& poly) = 0;
   };
 }
 

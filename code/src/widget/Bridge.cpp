@@ -15,4 +15,9 @@ namespace widget
   {
     m_imp->draw_rectangle (rect);
   }
+
+  void Bridge::draw_polygon (const shape::Polygon& poly)
+  {
+    m_imp->draw_polygon (poly);
+  }
 }

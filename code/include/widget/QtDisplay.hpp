@@ -1,6 +1,7 @@
 #ifndef QTDISPLAY_HPP
 #define QTDISPLAY_HPP
 
+#include "Polygon.hpp"
 #include "Rectangle.hpp"
 
 #include <QtGui>
@@ -30,13 +31,18 @@ namespace widget
     void show ();
 
     /*!
-     * @brief Draw a line in the QtDisplay::m_scene
+     * @brief Draw a shape::Rectangle
      *
-     * Draw a line between shape::Point start and end.
-     * @param start The start of the line
-     * @param end The end of the line
+     * @param rect The shape::Rectangle we want to draw
      */
     void draw_rectangle (const shape::Rectangle& rect);
+
+    /*!
+     * @brief Draw a shape::Rectangle
+     *
+     * @param rect The shape::Rectangle we want to draw
+     */
+    void draw_polygon (const shape::Polygon& poly);
 
   private:
     //!< The window where the layout is
@@ -59,7 +65,7 @@ namespace widget
     QGraphicsScene* m_scene;
     //!< The toolbar where the thumbnails of the shape will be stored
     QToolBar* m_tool;
-
+    //!< QVector containing all shapes
     QVector<QGraphicsItem*>* m_shapes;
   };
 }
