@@ -58,7 +58,7 @@ namespace widget
 
     // Setting the image in the QtDisplay::m_bin_label
     char trash_path[strlen (RESSOURCES_LOCATION) + strlen ("bin.png")];
-    strcat (trash_path, RESSOURCES_LOCATION);
+    strcpy (trash_path, RESSOURCES_LOCATION);
     strcat (trash_path, "bin.png");
     QPixmap tmp (trash_path);
     QPixmap trash = tmp.scaled (QSize (BUTTON_SIZE, BUTTON_SIZE));
