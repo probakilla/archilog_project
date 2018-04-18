@@ -64,9 +64,6 @@ namespace widget
     m_scroll_area = new QScrollArea (m_window);
 
     QSize default_size (DEFAULT_WINDOW_LENGTH, DEFAULT_WINDOW_HEIGHT);
-    QRectF fixed_size (-(DEFAULT_SCENE_LENGTH / 2), -(DEFAULT_SCENE_HEIGHT / 2),
-                       DEFAULT_SCENE_LENGTH, DEFAULT_SCENE_HEIGHT);
-    m_scene->setSceneRect (fixed_size);
     this->setFixedSize (default_size);
     this->setCentralWidget (m_window);
 
@@ -164,10 +161,7 @@ namespace widget
 
   void QtDisplay::mousePressEvent (QMouseEvent* event)
   {
-    if (event->button () == Qt::LeftButton &&
-        m_window->geometry ().contains (event->pos ()))
-    {
-      std::cout << "Bonjour poto " << std::endl;
-    }
+    if (event->button () == Qt::RightButton)
+      std::cout << "lol" << std::endl;
   }
 }
