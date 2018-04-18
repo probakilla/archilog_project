@@ -65,8 +65,9 @@ namespace widget
     QGraphicsView* m_view;
     //!< Where we draw shapes
     QGraphicsScene* m_scene;
+    QGraphicsScene* m_tool_scene;
     //!< The toolbar where the thumbnails of the shape will be stored
-    QToolBar* m_tool;
+    QGraphicsView* m_tool;
     //!< QVector containing all shapes
     QVector<QGraphicsItem*>* m_shapes;
   };
