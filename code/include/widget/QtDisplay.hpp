@@ -15,6 +15,7 @@ namespace widget
    */
   class QtDisplay : public QMainWindow
   {
+
   public:
     /*!
      * @brief Initialize all members
@@ -26,9 +27,6 @@ namespace widget
 
     //!< Deleting all members
     ~QtDisplay ();
-
-    //!< Displaying m_window
-    void show ();
 
     /*!
      * @brief Draw a shape::Rectangle
@@ -44,6 +42,8 @@ namespace widget
      */
     void draw_polygon (const shape::Polygon& poly);
 
+    void mousePressEvent (QMouseEvent* event);
+
   private:
     //!< The window where the layout is
     QWidget* m_window;
@@ -51,6 +51,8 @@ namespace widget
     QGridLayout* m_layout;
     //!< The label of the trash at the bottom of the toolbar
     QLabel* m_bin_label;
+
+    QScrollArea* m_scroll_area;
     //!< The save button
     QPushButton* m_save_button;
     //!< The load button

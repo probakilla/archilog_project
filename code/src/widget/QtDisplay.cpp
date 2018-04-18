@@ -58,11 +58,13 @@ namespace widget
     this->setFixedSize (1024, 712);
     this->setCentralWidget (m_window);
 
-    // Setting the QLabel image
-    const char* c = std::string (RESSOURCES_PATH + "bin.png").c_str ();
-    QImage image (c);
-    m_bin_label->setPixmap (QPixmap::fromImage (image));
-    m_bin_label->adjustSize ();
+    // Setting the image in the QtDisplay::m_bin_label
+    char trash_path[strlen (RESSOURCES_LOCATION) + strlen ("bin.png")];
+    strcpy (trash_path, RESSOURCES_LOCATION);
+    strcat (trash_path, "bin.png");
+    QPixmap tmp (trash_path);
+    QPixmap trash = tmp.scaled (QSize (ICON_SIZE, ICON_SIZE));
+    m_bin_label->setPixmap (trash);
     m_scroll_area->setWidget (m_bin_label);
     m_scroll_area->setFixedSize (BUTTON_SIZE, BUTTON_SIZE);
 
@@ -117,7 +119,7 @@ namespace widget
     int n = poly.get_nb_sides ();
     // Radius of the exterior circle
     // ref : https://www.mathopenref.com/polygonradius.html
-    double rad = (poly.get_side_length () / (2 * (sin (180 / n))));
+    double rad = (poly.get_side_length () / (2 * (sin (180 / n * M_PI / 180))));
 
     // Searching all points coordinates
     for (int i = 0; i < n; ++i)
