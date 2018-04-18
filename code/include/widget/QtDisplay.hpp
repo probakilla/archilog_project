@@ -51,7 +51,7 @@ namespace widget
     QGridLayout* m_layout;
     //!< The label of the trash at the bottom of the toolbar
     QLabel* m_bin_label;
-
+    //!< Where the bin icon is
     QScrollArea* m_scroll_area;
     //!< The save button
     QPushButton* m_save_button;
@@ -65,6 +65,7 @@ namespace widget
     QGraphicsView* m_view;
     //!< Where we draw shapes
     QGraphicsScene* m_scene;
+    //!< Where the thumbnails shows
     QGraphicsScene* m_tool_scene;
     //!< The toolbar where the thumbnails of the shape will be stored
     QGraphicsView* m_tool;

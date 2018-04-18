@@ -13,6 +13,12 @@
 //!< Path to the ressources directory.
 #define RESSOURCES_PATH std::string (RESSOURCES_LOCATION)
 
+#define DEFAULT_WINDOW_LENGTH 1024
+#define DEFAULT_WINDOW_HEIGHT 712
+//!< The scene must be smaller than the window
+#define DEFAULT_SCENE_LENGTH 800
+#define DEFAULT_SCENE_HEIGHT 600
+
 #define _USE_MATH_DEFINES
 
 namespace widget
@@ -57,7 +63,11 @@ namespace widget
     m_shapes = new QVector<QGraphicsItem*>;
     m_scroll_area = new QScrollArea (m_window);
 
-    this->setFixedSize (1024, 712);
+    QSize default_size (DEFAULT_WINDOW_LENGTH, DEFAULT_WINDOW_HEIGHT);
+    QRectF fixed_size (-(DEFAULT_SCENE_LENGTH / 2), -(DEFAULT_SCENE_HEIGHT / 2),
+                       DEFAULT_SCENE_LENGTH, DEFAULT_SCENE_HEIGHT);
+    m_scene->setSceneRect (fixed_size);
+    this->setFixedSize (default_size);
     this->setCentralWidget (m_window);
 
     // Setting the image in the QtDisplay::m_bin_label
