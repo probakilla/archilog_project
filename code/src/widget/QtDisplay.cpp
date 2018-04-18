@@ -108,6 +108,9 @@ namespace widget
     QColor color = rect.get_color ();
     QGraphicsRectItem* rect_item = new QGraphicsRectItem (
      pos.x (), pos.y (), rect.get_width (), rect.get_height ());
+    rect_item->setFlag (QGraphicsItem::ItemIsSelectable);
+    rect_item->setFlag (QGraphicsItem::ItemIsMovable);
+    rect_item->setFlag (QGraphicsItem::ItemSendsGeometryChanges);
     rect_item->setBrush (color);
     m_scene->addItem (rect_item);
     m_shapes->append (rect_item);
@@ -139,6 +142,9 @@ namespace widget
     QColor color = poly.get_color ();
     QPolygonF poly_tmp (points);
     QGraphicsPolygonItem* poly_item = new QGraphicsPolygonItem (poly_tmp);
+    poly_item->setFlag (QGraphicsItem::ItemIsSelectable);
+    poly_item->setFlag (QGraphicsItem::ItemIsMovable);
+    poly_item->setFlag (QGraphicsItem::ItemSendsGeometryChanges);
     poly_item->setBrush (color);
     m_scene->addItem (poly_item);
     m_shapes->append (poly_item);
