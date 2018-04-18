@@ -42,18 +42,20 @@ namespace widget
   {
     // Initializations
     m_window = new QWidget;
-    m_layout = new QGridLayout;
-    m_bin_label = new QLabel;
-    m_save_button = new QPushButton;
-    m_load_button = new QPushButton;
-    m_undo_button = new QPushButton;
-    m_redo_button = new QPushButton;
-    m_tool = addToolBar ("tools");
-    m_view = new QGraphicsView;
-    m_scene = new QGraphicsScene (this);
+    m_layout = new QGridLayout (m_window);
+    m_bin_label = new QLabel (m_window);
+    m_save_button = new QPushButton (m_window);
+    m_load_button = new QPushButton (m_window);
+    m_undo_button = new QPushButton (m_window);
+    m_redo_button = new QPushButton (m_window);
+    m_tool = new QGraphicsView (m_window);
+    m_view = new QGraphicsView (m_window);
+    m_scene = new QGraphicsScene (m_window);
+    m_tool_scene = new QGraphicsScene (m_window);
     m_view->setScene (m_scene);
+    m_tool->setScene (m_tool_scene);
     m_shapes = new QVector<QGraphicsItem*>;
-    m_scroll_area = new QScrollArea;
+    m_scroll_area = new QScrollArea (m_window);
 
     this->setFixedSize (1024, 712);
     this->setCentralWidget (m_window);
