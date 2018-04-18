@@ -117,7 +117,7 @@ namespace widget
     int n = poly.get_nb_sides ();
     // Radius of the exterior circle
     // ref : https://www.mathopenref.com/polygonradius.html
-    double rad = (poly.get_side_length () / (2 * (sin (180 / n))));
+    double rad = (poly.get_side_length () / (2 * (sin (180 / n * M_PI / 180))));
 
     // Searching all points coordinates
     for (int i = 0; i < n; ++i)
