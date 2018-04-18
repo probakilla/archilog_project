@@ -53,16 +53,18 @@ namespace widget
     m_scene = new QGraphicsScene (this);
     m_view->setScene (m_scene);
     m_shapes = new QVector<QGraphicsItem*>;
+    m_scroll_area = new QScrollArea;
 
-    m_window->setMinimumSize (800, 600);
+    this->setFixedSize (1024, 712);
+    this->setCentralWidget (m_window);
 
-    // Setting the image in the QtDisplay::m_bin_label
-    char trash_path[strlen (RESSOURCES_LOCATION) + strlen ("bin.png")];
-    strcat (trash_path, RESSOURCES_LOCATION);
-    strcat (trash_path, "bin.png");
-    QPixmap tmp (trash_path);
-    QPixmap trash = tmp.scaled (QSize (BUTTON_SIZE, BUTTON_SIZE));
-    m_bin_label->setPixmap (trash);
+    // Setting the QLabel image
+    const char* c = std::string (RESSOURCES_PATH + "bin.png").c_str ();
+    QImage image (c);
+    m_bin_label->setPixmap (QPixmap::fromImage (image));
+    m_bin_label->adjustSize ();
+    m_scroll_area->setWidget (m_bin_label);
+    m_scroll_area->setFixedSize (BUTTON_SIZE, BUTTON_SIZE);
 
     // Setting buttons images
     set_button_image (m_save_button, RESSOURCES_PATH + "save.png");
@@ -77,7 +79,7 @@ namespace widget
     m_layout->addWidget (m_redo_button, 0, 3);
     m_layout->addWidget (m_view, 1, 1, 5, 4);
     m_layout->addWidget (m_tool, 1, 0, 4, 0);
-    m_layout->addWidget (m_bin_label, 5, 0);
+    m_layout->addWidget (m_scroll_area, 5, 0);
     // Adding layout in the window
     m_window->setLayout (m_layout);
   }
@@ -97,8 +99,6 @@ namespace widget
     // Must be deleted in last
     delete m_window;
   }
-
-  void QtDisplay::show () { m_window->show (); }
 
   void QtDisplay::draw_rectangle (const shape::Rectangle& rect)
   {
@@ -140,5 +140,14 @@ namespace widget
     poly_item->setBrush (color);
     m_scene->addItem (poly_item);
     m_shapes->append (poly_item);
+  }
+
+  void QtDisplay::mousePressEvent (QMouseEvent* event)
+  {
+    if (event->button () == Qt::LeftButton &&
+        m_window->geometry ().contains (event->pos ()))
+    {
+      std::cout << "Bonjour poto " << std::endl;
+    }
   }
 }
