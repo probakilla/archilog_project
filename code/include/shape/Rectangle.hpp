@@ -88,8 +88,8 @@ namespace shape
     template <class Archive>
     void serialize (Archive& ar, const unsigned int version)
     {
-			boost::serialization::void_cast_register<Rectangle, AbstractPolygon>();
-			boost::serialization::base_object<AbstractPolygon>(*this);
+      boost::serialization::void_cast_register<Rectangle, AbstractPolygon> ();
+      boost::serialization::base_object<AbstractPolygon> (*this);
       if (version == 0)
         ar& m_height& m_width& m_rounding_coeff;
     }

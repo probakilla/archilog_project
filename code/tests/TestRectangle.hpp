@@ -12,6 +12,8 @@ namespace test
   {
     CPPUNIT_TEST_SUITE (TestRectangle);
     CPPUNIT_TEST (test_operators);
+    CPPUNIT_TEST (test_memento);
+    CPPUNIT_TEST (test_serialize);
     CPPUNIT_TEST_SUITE_END ();
 
   public:
@@ -29,6 +31,13 @@ namespace test
      * shape::Rectangle.
      */
     void test_memento ();
+
+    /*!
+     * @brief Test the Rectangle::serialize.
+     *
+     * Test to save a shape::Rectangle and load it.
+     */
+    void test_serialize ();
 
   private:
     shape::Rectangle m_fixture;

@@ -13,6 +13,8 @@ namespace test
     CPPUNIT_TEST_SUITE (TestGroup);
     CPPUNIT_TEST (test_add_remove_shape);
     CPPUNIT_TEST (test_equal);
+    CPPUNIT_TEST (test_memento);
+    CPPUNIT_TEST (test_serialize);
     CPPUNIT_TEST_SUITE_END ();
 
   public:
@@ -40,6 +42,13 @@ namespace test
      * shape::ShapeGroup.
      */
     void test_memento ();
+
+    /*!
+     * @brief Test the ShapeGroup::serialize.
+     *
+     * Test to save a shape::ShapeGroup and load it.
+     */
+    void test_serialize ();
 
   private:
     shape::ShapeGroup m_fixture;

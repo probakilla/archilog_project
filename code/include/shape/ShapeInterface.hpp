@@ -18,7 +18,7 @@ namespace shape
     virtual bool operator== (const ShapeInterface& shape) = 0;
 
   private:
-		friend boost::serialization::access;
+    friend boost::serialization::access;
     template <class Archive>
     void serialize (Archive& ar, const unsigned int version)
     {}

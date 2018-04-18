@@ -75,6 +75,25 @@ namespace test
     m_fixture.set_memento (mem);
     CPPUNIT_ASSERT (m_fixture == m_fixture_copy);
   }
+
+  void TestGroup::test_serialize ()
+  {
+    shape::Rectangle rect;
+    m_fixture.add_shape (&rect);
+    shape::Polygon poly;
+    m_fixture.add_shape (&poly);
+
+    std::stringstream save_file;
+    boost::archive::text_oarchive save_archive (save_file);
+    save_archive << m_fixture;
+
+    shape::ShapeGroup fixture_copy = m_fixture;
+    m_fixture.remove_shape (&rect);
+
+    boost::archive::text_iarchive load_archive (save_file);
+    load_archive >> m_fixture;
+    CPPUNIT_ASSERT (m_fixture == fixture_copy);
+  }
 }
 
 int main ()

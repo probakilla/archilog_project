@@ -39,13 +39,13 @@ namespace shape
   {
     if (!(AbstractShape::operator== (shape)))
       return false;
+
     ShapeGroup group = static_cast<const ShapeGroup&> (shape);
     if (m_group.size () != group.m_group.size ())
       return false;
-
     for (unsigned int i = 0; i < m_group.size (); ++i)
     {
-      if (m_group[i] != group.m_group[i])
+      if (!(*m_group[i] == *group.m_group[i]))
         return false;
     }
     return true;
@@ -69,4 +69,4 @@ namespace shape
   }
 }
 
-BOOST_CLASS_EXPORT_IMPLEMENT(shape::ShapeGroup);
+BOOST_CLASS_EXPORT_IMPLEMENT (shape::ShapeGroup);

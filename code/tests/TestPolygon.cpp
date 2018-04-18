@@ -68,6 +68,20 @@ namespace test
     m_fixture.set_memento (mem);
     CPPUNIT_ASSERT (m_fixture == m_fixture_copy);
   }
+
+  void TestPolygon::test_serialize ()
+  {
+    std::stringstream save_file;
+    boost::archive::text_oarchive save_archive (save_file);
+    save_archive << m_fixture;
+
+    shape::Polygon fixture_copy = m_fixture;
+    m_fixture.set_side_length (m_fixture.get_side_length () - 1);
+
+    boost::archive::text_iarchive load_archive (save_file);
+    load_archive >> m_fixture;
+    CPPUNIT_ASSERT (m_fixture == fixture_copy);
+  }
 }
 
 int main ()

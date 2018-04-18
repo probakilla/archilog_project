@@ -73,6 +73,20 @@ namespace test
     m_fixture.set_memento (mem);
     CPPUNIT_ASSERT (m_fixture == m_fixture_copy);
   }
+
+  void TestRectangle::test_serialize ()
+  {
+    std::stringstream save_file;
+    boost::archive::text_oarchive save_archive (save_file);
+    save_archive << m_fixture;
+
+    shape::Rectangle fixture_copy = m_fixture;
+    m_fixture.set_width (m_fixture.get_width () - 1);
+
+    boost::archive::text_iarchive load_archive (save_file);
+    load_archive >> m_fixture;
+    CPPUNIT_ASSERT (m_fixture == fixture_copy);
+  }
 }
 
 int main ()
