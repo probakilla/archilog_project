@@ -56,6 +56,7 @@ namespace widget
     m_redo_button = new QPushButton (m_window);
     m_tool = new QGraphicsView (m_window);
     m_view = new QGraphicsView (m_window);
+    m_view->setDragMode (QGraphicsView::RubberBandDrag);
     m_scene = new QGraphicsScene (m_window);
     m_tool_scene = new QGraphicsScene (m_window);
     m_view->setScene (m_scene);
