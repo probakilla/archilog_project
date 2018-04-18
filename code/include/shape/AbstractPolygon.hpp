@@ -26,14 +26,14 @@ namespace shape
     //!< Comparison operator.
     bool operator== (const ShapeInterface& shape) override;
 
-		friend boost::serialization::access;
-    template <class Archive>
-    void serialize (Archive& ar, unsigned)
+    friend boost::serialization::access;
+    template <class Archive> void serialize (Archive& ar, unsigned)
     {
-			boost::serialization::void_cast_register<AbstractPolygon,AbstractShape>();
-			boost::serialization::base_object<AbstractShape>(*this);
-			ar & m_color;
-		}
+      boost::serialization::void_cast_register<AbstractPolygon,
+                                               AbstractShape> ();
+      boost::serialization::base_object<AbstractShape> (*this);
+      ar& m_color;
+    }
 
   protected:
     //!< Empty constructor of shape::AbstractPolygon

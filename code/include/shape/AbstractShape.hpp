@@ -74,14 +74,14 @@ namespace shape
 
     //!< Setter on rotation center
     void set_rotation_center (const Point& point);
-		friend boost::serialization::access;
-    template <class Archive>
-    void serialize (Archive& ar, unsigned)
+    friend boost::serialization::access;
+    template <class Archive> void serialize (Archive& ar, unsigned)
     {
-			boost::serialization::void_cast_register<AbstractShape, ShapeInterface>();
-			boost::serialization::base_object<ShapeInterface>(*this);
-			ar & m_position & m_rotation_center;
-		}
+      boost::serialization::void_cast_register<AbstractShape,
+                                               ShapeInterface> ();
+      boost::serialization::base_object<ShapeInterface> (*this);
+      ar& m_position& m_rotation_center;
+    }
 
   protected:
     /*!

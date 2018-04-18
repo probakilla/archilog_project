@@ -104,7 +104,8 @@ namespace widget
   {
     shape::Point pos = rect.get_position ();
     QColor color = rect.get_color ();
-    QGraphicsRectItem* rect_item = new QGraphicsRectItem (0, 0, 100, 100);
+    QGraphicsRectItem* rect_item = new QGraphicsRectItem (
+     pos.x (), pos.y (), rect.get_width (), rect.get_height ());
     rect_item->setBrush (color);
     m_scene->addItem (rect_item);
     m_shapes->append (rect_item);
