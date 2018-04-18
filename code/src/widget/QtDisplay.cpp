@@ -118,11 +118,20 @@ namespace widget
     // Radius of the exterior circle
     // ref : https://www.mathopenref.com/polygonradius.html
     double rad = (poly.get_side_length () / (2 * (sin (180 / n))));
+
     // Searching all points coordinates
     for (int i = 0; i < n; ++i)
     {
       points.push_back (
        QPointF (rad * cos (2 * M_PI * i / n), rad * sin (2 * M_PI * i / n)));
+    }
+
+    // Adusting position
+    shape::Point pos = poly.get_position ();
+    for (int i = 0; i < n; ++i)
+    {
+      points[i].setX (points[i].rx () + pos.x ());
+      points[i].setY (points[i].ry () + pos.y ());
     }
 
     QColor color = poly.get_color ();
