@@ -97,7 +97,7 @@ namespace shape
     friend boost::serialization::access;
     template <class Archive> void serialize (Archive& ar, unsigned)
     {
-      boost::serialization::base_object<ShapeInterface> (*this);
+      ar& boost::serialization::base_object<ShapeInterface> (*this);
       ar& m_position& m_rotation_center;
     }
   };

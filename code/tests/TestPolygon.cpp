@@ -77,6 +77,7 @@ namespace test
 
     shape::Polygon fixture_copy = m_fixture;
     m_fixture.set_side_length (m_fixture.get_side_length () - 1);
+    m_fixture.set_color (m_fixture.get_color () - 1);
 
     boost::archive::text_iarchive load_archive (save_file);
     load_archive >> m_fixture;

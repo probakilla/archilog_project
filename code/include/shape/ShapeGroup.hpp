@@ -64,8 +64,7 @@ namespace shape
     friend boost::serialization::access;
     template <class Archive> void serialize (Archive& ar, unsigned)
     {
-      boost::serialization::base_object<AbstractShape> (*this);
-
+      ar& boost::serialization::base_object<AbstractShape> (*this);
       ar& m_group;
     }
   };

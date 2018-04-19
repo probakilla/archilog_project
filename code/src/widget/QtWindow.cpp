@@ -8,12 +8,12 @@ namespace widget
 
   void QtWindow::show () { m_window->show (); }
 
-  void QtWindow::draw_rectangle (const shape::Rectangle& rect)
+  void QtWindow::draw_rectangle (shape::Rectangle& rect)
   {
     m_window->draw_rectangle (rect);
   }
 
-  void QtWindow::draw_polygon (const shape::Polygon& poly)
+  void QtWindow::draw_polygon (shape::Polygon& poly)
   {
     m_window->draw_polygon (poly);
   }

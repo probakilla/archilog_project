@@ -11,12 +11,12 @@ namespace widget
 
   void Bridge::show () { m_imp->show (); }
 
-  void Bridge::draw_rectangle (const shape::Rectangle& rect)
+  void Bridge::draw_rectangle (shape::Rectangle& rect)
   {
     m_imp->draw_rectangle (rect);
   }
 
-  void Bridge::draw_polygon (const shape::Polygon& poly)
+  void Bridge::draw_polygon (shape::Polygon& poly)
   {
     m_imp->draw_polygon (poly);
   }

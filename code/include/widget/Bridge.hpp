@@ -32,10 +32,10 @@ namespace widget
     virtual void show ();
 
     //!< Drawing a rectangle in the Bridge::m_imp
-    virtual void draw_rectangle (const shape::Rectangle& rect);
+    virtual void draw_rectangle (shape::Rectangle& rect);
 
     //!< Drawing a polygon in the Bridge::m_imp
-    virtual void draw_polygon (const shape::Polygon& poly);
+    virtual void draw_polygon (shape::Polygon& poly);
 
   private:
     WindowInterface* m_imp;

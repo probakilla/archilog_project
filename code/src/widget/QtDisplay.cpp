@@ -5,6 +5,10 @@
 #include <cmath>
 #include <string>
 #include <vector>
+#include <fstream>
+#include <boost/serialization/vector.hpp>
+#include <QFileDialog>
+
 
 //!< The size of the icon IN the QPushButton
 #define ICON_SIZE 32
@@ -62,7 +66,7 @@ namespace widget
     m_tool_scene = new QGraphicsScene (m_window);
     m_view->setScene (m_scene);
     m_tool->setScene (m_tool_scene);
-    m_shapes = new QVector<QGraphicsItem*>;
+    m_shapes = new std::vector<shape::ShapeInterface*>;
     m_scroll_area = new QScrollArea (m_window);
 
     QSize default_size (DEFAULT_WINDOW_LENGTH, DEFAULT_WINDOW_HEIGHT);
@@ -84,6 +88,12 @@ namespace widget
     set_button_image (m_load_button, RESSOURCES_PATH + "load.png");
     set_button_image (m_undo_button, RESSOURCES_PATH + "undo.png");
     set_button_image (m_redo_button, RESSOURCES_PATH + "redo.png");
+
+    // Connection buttons to slot
+    connect (m_save_button, SIGNAL (released ()), this, SLOT (save ()));
+    connect (m_load_button, SIGNAL (released ()), this, SLOT (load ()));
+    connect (m_undo_button, SIGNAL (released ()), this, SLOT (undo ()));
+    connect (m_redo_button, SIGNAL (released ()), this, SLOT (redo ()));
 
     // Adding widgets in layout.
     m_layout->addWidget (m_save_button, 0, 0);
@@ -113,7 +123,7 @@ namespace widget
     delete m_window;
   }
 
-  void QtDisplay::draw_rectangle (const shape::Rectangle& rect)
+  void QtDisplay::draw_rectangle (shape::Rectangle& rect)
   {
     shape::Point pos = rect.get_position ();
     QColor color = rect.get_color ();
@@ -124,10 +134,10 @@ namespace widget
     rect_item->setFlag (QGraphicsItem::ItemSendsGeometryChanges);
     rect_item->setBrush (color);
     m_scene->addItem (rect_item);
-    m_shapes->append (rect_item);
+    m_shapes->push_back (&rect);
   }
 
-  void QtDisplay::draw_polygon (const shape::Polygon& poly)
+  void QtDisplay::draw_polygon (shape::Polygon& poly)
   {
     QVector<QPointF> points;
     int n = poly.get_nb_sides ();
@@ -158,7 +168,7 @@ namespace widget
     poly_item->setFlag (QGraphicsItem::ItemSendsGeometryChanges);
     poly_item->setBrush (color);
     m_scene->addItem (poly_item);
-    m_shapes->append (poly_item);
+    m_shapes->push_back (&poly);
   }
 
   void QtDisplay::mousePressEvent (QMouseEvent* event)
@@ -166,4 +176,27 @@ namespace widget
     if (event->button () == Qt::RightButton)
       std::cout << "lol" << std::endl;
   }
+
+  void QtDisplay::save ()
+  {
+    QString filename = QFileDialog::getSaveFileName(this,
+        tr("Save Shapes"), "",
+        tr("Shapes (*.txt);;All Files (*)"));
+    std::ofstream save_file (filename.toStdString ());
+    boost::archive::text_oarchive save_archive (save_file);
+    save_archive << m_shapes;
+  }
+
+  void QtDisplay::load () {
+    QString filename = QFileDialog::getOpenFileName(this,
+        tr("Save Shapes"), "",
+        tr("Shapes (*.txt);;All Files (*)"));
+    std::ifstream save_file (filename.toStdString ());
+    boost::archive::text_iarchive save_archive (save_file);
+    save_archive >> m_shapes;
+  }
+
+  void QtDisplay::undo () { std::cout << "undo" << std::endl; }
+
+  void QtDisplay::redo () { std::cout << "redo" << std::endl; }
 }

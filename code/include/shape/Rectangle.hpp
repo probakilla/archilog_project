@@ -93,7 +93,7 @@ namespace shape
     friend class boost::serialization::access;
     template <class Archive> void serialize (Archive& ar, unsigned)
     {
-      boost::serialization::base_object<AbstractPolygon> (*this);
+      ar& boost::serialization::base_object<AbstractPolygon> (*this);
       ar& m_height& m_width& m_rounding_coeff;
     }
   };

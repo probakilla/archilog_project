@@ -31,7 +31,7 @@ namespace widget
      * Call the method draw_rectangle of the widget::QtDisplay member
      * @param rect The shape::Rectangle to draw
      */
-    void draw_rectangle (const shape::Rectangle& rect);
+    void draw_rectangle (shape::Rectangle& rect);
 
     /*!
      * @brief Draw a shape::Polygon in the window
@@ -39,7 +39,7 @@ namespace widget
      * Call the method draw_polygon of the widget::QtDisplay member
      * @param poly The shape::Polygon to draw
      */
-    void draw_polygon (const shape::Polygon& poly);
+    void draw_polygon (shape::Polygon& poly);
 
   private:
     //!< The widget::QtDisplay used for the application display

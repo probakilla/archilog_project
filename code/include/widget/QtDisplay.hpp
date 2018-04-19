@@ -5,6 +5,7 @@
 #include "Rectangle.hpp"
 
 #include <QtGui>
+#include <vector>
 
 namespace widget
 {
@@ -15,7 +16,7 @@ namespace widget
    */
   class QtDisplay : public QMainWindow
   {
-
+    Q_OBJECT
   public:
     /*!
      * @brief Initialize all members
@@ -33,16 +34,22 @@ namespace widget
      *
      * @param rect The shape::Rectangle we want to draw
      */
-    void draw_rectangle (const shape::Rectangle& rect);
+    void draw_rectangle (shape::Rectangle& rect);
 
     /*!
      * @brief Draw a shape::Rectangle
      *
      * @param rect The shape::Rectangle we want to draw
      */
-    void draw_polygon (const shape::Polygon& poly);
+    void draw_polygon (shape::Polygon& poly);
 
     void mousePressEvent (QMouseEvent* event);
+
+  private slots:
+    void save ();
+    void load ();
+    void undo ();
+    void redo ();
 
   private:
     //!< The window where the layout is
@@ -69,8 +76,8 @@ namespace widget
     QGraphicsScene* m_tool_scene;
     //!< The toolbar where the thumbnails of the shape will be stored
     QGraphicsView* m_tool;
-    //!< QVector containing all shapes
-    QVector<QGraphicsItem*>* m_shapes;
+    //!< Vector containing all shapes
+    std::vector<shape::ShapeInterface*>* m_shapes;
   };
 }
 #endif /* !defined(QTDISPLAY_HPP) */

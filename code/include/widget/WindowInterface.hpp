@@ -22,10 +22,10 @@ namespace widget
     virtual void show () = 0;
 
     //!< Draw a rectangle
-    virtual void draw_rectangle (const shape::Rectangle& rect) = 0;
+    virtual void draw_rectangle (shape::Rectangle& rect) = 0;
 
     //!< Draw a polygon
-    virtual void draw_polygon (const shape::Polygon& poly) = 0;
+    virtual void draw_polygon (shape::Polygon& poly) = 0;
   };
 }
 
