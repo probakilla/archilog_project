@@ -85,19 +85,17 @@ namespace shape
      */
     void set_memento (Memento<Rectangle> m);
 
-    template <class Archive>
-    void serialize (Archive& ar, const unsigned int version)
-    {
-      boost::serialization::void_cast_register<Rectangle, AbstractPolygon> ();
-      boost::serialization::base_object<AbstractPolygon> (*this);
-      if (version == 0)
-        ar& m_height& m_width& m_rounding_coeff;
-    }
-
   private:
     double m_height;         /*!< Height of the shape::Rectangle */
     double m_width;          /*!< Width of the shape::Rectangle */
     double m_rounding_coeff; /*!< Coefficient for the corner rounding*/
+
+    friend class boost::serialization::access;
+    template <class Archive> void serialize (Archive& ar, unsigned)
+    {
+      boost::serialization::base_object<AbstractPolygon> (*this);
+      ar& m_height& m_width& m_rounding_coeff;
+    }
   };
 }
 BOOST_CLASS_EXPORT_KEY (shape::Rectangle);

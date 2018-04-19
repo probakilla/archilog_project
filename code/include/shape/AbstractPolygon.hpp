@@ -26,15 +26,6 @@ namespace shape
     //!< Comparison operator.
     bool operator== (const ShapeInterface& shape) override;
 
-    friend boost::serialization::access;
-    template <class Archive> void serialize (Archive& ar, unsigned)
-    {
-      boost::serialization::void_cast_register<AbstractPolygon,
-                                               AbstractShape> ();
-      boost::serialization::base_object<AbstractShape> (*this);
-      ar& m_color;
-    }
-
   protected:
     //!< Empty constructor of shape::AbstractPolygon
     AbstractPolygon ();
@@ -49,6 +40,13 @@ namespace shape
 
   private:
     hex m_color; //!< Color in hexadecimal of the polygon
+
+    friend boost::serialization::access;
+    template <class Archive> void serialize (Archive& ar, unsigned)
+    {
+      boost::serialization::base_object<AbstractShape> (*this);
+      ar& m_color;
+    }
   };
 }
 BOOST_CLASS_EXPORT_KEY (shape::AbstractPolygon);

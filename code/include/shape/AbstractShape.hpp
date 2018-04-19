@@ -74,14 +74,6 @@ namespace shape
 
     //!< Setter on rotation center
     void set_rotation_center (const Point& point);
-    friend boost::serialization::access;
-    template <class Archive> void serialize (Archive& ar, unsigned)
-    {
-      boost::serialization::void_cast_register<AbstractShape,
-                                               ShapeInterface> ();
-      boost::serialization::base_object<ShapeInterface> (*this);
-      ar& m_position& m_rotation_center;
-    }
 
   protected:
     /*!
@@ -101,6 +93,13 @@ namespace shape
   private:
     Point m_position;        //!< Current position of the shape
     Point m_rotation_center; //!< Center of rotation of the shape
+
+    friend boost::serialization::access;
+    template <class Archive> void serialize (Archive& ar, unsigned)
+    {
+      boost::serialization::base_object<ShapeInterface> (*this);
+      ar& m_position& m_rotation_center;
+    }
   };
 }
 BOOST_CLASS_EXPORT_KEY (shape::AbstractShape);

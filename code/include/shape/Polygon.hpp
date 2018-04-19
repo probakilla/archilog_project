@@ -70,18 +70,16 @@ namespace shape
      */
     void set_memento (Memento<Polygon> m);
 
-    template <class Archive>
-    void serialize (Archive& ar, const unsigned int version)
-    {
-      boost::serialization::void_cast_register<Polygon, AbstractPolygon> ();
-      boost::serialization::base_object<AbstractPolygon> (*this);
-      if (version == 0)
-        ar& m_nb_sides& m_side_length;
-    }
-
   private:
     int m_nb_sides;       //!< The number of sides of the shape::Polygon.
     double m_side_length; //!< The length of each sides of the shape::Polygon.
+
+    friend class boost::serialization::access;
+    template <class Archive> void serialize (Archive& ar, unsigned)
+    {
+      boost::serialization::base_object<AbstractPolygon> (*this);
+      ar& m_nb_sides& m_side_length;
+    }
   };
 }
 BOOST_CLASS_EXPORT_KEY (shape::Polygon);

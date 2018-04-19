@@ -57,6 +57,7 @@ namespace widget
     m_tool = new QGraphicsView (m_window);
     m_view = new QGraphicsView (m_window);
     m_view->setDragMode (QGraphicsView::RubberBandDrag);
+
     m_scene = new QGraphicsScene (m_window);
     m_tool_scene = new QGraphicsScene (m_window);
     m_view->setScene (m_scene);
@@ -65,7 +66,7 @@ namespace widget
     m_scroll_area = new QScrollArea (m_window);
 
     QSize default_size (DEFAULT_WINDOW_LENGTH, DEFAULT_WINDOW_HEIGHT);
-    this->setFixedSize (default_size);
+    this->setMinimumSize (default_size);
     this->setCentralWidget (m_window);
 
     // Setting the image in the QtDisplay::m_bin_label

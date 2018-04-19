@@ -57,18 +57,17 @@ namespace shape
      * @param m The memento used to restaure the state.
      */
     void set_memento (Memento<ShapeGroup> m);
-    friend boost::serialization::access;
-    template <class Archive>
-    void serialize (Archive& ar, const unsigned int version)
-    {
-      boost::serialization::void_cast_register<ShapeGroup, AbstractShape> ();
-      boost::serialization::base_object<AbstractShape> (*this);
-      if (version == 0)
-        ar& m_group;
-    }
 
   private:
     std::vector<ShapeInterface*> m_group;
+
+    friend boost::serialization::access;
+    template <class Archive> void serialize (Archive& ar, unsigned)
+    {
+      boost::serialization::base_object<AbstractShape> (*this);
+
+      ar& m_group;
+    }
   };
 }
 BOOST_CLASS_EXPORT_KEY (shape::ShapeGroup);
