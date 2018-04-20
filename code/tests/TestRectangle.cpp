@@ -82,6 +82,8 @@ namespace test
 
     shape::Rectangle fixture_copy = m_fixture;
     m_fixture.set_width (m_fixture.get_width () - 1);
+    m_fixture.set_color (m_fixture.get_color () - 1);
+    m_fixture.set_position (shape::Point (42, 69));
 
     boost::archive::text_iarchive load_archive (save_file);
     load_archive >> m_fixture;

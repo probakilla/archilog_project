@@ -2,13 +2,12 @@
 
 #include "config.hpp"
 
+#include <QFileDialog>
+#include <boost/serialization/vector.hpp>
 #include <cmath>
+#include <fstream>
 #include <string>
 #include <vector>
-#include <fstream>
-#include <boost/serialization/vector.hpp>
-#include <QFileDialog>
-
 
 //!< The size of the icon IN the QPushButton
 #define ICON_SIZE 32
@@ -179,21 +178,32 @@ namespace widget
 
   void QtDisplay::save ()
   {
-    QString filename = QFileDialog::getSaveFileName(this,
-        tr("Save Shapes"), "",
-        tr("Shapes (*.txt);;All Files (*)"));
+    QString filename = QFileDialog::getSaveFileName (
+     this, tr ("Save Shapes"), "", tr ("Shapes (*.txt);;All Files (*)"));
     std::ofstream save_file (filename.toStdString ());
     boost::archive::text_oarchive save_archive (save_file);
-    save_archive << m_shapes;
+    save_archive << *m_shapes;
   }
 
-  void QtDisplay::load () {
-    QString filename = QFileDialog::getOpenFileName(this,
-        tr("Save Shapes"), "",
-        tr("Shapes (*.txt);;All Files (*)"));
+#include <typeinfo>
+  void QtDisplay::load ()
+  {
+    QString filename = QFileDialog::getOpenFileName (
+     this, tr ("Save Shapes"), ".txt", tr (" (*.txt);;All Files (*)"));
     std::ifstream save_file (filename.toStdString ());
     boost::archive::text_iarchive save_archive (save_file);
-    save_archive >> m_shapes;
+    std::vector<shape::ShapeInterface*> load_shapes;
+    save_archive >> load_shapes;
+    // Clear existing shapes.
+    m_shapes->clear ();
+    m_scene->clear ();
+    m_view->viewport ()->update ();
+    // Load and draw new shapes
+    for (unsigned int i = 0; i < load_shapes.size (); ++i)
+      if (typeid (*load_shapes[i]) == typeid (shape::Rectangle))
+        draw_rectangle (static_cast<shape::Rectangle&> (*load_shapes[i]));
+      else if (typeid (*load_shapes[i]) == typeid (shape::Polygon))
+        draw_polygon (static_cast<shape::Polygon&> (*load_shapes[i]));
   }
 
   void QtDisplay::undo () { std::cout << "undo" << std::endl; }
