@@ -3,10 +3,13 @@
 #include "config.hpp"
 
 #include <QFileDialog>
+#include <QMessageBox>
 #include <boost/serialization/vector.hpp>
 #include <cmath>
+#include <exception>
 #include <fstream>
 #include <string>
+#include <typeinfo>
 #include <vector>
 
 //!< The size of the icon IN the QPushButton
@@ -176,24 +179,61 @@ namespace widget
       std::cout << "lol" << std::endl;
   }
 
+  static void invalid_save_file ()
+  {
+    QMessageBox msgBox;
+    msgBox.setWindowTitle ("Warning !");
+    msgBox.setText ("Unable to save the file.");
+    msgBox.exec ();
+  }
+
   void QtDisplay::save ()
   {
     QString filename = QFileDialog::getSaveFileName (
-     this, tr ("Save Shapes"), "", tr ("Shapes (*.txt);;All Files (*)"));
+     this, tr ("Save Shapes"), "save.txt", tr (" (*.txt);;All Files (*)"));
+    // The user cancel it.
+    if (filename.size () == 0)
+      return;
     std::ofstream save_file (filename.toStdString ());
-    boost::archive::text_oarchive save_archive (save_file);
-    save_archive << *m_shapes;
+    try
+    {
+      boost::archive::text_oarchive save_archive (save_file);
+      save_archive << *m_shapes;
+    }
+    catch (const std::exception& ex)
+    {
+      invalid_save_file ();
+      return;
+    }
   }
 
-#include <typeinfo>
+  static void invalid_load_file ()
+  {
+    QMessageBox msgBox;
+    msgBox.setWindowTitle ("Warning !");
+    msgBox.setText ("Invalid load file.");
+    msgBox.exec ();
+  }
+
   void QtDisplay::load ()
   {
     QString filename = QFileDialog::getOpenFileName (
-     this, tr ("Save Shapes"), ".txt", tr (" (*.txt);;All Files (*)"));
-    std::ifstream save_file (filename.toStdString ());
-    boost::archive::text_iarchive save_archive (save_file);
+     this, tr ("Load Shapes"), ".txt", tr (" (*.txt);;All Files (*)"));
+    // The user cancel it.
+    if (filename.size () == 0)
+      return;
+    std::ifstream load_file (filename.toStdString ());
     std::vector<shape::ShapeInterface*> load_shapes;
-    save_archive >> load_shapes;
+    try
+    {
+      boost::archive::text_iarchive save_archive (load_file);
+      save_archive >> load_shapes;
+    }
+    catch (const std::exception& ex)
+    {
+      invalid_load_file ();
+      return;
+    }
     // Clear existing shapes.
     m_shapes->clear ();
     m_scene->clear ();
