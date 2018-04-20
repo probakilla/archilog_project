@@ -2,6 +2,7 @@
 #define QTDISPLAY_HPP
 
 #include "Polygon.hpp"
+#include "QtMainScene.hpp"
 #include "Rectangle.hpp"
 
 #include <QtGui>
@@ -43,8 +44,6 @@ namespace widget
      */
     void draw_polygon (shape::Polygon& poly);
 
-    void mousePressEvent (QMouseEvent* event);
-
   private slots:
     void save ();
     void load ();
@@ -71,7 +70,7 @@ namespace widget
     //!< The white panel where shape will appear
     QGraphicsView* m_view;
     //!< Where we draw shapes
-    QGraphicsScene* m_scene;
+    QtMainScene* m_scene;
     //!< Where the thumbnails shows
     QGraphicsScene* m_tool_scene;
     //!< The toolbar where the thumbnails of the shape will be stored

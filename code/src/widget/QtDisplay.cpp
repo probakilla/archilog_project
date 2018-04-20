@@ -64,7 +64,7 @@ namespace widget
     m_view = new QGraphicsView (m_window);
     m_view->setDragMode (QGraphicsView::RubberBandDrag);
 
-    m_scene = new QGraphicsScene (m_window);
+    m_scene = new QtMainScene (m_window);
     m_tool_scene = new QGraphicsScene (m_window);
     m_view->setScene (m_scene);
     m_tool->setScene (m_tool_scene);
@@ -171,12 +171,6 @@ namespace widget
     poly_item->setBrush (color);
     m_scene->addItem (poly_item);
     m_shapes->push_back (&poly);
-  }
-
-  void QtDisplay::mousePressEvent (QMouseEvent* event)
-  {
-    if (event->button () == Qt::RightButton)
-      std::cout << "lol" << std::endl;
   }
 
   static void invalid_save_file ()
