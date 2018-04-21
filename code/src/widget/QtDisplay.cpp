@@ -175,8 +175,11 @@ namespace widget
 
   void QtDisplay::mousePressEvent (QMouseEvent* event)
   {
-    if (event->button () == Qt::RightButton)
-      std::cout << "lol" << std::endl;
+    if (event->modifiers().testFlag(Qt::ControlModifier))
+      {
+
+        std::cout << "teub" << std::endl;
+      }
   }
 
   static void invalid_save_file ()
