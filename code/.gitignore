@@ -15,3 +15,7 @@ tests/src/
 tests/tests/
 tests/CTestTestfile.cmake
 include/config.hh
+.dir.locals.el
+GPATH
+GRTAGS
+GTAGS

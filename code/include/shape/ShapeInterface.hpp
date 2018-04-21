@@ -19,9 +19,7 @@ namespace shape
 
   private:
     friend boost::serialization::access;
-    template <class Archive>
-    void serialize (Archive&, const unsigned int)
-    {}
+    template <class Archive> void serialize (Archive&, const unsigned int) {}
   };
 }
 //BOOST_SERIALIZATION_ASSUME_ABSTRACT(ShapeInterface)
