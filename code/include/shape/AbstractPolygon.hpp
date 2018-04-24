@@ -8,6 +8,8 @@
 
 namespace shape
 {
+  using hex = int;
+
   class AbstractPolygon : public AbstractShape
   {
   public:

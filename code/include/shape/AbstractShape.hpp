@@ -8,8 +8,6 @@
 
 namespace shape
 {
-  using hex = int;
-
   //!< Structure of a 2D Point
   struct Point
   {

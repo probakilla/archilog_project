@@ -1,5 +1,6 @@
 #ifndef SHAPEINTERFACE_HPP
 #define SHAPEINTERFACE_HPP
+
 #include <boost/archive/text_iarchive.hpp>
 #include <boost/archive/text_oarchive.hpp>
 #include <boost/serialization/base_object.hpp>

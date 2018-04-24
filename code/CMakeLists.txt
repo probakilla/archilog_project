@@ -20,6 +20,7 @@ configure_file (
 # SRC dirs
 set (SRCS_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
 set (SHAPE_SRC_DIR ${SRCS_DIR}/shape)
+set (CMD_SRC_DIR ${SRCS_DIR}/command)
 set (WIDGET_SRC_DIR ${SRCS_DIR}/widget)
 set (TESTS_DIR ${CMAKE_CURRENT_SOURCE_DIR}/tests)
 set (DOC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../doc)
@@ -27,9 +28,10 @@ set (DOC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../doc)
 # Include dirs
 set (INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
 set (SHAPE_INC_DIR ${INCLUDE_DIR}/shape)
+set (CMD_INC_DIR ${INCLUDE_DIR}/command)
 set (WIDGET_INC_DIR ${INCLUDE_DIR}/widget)
 
-include_directories (include/ ${WIDGET_INC_DIR} ${SHAPE_INC_DIR})
+include_directories (include/ ${WIDGET_INC_DIR} ${CMD_INC_DIR} ${SHAPE_INC_DIR})
 
 # Qt Libs
 set (CMAKE_AUTOMOC ON)
