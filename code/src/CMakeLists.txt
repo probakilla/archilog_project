@@ -1,9 +1,10 @@
 # src/CMakeLists.txt
 
 file (GLOB SHAPE_SRCS shape/*.cpp)
+file (GLOB CMD_SRCS command/*.cpp)
 file (GLOB WIDGET_SRCS widget/*.cpp)
 
-add_library (editor ${MOC_OUTFILES} ${SHAPE_SRCS} ${WIDGET_SRCS})
+add_library (editor ${MOC_OUTFILES} ${SHAPE_SRCS} ${CMD_SRCS} ${WIDGET_SRCS})
 
 # To use the macro Q_OBJECT
 set (INCLUDE_WIDGET_FILES ${INCLUDE_DIR}/widget/QtDisplay.hpp)

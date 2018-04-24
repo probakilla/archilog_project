@@ -4,22 +4,22 @@
 #include "CommandInterface.hpp"
 #include "Rectangle.hpp"
 
-namespace shape
+namespace command
 {
   class RectWidthCommand : public CommandInterface
   {
   public:
-    RectWidthCommand (Rectangle* rect, double width);
+    RectWidthCommand (shape::Rectangle* rect, double width);
     ~RectWidthCommand ();
-		
+
     void execute ();
 
     void undo ();
 
   private:
-    Rectangle* m_rect;
+    shape::Rectangle* m_rect;
     double m_width;
-    Memento<Rectangle> m_mem;
+    shape::Memento<shape::Rectangle> m_mem;
   };
 }
 #endif /* !defined(RECTWIDTHCOMMAND_HPP) */

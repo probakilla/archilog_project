@@ -1,7 +1,7 @@
 #include "RectWidthCommand.hpp"
-namespace shape
+namespace command
 {
-  RectWidthCommand::RectWidthCommand (Rectangle* rect, double width) :
+  RectWidthCommand::RectWidthCommand (shape::Rectangle* rect, double width) :
    m_rect (rect), m_width (width)
   {}
 

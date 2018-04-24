@@ -4,12 +4,12 @@
 #include "CommandInterface.hpp"
 #include "Polygon.hpp"
 
-namespace shape
+namespace command
 {
   class PolyColorCommand : public CommandInterface
   {
   public:
-    PolyColorCommand (Polygon* poly, hex color);
+    PolyColorCommand (shape::Polygon* poly, shape::hex color);
     ~PolyColorCommand ();
 
     void execute ();
@@ -17,9 +17,9 @@ namespace shape
     void undo ();
 
   private:
-    Polygon* m_poly;
-    hex m_color;
-    Memento<Polygon> m_mem;
+    shape::Polygon* m_poly;
+    shape::hex m_color;
+    shape::Memento<shape::Polygon> m_mem;
   };
 }
 #endif /* !defined(POLYCOLORCOMMAND_HPP) */

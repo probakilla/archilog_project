@@ -4,12 +4,12 @@
 #include "CommandInterface.hpp"
 #include "Rectangle.hpp"
 
-namespace shape
+namespace command
 {
   class RectHeightCommand : public CommandInterface
   {
   public:
-    RectHeightCommand (Rectangle* rect, double height);
+    RectHeightCommand (shape::Rectangle* rect, double height);
     ~RectHeightCommand ();
 
     void execute ();
@@ -17,9 +17,9 @@ namespace shape
     void undo ();
 
   private:
-    Rectangle* m_rect;
+    shape::Rectangle* m_rect;
     double m_height;
-    Memento<Rectangle> m_mem;
+    shape::Memento<shape::Rectangle> m_mem;
   };
 }
 #endif /* !defined(RECTHEIGHTCOMMAND_HPP) */

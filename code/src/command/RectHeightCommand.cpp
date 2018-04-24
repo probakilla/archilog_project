@@ -1,7 +1,7 @@
 #include "RectHeightCommand.hpp"
-namespace shape
+namespace command
 {
-  RectHeightCommand::RectHeightCommand (Rectangle* rect, double height) :
+  RectHeightCommand::RectHeightCommand (shape::Rectangle* rect, double height) :
    m_rect (rect), m_height (height)
   {}
 

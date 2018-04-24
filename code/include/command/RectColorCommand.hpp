@@ -4,12 +4,12 @@
 #include "CommandInterface.hpp"
 #include "Rectangle.hpp"
 
-namespace shape
+namespace command
 {
   class RectColorCommand : public CommandInterface
   {
   public:
-    RectColorCommand (Rectangle* rect, hex color);
+    RectColorCommand (shape::Rectangle* rect, shape::hex color);
     ~RectColorCommand ();
 
     void execute ();
@@ -17,9 +17,9 @@ namespace shape
     void undo ();
 
   private:
-    Rectangle* m_rect;
-    hex m_color;
-    Memento<Rectangle> m_mem;
+    shape::Rectangle* m_rect;
+    shape::hex m_color;
+    shape::Memento<shape::Rectangle> m_mem;
   };
 }
 #endif /* !defined(RECTANGLECOLOR_HPP) */
