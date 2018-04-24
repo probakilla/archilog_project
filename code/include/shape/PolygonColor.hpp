@@ -19,7 +19,7 @@ namespace shape
   private:
     Polygon* _poly;
     hex _color;
-    Memento<Polygon>* _mem;
+    Memento<Polygon> _mem;
   };
 }
 #endif /* !defined(POLYGONCOLOR_HPP) */

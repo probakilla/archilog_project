@@ -9,7 +9,7 @@ namespace shape
   class RectangleColor : public CommandInterface
   {
   public:
-    RectangleColor (Rectangle* poly, hex color);
+    RectangleColor (Rectangle* rect, hex color);
     ~RectangleColor ();
 
     void execute ();
@@ -17,9 +17,9 @@ namespace shape
     void undo ();
 
   private:
-    Rectangle* _poly;
+    Rectangle* _rect;
     hex _color;
-    Memento<Rectangle>* _mem;
+    Memento<Rectangle> _mem;
   };
 }
 #endif /* !defined(RECTANGLECOLOR_HPP) */

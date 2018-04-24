@@ -20,6 +20,8 @@ namespace shape
      */
     Memento (T state) : m_state (state) {}
 
+    Memento () {}
+
     //!< Default destructor.
     ~Memento () = default;
 
