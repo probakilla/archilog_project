@@ -4,6 +4,8 @@
 namespace shape
 {
   class CommandInterface
-  {};
+  {
+    void execute ();
+  };
 }
 #endif /* !defined(COMMANDINTERFACE_HPP) */
