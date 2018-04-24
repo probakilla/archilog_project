@@ -6,20 +6,20 @@
 
 namespace shape
 {
-  class RectangleColor : public CommandInterface
+  class RectColorCommand : public CommandInterface
   {
   public:
-    RectangleColor (Rectangle* rect, hex color);
-    ~RectangleColor ();
+    RectColorCommand (Rectangle* rect, hex color);
+    ~RectColorCommand ();
 
     void execute ();
 
     void undo ();
 
   private:
-    Rectangle* _rect;
-    hex _color;
-    Memento<Rectangle> _mem;
+    Rectangle* m_rect;
+    hex m_color;
+    Memento<Rectangle> m_mem;
   };
 }
 #endif /* !defined(RECTANGLECOLOR_HPP) */
