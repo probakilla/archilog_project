@@ -1,6 +1,8 @@
 #include "QtDisplay.hpp"
 
+#include "QtRectangle.hpp"
 #include "config.hpp"
+#include "QtPolygon.hpp"
 
 #include <QFileDialog>
 #include <QMessageBox>
@@ -127,10 +129,8 @@ namespace widget
 
   void QtDisplay::draw_rectangle (shape::Rectangle& rect)
   {
-    shape::Point pos = rect.get_position ();
     QColor color = rect.get_color ();
-    QGraphicsRectItem* rect_item = new QGraphicsRectItem (
-     pos.x (), pos.y (), rect.get_width (), rect.get_height ());
+    QtRectangle* rect_item = new QtRectangle (rect);
     rect_item->setFlag (QGraphicsItem::ItemIsSelectable);
     rect_item->setFlag (QGraphicsItem::ItemIsMovable);
     rect_item->setFlag (QGraphicsItem::ItemSendsGeometryChanges);
@@ -141,30 +141,8 @@ namespace widget
 
   void QtDisplay::draw_polygon (shape::Polygon& poly)
   {
-    QVector<QPointF> points;
-    int n = poly.get_nb_sides ();
-    // Radius of the exterior circle
-    // ref : https://www.mathopenref.com/polygonradius.html
-    double rad = (poly.get_side_length () / (2 * (sin (180 / n * M_PI / 180))));
-
-    // Searching all points coordinates
-    for (int i = 0; i < n; ++i)
-    {
-      points.push_back (
-       QPointF (rad * cos (2 * M_PI * i / n), rad * sin (2 * M_PI * i / n)));
-    }
-
-    // Adusting position
-    shape::Point pos = poly.get_position ();
-    for (int i = 0; i < n; ++i)
-    {
-      points[i].setX (points[i].rx () + pos.x ());
-      points[i].setY (points[i].ry () + pos.y ());
-    }
-
     QColor color = poly.get_color ();
-    QPolygonF poly_tmp (points);
-    QGraphicsPolygonItem* poly_item = new QGraphicsPolygonItem (poly_tmp);
+    QtPolygon* poly_item = new QtPolygon (poly);
     poly_item->setFlag (QGraphicsItem::ItemIsSelectable);
     poly_item->setFlag (QGraphicsItem::ItemIsMovable);
     poly_item->setFlag (QGraphicsItem::ItemSendsGeometryChanges);

@@ -1,5 +1,9 @@
 #include "QtMainScene.hpp"
 
+#include <QColorDialog>
+#include <QGraphicsItem>
+#include <QList>
+#include <QWidget>
 #include <iostream>
 
 namespace widget
