@@ -143,7 +143,7 @@ namespace widget
   void QtDisplay::draw_rectangle (shape::Rectangle& rect)
   {
     QColor color = rect.get_color ();
-    QtRectangle* rect_item = new QtRectangle (rect, this);
+    QtRectangle* rect_item = new QtRectangle (&rect, this);
     rect_item->setFlag (QGraphicsItem::ItemIsSelectable);
     rect_item->setFlag (QGraphicsItem::ItemIsMovable);
     rect_item->setFlag (QGraphicsItem::ItemSendsGeometryChanges);
@@ -269,43 +269,44 @@ namespace widget
       int new_color = color.name ().replace ("#", "").toInt (&ok, 16);
       if (ok)
       {
-        shape::Rectangle tmp = cur_rect->get_rect ();
+        shape::Rectangle* tmp = cur_rect->get_rect ();
         command::RectColorCommand* cmd =
-         new command::RectColorCommand (&tmp, new_color);
+         new command::RectColorCommand (tmp, new_color);
         m_commands->push_back (cmd);
-        tmp.set_color (new_color);
-        cur_rect->update_shape (tmp);
+
+        cmd->execute ();
+        cur_rect->update_shape ();
       }
     }
   }
 
   void QtDisplay::edit_rectangle_width ()
   {
-    shape::Rectangle tmp = cur_rect->get_rect ();
+    shape::Rectangle* tmp = cur_rect->get_rect ();
     double new_width =
-     input_dialog ("Width : ", tmp.get_width (), MIN_LENGTH, MAX_LENGTH);
+     input_dialog ("Width : ", tmp->get_width (), MIN_LENGTH, MAX_LENGTH);
     if (new_width > 0)
     {
       command::RectWidthCommand* cmd =
-       new command::RectWidthCommand (&tmp, new_width);
+       new command::RectWidthCommand (tmp, new_width);
       m_commands->push_back (cmd);
-      tmp.set_width (new_width);
-      cur_rect->update_shape (tmp);
+      cmd->execute ();
+      cur_rect->update_shape ();
     }
   }
 
   void QtDisplay::edit_rectangle_height ()
   {
-    shape::Rectangle tmp = cur_rect->get_rect ();
+    shape::Rectangle* tmp = cur_rect->get_rect ();
     double new_height =
-     input_dialog ("Height : ", tmp.get_height (), MIN_LENGTH, MAX_LENGTH);
+     input_dialog ("Height : ", tmp->get_height (), MIN_LENGTH, MAX_LENGTH);
     if (new_height > 0)
     {
       command::RectHeightCommand* cmd =
-       new command::RectHeightCommand (&tmp, new_height);
+       new command::RectHeightCommand (tmp, new_height);
       m_commands->push_back (cmd);
-      tmp.set_height (new_height);
-      cur_rect->update_shape (tmp);
+      cmd->execute ();
+      cur_rect->update_shape ();
     }
   }
 

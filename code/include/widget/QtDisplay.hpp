@@ -6,6 +6,7 @@
 #include "QtMainScene.hpp"
 #include "QtPolygon.hpp"
 #include "Rectangle.hpp"
+#include "QtRectangle.hpp"
 
 #include <QtGui>
 #include <vector>
