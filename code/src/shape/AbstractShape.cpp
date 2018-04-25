@@ -54,8 +54,8 @@ namespace shape
     m_rotation_center = default_pos;
   }
 
-  AbstractShape::AbstractShape (const Point& pos) :
-   m_position (pos), m_rotation_center (pos)
+  AbstractShape::AbstractShape (const Point& pos, double rotation) :
+   m_position (pos), m_rotation_center (pos), m_rotation (rotation)
   {}
 
   // Getters
@@ -66,6 +66,8 @@ namespace shape
     return m_rotation_center;
   }
 
+  double AbstractShape::get_rotation () const { return m_rotation; }
+
   // Setters
   void AbstractShape::set_position (const Point& point) { m_position = point; }
 
@@ -74,18 +76,25 @@ namespace shape
     m_rotation_center = point;
   }
 
+  void AbstractShape::set_rotation (double angle) { m_rotation = angle; }
+
   // Other methods
 
-  // Preprocessor command to avoid unsued compile error.
-  bool AbstractShape::add_shape (__attribute__ ((unused))
-                                 const ShapeInterface& shape)
+  void AbstractShape::translate (double dx, double dy)
+  {
+    m_position.set_x (m_position.x () + dx);
+    m_position.set_y (m_position.y () + dy);
+    m_rotation_center.set_x (m_rotation_center.x () + dx);
+    m_rotation_center.set_y (m_rotation_center.y () + dy);
+  }
+
+  bool AbstractShape::add_shape (const ShapeInterface&)
   {
     throw NotImplementedException ();
   }
 
   // Preprocessor command to avoid unsued compile error.
-  bool AbstractShape::remove_shape (__attribute__ ((unused))
-                                    const ShapeInterface& shape)
+  bool AbstractShape::remove_shape (const ShapeInterface&)
   {
     throw NotImplementedException ();
   }

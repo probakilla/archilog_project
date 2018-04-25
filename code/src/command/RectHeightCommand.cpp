@@ -1,4 +1,5 @@
 #include "RectHeightCommand.hpp"
+
 namespace command
 {
   RectHeightCommand::RectHeightCommand (shape::Rectangle* rect, double height) :

@@ -5,10 +5,12 @@
 
 #define DEFAULT_X 0
 #define DEFAULT_Y 0
+//!< Default rotation for the shape
+#define DEFAULT_ROTATION 0.0
 
 namespace shape
 {
-  //!< Structure of a 2D Point
+  /*! @brief Structure of a 2D Point */
   struct Point
   {
   public:
@@ -16,22 +18,22 @@ namespace shape
     Point (const Point& point);
     ~Point () = default;
 
-    //!< Getter on abscissa
+    /*! @brief Getter on #m_x */
     double x () const;
 
-    //!< Getter on ordinate
+    /*! @brief Getter on #m_y */
     double y () const;
 
-    //!< Setter on abscissa
+    /*! @brief Setter on #m_x */
     void set_x (double x);
 
-    //!< Setter on abscissa
+    /*! @brief Setter on #m_y */
     void set_y (double y);
 
-    //!< Affectation operator
+    /*! @brief Affectation operator */
     Point& operator= (const Point& point);
 
-    //!< Comparison operator
+    /*! @brief Comparison operator */
     bool operator== (const Point& point) const;
 
     template <class Point>
@@ -46,11 +48,11 @@ namespace shape
     double m_y; //!< ordinades
   };
 
-  //!< Factorisation for shape classes
+  /*! @brief Factorisation for shape classes */
   class AbstractShape : public ShapeInterface
   {
   public:
-    //!< Destructor, deletes points members
+    /*! @brief Destructor, deletes points members */
     virtual ~AbstractShape () = default;
 
     virtual bool add_shape (const ShapeInterface& shape);
@@ -61,42 +63,57 @@ namespace shape
 
     virtual AbstractShape& operator= (const AbstractShape& shape);
 
-    //!< Getter on position
+    /*! @brief Getter on #m_position. */
     Point get_position () const;
 
-    //!< Getter on rotation center
+    /*! @brief Getter on #m_rotation_center. */
     Point get_rotation_center () const;
 
-    //!< Setter on position
+    /*! @brief Getter on #m_rotation. */
+    double get_rotation () const;
+
+    /*! @brief Setter on #m_position. */
     void set_position (const Point& point);
 
-    //!< Setter on rotation center
+    /*! @brief Setter on #m_rotation_center. */
     void set_rotation_center (const Point& point);
+
+    /*! @brief Setter on #m_rotation. */
+    void set_rotation (double angle);
+
+    /*!
+     * @brief Translate the #m_position and the #m_rotation_center.
+     *
+     * Translate the #m_position, Point::m_x by dx and Point::m_y
+     * by dy. Translate the #m_rotation_center the same way.
+     */
+    void translate (double dx, double dy);
 
   protected:
     /*!
-     * @brief Empty constructor of shape::AbstractShape
+     * @brief Empty constructor of shape::AbstractShape.
      *
-     * Set the position to (0, 0) and the color to white.
+     * Set the #m_position to (0, 0).
      */
     AbstractShape ();
 
     /*!
-     * @brief Constructor of shape::AbstractShape
+     * @brief Constructor of shape::AbstractShape.
      *
-     * @param pos The default position of the shape.
+     * @param pos The default #m_position of the shape.
      */
-    AbstractShape (const Point& pos);
+    AbstractShape (const Point& pos, double rotation = DEFAULT_ROTATION);
 
   private:
-    Point m_position;        //!< Current position of the shape
-    Point m_rotation_center; //!< Center of rotation of the shape
+    Point m_position;        //!< Current position of the shape.
+    Point m_rotation_center; //!< Center of rotation of the shape.
+    double m_rotation;       //!< Rotation of the shape.
 
     friend boost::serialization::access;
     template <class Archive> void serialize (Archive& ar, unsigned)
     {
       ar& boost::serialization::base_object<ShapeInterface> (*this);
-      ar& m_position& m_rotation_center;
+      ar& m_position& m_rotation_center& m_rotation;
     }
   };
 }

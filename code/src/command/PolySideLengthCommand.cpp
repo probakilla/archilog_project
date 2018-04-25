@@ -1,4 +1,5 @@
 #include "PolySideLengthCommand.hpp"
+
 namespace command
 {
   PolySideLengthCommand::PolySideLengthCommand (shape::Polygon* poly,
