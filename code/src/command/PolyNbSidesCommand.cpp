@@ -1,4 +1,5 @@
 #include "PolyNbSidesCommand.hpp"
+
 namespace command
 {
   PolyNbSidesCommand::PolyNbSidesCommand (shape::Polygon* poly,

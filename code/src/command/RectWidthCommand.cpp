@@ -1,4 +1,5 @@
 #include "RectWidthCommand.hpp"
+
 namespace command
 {
   RectWidthCommand::RectWidthCommand (shape::Rectangle* rect, double width) :

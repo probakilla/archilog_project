@@ -1,4 +1,5 @@
 #include "RectColorCommand.hpp"
+
 namespace command
 {
   RectColorCommand::RectColorCommand (shape::Rectangle* rect,
@@ -6,6 +7,7 @@ namespace command
    m_rect (rect),
    m_color (color)
   {}
+
   RectColorCommand::~RectColorCommand () {}
 
   void RectColorCommand::execute ()

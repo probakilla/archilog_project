@@ -1,9 +1,11 @@
 #include "PolyColorCommand.hpp"
+
 namespace command
 {
   PolyColorCommand::PolyColorCommand (shape::Polygon* poly, shape::hex color) :
    m_poly (poly), m_color (color)
   {}
+
   PolyColorCommand::~PolyColorCommand () {}
 
   void PolyColorCommand::execute ()
