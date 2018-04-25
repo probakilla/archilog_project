@@ -20,7 +20,7 @@ namespace widget
    m_parent (parent), m_rect (rect)
   {
     this->setTransformOriginPoint (QPoint (m_rect.get_rotation_center ().x (),
-                                           m_rect.get_rotation_center ().y ()));sssss
+                                           m_rect.get_rotation_center ().y ()));
     // Adjust the position.
     setPos (x () - rect.get_width () / 2, y () - rect.get_height () / 2);
   }
