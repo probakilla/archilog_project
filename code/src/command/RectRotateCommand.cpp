@@ -11,7 +11,7 @@ namespace command
   void RectRotateCommand::execute ()
   {
     m_mem = m_rect->create_memento ();
-    m_rect->set_angle (m_angle);
+    m_rect->set_rotation (m_angle);
   }
 
   void RectRotateCommand::undo () { m_rect->set_memento (m_mem); }
