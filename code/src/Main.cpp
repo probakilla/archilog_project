@@ -11,7 +11,7 @@ int main (int argc, char** argv)
   widget::QtWindowFactory factory;
   widget::Bridge b (&factory);
   shape::Rectangle rect (shape::Point (-150.0, -150.0), 15.0, 15.0);
-  rect.set_color (0xbbbbbbbb);
+  rect.set_color (0xbbbbbb);
   shape::Polygon poly (shape::Point (100, 100), 7, 10.0);
   b.draw_rectangle (rect);
   b.draw_polygon (poly);

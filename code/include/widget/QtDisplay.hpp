@@ -1,8 +1,10 @@
 #ifndef QTDISPLAY_HPP
 #define QTDISPLAY_HPP
 
+#include "CommandInterface.hpp"
 #include "Polygon.hpp"
 #include "QtMainScene.hpp"
+#include "QtPolygon.hpp"
 #include "Rectangle.hpp"
 
 #include <QtGui>
@@ -44,13 +46,38 @@ namespace widget
      */
     void draw_polygon (shape::Polygon& poly);
 
+    //!< Currently selected item  !! saucisse saucisse !!.
+    static QtRectangle* cur_rect;
+    static QtPolygon* cur_poly;
+
   private slots:
     void save ();
     void load ();
     void undo ();
     void redo ();
 
+    //!< Show a QColorDialog to chose a color for the rectangle
+    void edit_rectangle_color ();
+    //!< Show a QInputDialog to chose a width for the rectangle
+    void edit_rectangle_width ();
+    //!< Show a QInputDialog to chose a height for the rectangle
+    void edit_rectangle_height ();
+
   private:
+    /*!
+     * @brief Show the dialog for shape editing.
+     *
+     * Show a dialog for the selection of a double value
+     * @param name The name of the dialog
+     * @param def_val The default value of the dialog
+     * @param min_val The maximum value possible for the dialog
+     * @param max_val The maximum value possible for the dialog
+     * @return The selected value if correct, -1.0 if there is an error
+     */
+    double input_dialog (const QString& name, double def_val, double min_val,
+                         double max_val) const;
+    //!< Create actions of the QtRectangle's context menu
+    void connect_rectangle (QtRectangle* rect);
     //!< The window where the layout is
     QWidget* m_window;
     //!< The layout where all widgets are
@@ -77,6 +104,8 @@ namespace widget
     QGraphicsView* m_tool;
     //!< Vector containing all shapes
     std::vector<shape::ShapeInterface*>* m_shapes;
+    //!< Vector containing all commands
+    std::vector<command::CommandInterface*>* m_commands;
   };
 }
 #endif /* !defined(QTDISPLAY_HPP) */

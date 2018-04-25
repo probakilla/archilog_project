@@ -2,6 +2,9 @@
 
 #include "QtPolygon.hpp"
 #include "QtRectangle.hpp"
+#include "RectColorCommand.hpp"
+#include "RectHeightCommand.hpp"
+#include "RectWidthCommand.hpp"
 #include "config.hpp"
 
 #include <QFileDialog>
@@ -10,6 +13,7 @@
 #include <cmath>
 #include <exception>
 #include <fstream>
+#include <iostream>
 #include <string>
 #include <typeinfo>
 #include <vector>
@@ -29,8 +33,16 @@
 
 #define _USE_MATH_DEFINES
 
+#define DECIMALS 2
+#define MIN_LENGTH 1.0
+#define MAX_LENGTH 1024.0
+#define MIN_DOUBLE 0.0
+
 namespace widget
 {
+  QtRectangle* QtDisplay::cur_rect;
+  QtPolygon* QtDisplay::cur_poly;
+
   /*!
    * @brief Set the image of a QPushButton
    *
@@ -65,6 +77,7 @@ namespace widget
     m_tool = new QGraphicsView (m_window);
     m_view = new QGraphicsView (m_window);
     m_view->setDragMode (QGraphicsView::RubberBandDrag);
+    m_commands = new std::vector<command::CommandInterface*>;
 
     m_scene = new QtMainScene (m_window);
     m_tool_scene = new QGraphicsScene (m_window);
@@ -130,7 +143,7 @@ namespace widget
   void QtDisplay::draw_rectangle (shape::Rectangle& rect)
   {
     QColor color = rect.get_color ();
-    QtRectangle* rect_item = new QtRectangle (rect, m_view);
+    QtRectangle* rect_item = new QtRectangle (rect, this);
     rect_item->setFlag (QGraphicsItem::ItemIsSelectable);
     rect_item->setFlag (QGraphicsItem::ItemIsMovable);
     rect_item->setFlag (QGraphicsItem::ItemSendsGeometryChanges);
@@ -139,6 +152,7 @@ namespace widget
     shape::Point r_center = rect.get_rotation_center ();
     rect_item->setTransformOriginPoint (r_center.x (), r_center.y ());
     rect_item->setRotation (rect.get_rotation ());
+    connect_rectangle (rect_item);
     m_shapes->push_back (&rect);
   }
 
@@ -227,4 +241,83 @@ namespace widget
   void QtDisplay::undo () { std::cout << "undo" << std::endl; }
 
   void QtDisplay::redo () { std::cout << "redo" << std::endl; }
+
+  void QtDisplay::connect_rectangle (QtRectangle* rect)
+  {
+    QAction* color_act = new QAction (tr ("&Edit color"), m_view);
+    connect (color_act, SIGNAL (triggered ()), this,
+             SLOT (edit_rectangle_color ()));
+    rect->get_menu ()->addAction (color_act);
+
+    QAction* width_act = new QAction (tr ("&Edit width"), m_view);
+    connect (width_act, SIGNAL (triggered ()), this,
+             SLOT (edit_rectangle_width ()));
+    rect->get_menu ()->addAction (width_act);
+
+    QAction* height_act = new QAction (tr ("&Edit height"), m_view);
+    connect (height_act, SIGNAL (triggered ()), this,
+             SLOT (edit_rectangle_height ()));
+    rect->get_menu ()->addAction (height_act);
+  }
+
+  void QtDisplay::edit_rectangle_color ()
+  {
+    QColor color = QColorDialog::getColor ();
+    if (color.isValid ())
+    {
+      bool ok;
+      int new_color = color.name ().replace ("#", "").toInt (&ok, 16);
+      if (ok)
+      {
+        shape::Rectangle tmp = cur_rect->get_rect ();
+        command::RectColorCommand* cmd =
+         new command::RectColorCommand (&tmp, new_color);
+        m_commands->push_back (cmd);
+        tmp.set_color (new_color);
+        cur_rect->update_shape (tmp);
+      }
+    }
+  }
+
+  void QtDisplay::edit_rectangle_width ()
+  {
+    shape::Rectangle tmp = cur_rect->get_rect ();
+    double new_width =
+     input_dialog ("Width : ", tmp.get_width (), MIN_LENGTH, MAX_LENGTH);
+    if (new_width > 0)
+    {
+      command::RectWidthCommand* cmd =
+       new command::RectWidthCommand (&tmp, new_width);
+      m_commands->push_back (cmd);
+      tmp.set_width (new_width);
+      cur_rect->update_shape (tmp);
+    }
+  }
+
+  void QtDisplay::edit_rectangle_height ()
+  {
+    shape::Rectangle tmp = cur_rect->get_rect ();
+    double new_height =
+     input_dialog ("Height : ", tmp.get_height (), MIN_LENGTH, MAX_LENGTH);
+    if (new_height > 0)
+    {
+      command::RectHeightCommand* cmd =
+       new command::RectHeightCommand (&tmp, new_height);
+      m_commands->push_back (cmd);
+      tmp.set_height (new_height);
+      cur_rect->update_shape (tmp);
+    }
+  }
+
+  double QtDisplay::input_dialog (const QString& name, double def_val,
+                                  double min_val, double max_val) const
+  {
+    bool ok; // Check if the user accept
+    double value =
+     QInputDialog::getDouble (m_view, tr ("QInputDialog::getDouble()"), name,
+                              def_val, min_val, max_val, DECIMALS, &ok);
+    if (ok)
+      return value;
+    return -1.0;
+  }
 }

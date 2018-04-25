@@ -1,10 +1,15 @@
 #include "QtPolygon.hpp"
 
+#include <QColorDialog>
+#include <QInputDialog>
 #include <QMenu>
 #include <QPolygonF>
 #include <cmath>
 
 #define _USE_MATH_DEFINES
+
+#define MIN_VALUE 1.0
+#define DECIMALS 2
 
 namespace widget
 {
@@ -35,7 +40,10 @@ namespace widget
 
   QtPolygon::QtPolygon (shape::Polygon poly) :
    QGraphicsPolygonItem (get_point (poly)), m_poly (poly)
-  {}
+  {
+    this->setTransformOriginPoint (poly.get_rotation_center ().x (),
+                                   poly.get_rotation_center ().y ());
+  }
 
   QtPolygon::~QtPolygon () {}
 

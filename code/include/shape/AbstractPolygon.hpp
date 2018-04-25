@@ -4,7 +4,7 @@
 #include "AbstractShape.hpp"
 
 //!< Default = black color
-#define DEFAULT_COLOR 0x00000000
+#define DEFAULT_COLOR 0x000000
 
 namespace shape
 {

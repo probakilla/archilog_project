@@ -5,9 +5,9 @@ namespace command
 {
   class CommandInterface
   {
-    void execute ();
+    virtual void execute () = 0;
 
-		void undo ();
+	virtual void undo () = 0;
   };
 }
 #endif /* !defined(COMMANDINTERFACE_HPP) */
