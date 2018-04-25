@@ -4,20 +4,22 @@
 #include <QColorDialog>
 #include <QMenu>
 
-
 namespace widget
 {
   QtRectangle::QtRectangle (shape::Rectangle rect) :
    QGraphicsRectItem (rect.get_position ().x (), rect.get_position ().y (),
                       rect.get_width (), rect.get_height ()),
    m_rect (rect)
-  {}
+  {
+    // Adjust the position.
+    setPos (x () - rect.get_width () / 2, y () - rect.get_height () / 2);
+  }
 
   QtRectangle::~QtRectangle () {}
 
   void QtRectangle::contextMenuEvent (QGraphicsSceneContextMenuEvent* event)
   {
-    if (event->reason() == QGraphicsSceneContextMenuEvent::Mouse)
+    if (event->reason () == QGraphicsSceneContextMenuEvent::Mouse)
     {
       QMenu menu;
       menu.addAction ("Edit color");
