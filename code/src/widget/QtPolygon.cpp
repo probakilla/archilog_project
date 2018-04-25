@@ -41,7 +41,7 @@ namespace widget
 
   void QtPolygon::contextMenuEvent (QGraphicsSceneContextMenuEvent* event)
   {
-    if (event->reason() == QGraphicsSceneContextMenuEvent::Mouse)
+    if (event->reason () == QGraphicsSceneContextMenuEvent::Mouse)
     {
       QMenu menu;
       menu.addAction ("Edit color");

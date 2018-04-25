@@ -9,7 +9,8 @@ add_library (editor ${MOC_OUTFILES} ${SHAPE_SRCS} ${CMD_SRCS} ${WIDGET_SRCS})
 # To use the macro Q_OBJECT
 set (
   INCLUDE_WIDGET_FILES
-  ${WIDGET_INC_DIR}/QtDisplay.hpp)
+  ${WIDGET_INC_DIR}/QtDisplay.hpp
+  ${WIDGET_INC_DIR}/QtRectangle.hpp)
 qt4_wrap_cpp(INCLUDE_WIDGET_FILES_MOC ${INCLUDE_WIDGET_FILES})
 
 #Boost

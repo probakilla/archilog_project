@@ -1,8 +1,10 @@
 #include "PolySideLengthCommand.hpp"
 namespace command
 {
-  PolySideLengthCommand::PolySideLengthCommand (shape::Polygon* poly, double side_length) :
-   m_poly (poly), m_side_length (side_length)
+  PolySideLengthCommand::PolySideLengthCommand (shape::Polygon* poly,
+                                                double side_length) :
+   m_poly (poly),
+   m_side_length (side_length)
   {}
 
   PolySideLengthCommand::~PolySideLengthCommand () {}

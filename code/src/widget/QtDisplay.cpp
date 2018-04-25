@@ -1,8 +1,8 @@
 #include "QtDisplay.hpp"
 
+#include "QtPolygon.hpp"
 #include "QtRectangle.hpp"
 #include "config.hpp"
-#include "QtPolygon.hpp"
 
 #include <QFileDialog>
 #include <QMessageBox>
@@ -130,7 +130,7 @@ namespace widget
   void QtDisplay::draw_rectangle (shape::Rectangle& rect)
   {
     QColor color = rect.get_color ();
-    QtRectangle* rect_item = new QtRectangle (rect);
+    QtRectangle* rect_item = new QtRectangle (rect, m_view);
     rect_item->setFlag (QGraphicsItem::ItemIsSelectable);
     rect_item->setFlag (QGraphicsItem::ItemIsMovable);
     rect_item->setFlag (QGraphicsItem::ItemSendsGeometryChanges);

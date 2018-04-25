@@ -4,6 +4,8 @@
 #include <QGraphicsScene>
 #include <QGraphicsSceneMouseEvent>
 
+#include "QtRectangle.hpp"
+
 namespace widget
 {
   class QtMainScene : public QGraphicsScene
@@ -19,6 +21,8 @@ namespace widget
     void mouseMoveEvent (QGraphicsSceneMouseEvent* mouseEvent) override;
 
     void mouseDoubleClickEvent (QGraphicsSceneMouseEvent* mouseEvent) override;
+
+    void connect_rectangle (const QtRectangle& rect);
   };
 }
 #endif /* !defined(QTMAINSCENE_HPP) */
