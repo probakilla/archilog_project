@@ -14,52 +14,26 @@
 
 namespace widget
 {
-  QtRectangle::QtRectangle (shape::Rectangle rect, QWidget* parent) :
+  QtRectangle::QtRectangle (shape::Rectangle rect) :
    QGraphicsRectItem (rect.get_position ().x (), rect.get_position ().y (),
                       rect.get_width (), rect.get_height ()),
-   m_parent (parent), m_rect (rect)
+   m_menu (), m_rect (rect)
   {
     this->setTransformOriginPoint (QPoint (m_rect.get_rotation_center ().x (),
-                                           m_rect.get_rotation_center ().y ()));sssss
+                                           m_rect.get_rotation_center ().y ()));
     // Adjust the position.
     setPos (x () - rect.get_width () / 2, y () - rect.get_height () / 2);
   }
 
   QtRectangle::~QtRectangle () {}
 
+  QMenu* QtRectangle::get_menu () const { return m_menu; }
+
   void QtRectangle::contextMenuEvent (QGraphicsSceneContextMenuEvent* event)
   {
     if (event->reason () == QGraphicsSceneContextMenuEvent::Mouse)
     {
-      QMenu menu;
-      QAction* color_act = new QAction (tr ("&Edit color"), this);
-      connect (color_act, SIGNAL (triggered ()), this, SLOT (edit_color ()));
-      menu.addAction (color_act);
-
-      QAction* height_act = new QAction (tr ("&Edit height"), this);
-      connect (height_act, SIGNAL (triggered ()), this, SLOT (edit_height ()));
-      menu.addAction (height_act);
-
-      QAction* width_act = new QAction (tr ("Edit width"), this);
-      connect (width_act, SIGNAL (triggered ()), this, SLOT (edit_width ()));
-      menu.addAction (width_act);
-
-      QAction* rotation_center_act =
-       new QAction (tr ("Edit rotation center"), this);
-      connect (rotation_center_act, SIGNAL (triggered ()), this,
-               SLOT (edit_rotation_center ()));
-      menu.addAction (rotation_center_act);
-
-      QAction* rotation_act = new QAction (tr ("Rotate"), this);
-      connect (rotation_act, SIGNAL (triggered ()), this, SLOT (rotate ()));
-      menu.addAction (rotation_act);
-
-      QAction* rounding_act = new QAction (tr ("Edit rounding coeff"), this);
-      connect (rounding_act, SIGNAL (triggered ()), this,
-               SLOT (edit_rounding ()));
-      menu.addAction (rounding_act);
-
-      menu.exec (event->screenPos ());
+      m_menu->exec (event->screenPos ());
     }
   }
 
@@ -132,17 +106,5 @@ namespace widget
     {
       m_rect.set_rounding_coeff (new_rounding);
     }
-  }
-
-  double QtRectangle::input_dialog (const QString& name, double def_val,
-                                    double max_val) const
-  {
-    bool ok; // Check if the user accept
-    double value =
-     QInputDialog::getDouble (m_parent, tr ("QInputDialog::getDouble()"), name,
-                              def_val, MIN_VALUE, max_val, DECIMALS, &ok);
-    if (ok)
-      return value;
-    return -1.0;
   }
 }
