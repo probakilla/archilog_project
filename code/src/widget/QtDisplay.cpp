@@ -1,8 +1,8 @@
 #include "QtDisplay.hpp"
 
+#include "QtPolygon.hpp"
 #include "QtRectangle.hpp"
 #include "config.hpp"
-#include "QtPolygon.hpp"
 
 #include <QFileDialog>
 #include <QMessageBox>
@@ -136,6 +136,9 @@ namespace widget
     rect_item->setFlag (QGraphicsItem::ItemSendsGeometryChanges);
     rect_item->setBrush (color);
     m_scene->addItem (rect_item);
+    shape::Point r_center = rect.get_rotation_center ();
+    rect_item->setTransformOriginPoint (r_center.x (), r_center.y ());
+    rect_item->setRotation (rect.get_rotation ());
     m_shapes->push_back (&rect);
   }
 
@@ -148,6 +151,9 @@ namespace widget
     poly_item->setFlag (QGraphicsItem::ItemSendsGeometryChanges);
     poly_item->setBrush (color);
     m_scene->addItem (poly_item);
+    shape::Point r_center = poly.get_rotation_center ();
+    poly_item->setTransformOriginPoint (r_center.x (), r_center.y ());
+    poly_item->setRotation (poly.get_rotation ());
     m_shapes->push_back (&poly);
   }
 
