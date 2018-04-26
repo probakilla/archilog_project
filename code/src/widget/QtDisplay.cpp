@@ -4,6 +4,7 @@
 #include "QtRectangle.hpp"
 #include "RectColorCommand.hpp"
 #include "RectHeightCommand.hpp"
+#include "RectRotateCommand.hpp"
 #include "RectWidthCommand.hpp"
 #include "config.hpp"
 
@@ -35,8 +36,8 @@
 
 #define DECIMALS 2
 #define MIN_LENGTH 1.0
-#define MAX_LENGTH 1024.0
-#define MIN_DOUBLE 0.0
+#define MAX_DIALOG 1024.0
+#define MIN_DIALOG 0.0
 
 namespace widget
 {
@@ -257,6 +258,11 @@ namespace widget
     connect (height_act, SIGNAL (triggered ()), this,
              SLOT (edit_rectangle_height ()));
     rect->get_menu ()->addAction (height_act);
+
+    QAction* rotate_act = new QAction (tr ("&Rotate"), m_view);
+    connect (rotate_act, SIGNAL (triggered ()), this,
+             SLOT (rectangle_rotation ()));
+    rect->get_menu ()->addAction (rotate_act);
   }
 
   void QtDisplay::edit_rectangle_color ()
@@ -280,7 +286,7 @@ namespace widget
   {
     shape::Rectangle* tmp = cur_rect->get_rect ();
     double new_width =
-     input_dialog ("Width : ", tmp->get_width (), MIN_LENGTH, MAX_LENGTH);
+     input_dialog ("Width : ", tmp->get_width (), MIN_LENGTH, MAX_DIALOG);
     if (new_width > 0)
     {
       command::RectWidthCommand* cmd =
@@ -293,11 +299,24 @@ namespace widget
   {
     shape::Rectangle* tmp = cur_rect->get_rect ();
     double new_height =
-     input_dialog ("Height : ", tmp->get_height (), MIN_LENGTH, MAX_LENGTH);
+     input_dialog ("Height : ", tmp->get_height (), MIN_LENGTH, MAX_DIALOG);
     if (new_height > 0)
     {
       command::RectHeightCommand* cmd =
        new command::RectHeightCommand (tmp, new_height);
+      m_commands->add_undoable (cmd);
+    }
+  }
+
+  void QtDisplay::rectangle_rotation ()
+  {
+    shape::Rectangle* tmp = cur_rect->get_rect ();
+    double new_angle =
+     input_dialog ("Rotation angle : ", 0.0, MIN_DIALOG, MAX_DIALOG);
+    if (new_angle > 0)
+    {
+      command::RectRotateCommand* cmd =
+       new command::RectRotateCommand (tmp, new_angle);
       m_commands->add_undoable (cmd);
     }
   }

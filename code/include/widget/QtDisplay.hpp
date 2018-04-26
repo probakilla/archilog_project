@@ -64,6 +64,8 @@ namespace widget
     void edit_rectangle_width ();
     //!< Show a QInputDialog to chose a height for the rectangle
     void edit_rectangle_height ();
+    //!< Show a QInputDialog to chose a angle for the rotation
+    void rectangle_rotation ();
 
   private:
     /*!

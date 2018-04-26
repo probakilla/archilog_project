@@ -19,3 +19,4 @@ include/config.hh
 GPATH
 GRTAGS
 GTAGS
+nohup.out
