@@ -77,7 +77,8 @@ namespace widget
     m_tool = new QGraphicsView (m_window);
     m_view = new QGraphicsView (m_window);
     m_view->setDragMode (QGraphicsView::RubberBandDrag);
-    m_commands = new std::vector<command::CommandInterface*>;
+    m_undoable_commands = new std::vector<command::CommandInterface*>;
+    m_redoable_commands = new std::vector<command::CommandInterface*>;
 
     m_scene = new QtMainScene (m_window);
     m_tool_scene = new QGraphicsScene (m_window);
@@ -226,7 +227,7 @@ namespace widget
     }
     // Clear existing shapes.
     m_shapes->clear ();
-    m_commands->clear ();
+    m_undoable_commands->clear ();
     m_scene->clear ();
     m_view->viewport ()->update ();
     // Load and draw new shapes
@@ -239,13 +240,23 @@ namespace widget
 
   void QtDisplay::undo ()
   {
-    if (m_commands->size () == 0)
+    if (m_undoable_commands->size () == 0)
       return;
-    m_commands->back ()->undo ();
-    m_commands->pop_back ();
+    command::CommandInterface* cmd = m_undoable_commands->back ();
+    cmd->undo ();
+    m_redoable_commands->push_back (cmd);
+    m_undoable_commands->pop_back ();
   }
 
-  void QtDisplay::redo () { std::cout << "redo" << std::endl; }
+  void QtDisplay::redo ()
+  {
+    if (m_redoable_commands->size () == 0)
+      return;
+    command::CommandInterface* cmd = m_redoable_commands->back ();
+    cmd->execute ();
+    m_undoable_commands->push_back (cmd);
+    m_redoable_commands->pop_back ();
+  }
 
   void QtDisplay::connect_rectangle (QtRectangle* rect)
   {
@@ -277,8 +288,8 @@ namespace widget
         shape::Rectangle* tmp = cur_rect->get_rect ();
         command::RectColorCommand* cmd =
          new command::RectColorCommand (tmp, new_color);
-        m_commands->push_back (cmd);
-
+        m_undoable_commands->push_back (cmd);
+	m_redoable_commands->clear ();
         cmd->execute ();
       }
     }
@@ -293,7 +304,8 @@ namespace widget
     {
       command::RectWidthCommand* cmd =
        new command::RectWidthCommand (tmp, new_width);
-      m_commands->push_back (cmd);
+      m_undoable_commands->push_back (cmd);
+      m_redoable_commands->clear ();
       cmd->execute ();
     }
   }
@@ -307,7 +319,8 @@ namespace widget
     {
       command::RectHeightCommand* cmd =
        new command::RectHeightCommand (tmp, new_height);
-      m_commands->push_back (cmd);
+      m_undoable_commands->push_back (cmd);
+      m_redoable_commands->clear ();
       cmd->execute ();
     }
   }

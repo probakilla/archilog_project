@@ -105,8 +105,10 @@ namespace widget
     QGraphicsView* m_tool;
     //!< Vector containing all shapes
     std::vector<shape::ShapeInterface*>* m_shapes;
-    //!< Vector containing all commands
-    std::vector<command::CommandInterface*>* m_commands;
+    //!< Vector containing all commands that can be undo
+    std::vector<command::CommandInterface*>* m_undoable_commands;
+    //!< Vector containing all commands that can be redo
+    std::vector<command::CommandInterface*>* m_redoable_commands;
   };
 }
 #endif /* !defined(QTDISPLAY_HPP) */
