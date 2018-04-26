@@ -7,6 +7,7 @@
 #include "QtPolygon.hpp"
 #include "Rectangle.hpp"
 #include "QtRectangle.hpp"
+#include "AllCommands.hpp"
 
 #include <QtGui>
 #include <vector>
@@ -105,10 +106,8 @@ namespace widget
     QGraphicsView* m_tool;
     //!< Vector containing all shapes
     std::vector<shape::ShapeInterface*>* m_shapes;
-    //!< Vector containing all commands that can be undo
-    std::vector<command::CommandInterface*>* m_undoable_commands;
-    //!< Vector containing all commands that can be redo
-    std::vector<command::CommandInterface*>* m_redoable_commands;
+    //!< Singleton containing all commands.
+    shape::AllCommands* m_commands;
   };
 }
 #endif /* !defined(QTDISPLAY_HPP) */

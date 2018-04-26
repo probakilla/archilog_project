@@ -112,6 +112,7 @@ namespace shape
   {
     m_position = shape.get_position ();
     m_rotation_center = shape.get_rotation_center ();
+    m_rotation = shape.get_rotation ();
     return *this;
   }
 
