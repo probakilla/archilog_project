@@ -36,6 +36,8 @@ namespace widget
   QtPolygon::QtPolygon (shape::Polygon* poly, QWidget* parent) :
    QGraphicsPolygonItem (get_point (poly)), m_parent (parent), m_poly (poly)
   {
+    QPolygonF tmp (get_point (m_poly));
+    this->setPolygon (tmp);
     // Adjusting position.
     this->setX (m_poly->get_position ().x ());
     this->setY (m_poly->get_position ().y ());
@@ -55,8 +57,8 @@ namespace widget
 
   void QtPolygon::update_shape ()
   {
-    //QPolygonF tmp (get_point (m_poly));
-    //this->setPolygon (tmp);
+    QPolygonF tmp (get_point (m_poly));
+    this->setPolygon (tmp);
     this->setX (m_poly->get_position ().x ());
     this->setY (m_poly->get_position ().y ());
     this->setTransformOriginPoint (m_poly->get_rotation_center ().x (),

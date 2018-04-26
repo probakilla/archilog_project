@@ -89,7 +89,7 @@ namespace widget
     m_view->setDragMode (QGraphicsView::RubberBandDrag);
     m_commands = shape::AllCommands::get_instance ();
 
-    m_scene = new QtMainScene (m_window);
+    m_scene = new QGraphicsScene (m_window);
     m_tool_scene = new QGraphicsScene (m_window);
     m_view->setScene (m_scene);
     m_tool->setScene (m_tool_scene);

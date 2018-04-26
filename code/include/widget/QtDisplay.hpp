@@ -3,7 +3,6 @@
 
 #include "CommandInterface.hpp"
 #include "Polygon.hpp"
-#include "QtMainScene.hpp"
 #include "QtPolygon.hpp"
 #include "Rectangle.hpp"
 #include "QtRectangle.hpp"
@@ -118,7 +117,7 @@ namespace widget
     //!< The white panel where shape will appear
     QGraphicsView* m_view;
     //!< Where we draw shapes
-    QtMainScene* m_scene;
+    QGraphicsScene* m_scene;
     //!< Where the thumbnails shows
     QGraphicsScene* m_tool_scene;
     //!< The toolbar where the thumbnails of the shape will be stored
