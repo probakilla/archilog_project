@@ -41,8 +41,9 @@
 #define _USE_MATH_DEFINES
 
 #define DECIMALS 2
-#define MIN_LENGTH 1.0
 #define MAX_DIALOG 1024.0
+#define MAX_ANGLE 360.0
+#define MIN_LENGTH 1.0
 #define MIN_DIALOG 0.0
 #define MIN_NB_SIDES 3.0
 #define STEP 1
@@ -86,8 +87,7 @@ namespace widget
     m_tool = new QGraphicsView (m_window);
     m_view = new QGraphicsView (m_window);
     m_view->setDragMode (QGraphicsView::RubberBandDrag);
-    m_undoable_commands = new std::vector<command::CommandInterface*>;
-    m_redoable_commands = new std::vector<command::CommandInterface*>;
+    m_commands = shape::AllCommands::get_instance ();
 
     m_scene = new QtMainScene (m_window);
     m_tool_scene = new QGraphicsScene (m_window);
@@ -238,7 +238,7 @@ namespace widget
     }
     // Clear existing shapes.
     m_shapes->clear ();
-    m_undoable_commands->clear ();
+    m_commands->clear ();
     m_scene->clear ();
     m_view->viewport ()->update ();
     // Load and draw new shapes
@@ -249,25 +249,9 @@ namespace widget
         draw_polygon (static_cast<shape::Polygon&> (*load_shapes[i]));
   }
 
-  void QtDisplay::undo ()
-  {
-    if (m_undoable_commands->size () == 0)
-      return;
-    command::CommandInterface* cmd = m_undoable_commands->back ();
-    cmd->undo ();
-    m_redoable_commands->push_back (cmd);
-    m_undoable_commands->pop_back ();
-  }
+  void QtDisplay::undo () { m_commands->undo (); }
 
-  void QtDisplay::redo ()
-  {
-    if (m_redoable_commands->size () == 0)
-      return;
-    command::CommandInterface* cmd = m_redoable_commands->back ();
-    cmd->execute ();
-    m_undoable_commands->push_back (cmd);
-    m_redoable_commands->pop_back ();
-  }
+  void QtDisplay::redo () { m_commands->redo (); }
 
   // CONNECTING SHAPES
 
@@ -305,6 +289,16 @@ namespace widget
     connect (nb_sides_act, SIGNAL (triggered ()), this,
              SLOT (edit_polygon_nb_sides ()));
     poly->get_menu ()->addAction (nb_sides_act);
+
+    QAction* side_length_act = new QAction (tr ("&Edit side length"), m_view);
+    connect (side_length_act, SIGNAL (triggered ()), this,
+             SLOT (edit_polygon_side_length ()));
+    poly->get_menu ()->addAction (side_length_act);
+
+    QAction* rotate_act = new QAction (tr ("&Rotate"), m_view);
+    connect (rotate_act, SIGNAL (triggered ()), this,
+             SLOT (polygon_rotation ()));
+    poly->get_menu ()->addAction (rotate_act);
   }
 
   // PRIVATE SLOTS
@@ -321,9 +315,7 @@ namespace widget
         shape::Rectangle* tmp = cur_rect->get_rect ();
         command::RectColorCommand* cmd =
          new command::RectColorCommand (tmp, new_color);
-        m_undoable_commands->push_back (cmd);
-        m_redoable_commands->clear ();
-        cmd->execute ();
+        m_commands->add_undoable (cmd);
       }
     }
   }
@@ -337,9 +329,7 @@ namespace widget
     {
       command::RectWidthCommand* cmd =
        new command::RectWidthCommand (tmp, new_width);
-      m_undoable_commands->push_back (cmd);
-      m_redoable_commands->clear ();
-      cmd->execute ();
+      m_commands->add_undoable (cmd);
     }
   }
 
@@ -352,9 +342,7 @@ namespace widget
     {
       command::RectHeightCommand* cmd =
        new command::RectHeightCommand (tmp, new_height);
-      m_undoable_commands->push_back (cmd);
-      m_redoable_commands->clear ();
-      cmd->execute ();
+      m_commands->add_undoable (cmd);
     }
   }
 
@@ -362,14 +350,12 @@ namespace widget
   {
     shape::Rectangle* tmp = cur_rect->get_rect ();
     double new_angle =
-     input_dialog ("Rotation angle : ", 0.0, MIN_DIALOG, MAX_DIALOG);
+     input_dialog ("Rotation angle : ", 0.0, MIN_DIALOG, MAX_ANGLE);
     if (new_angle > 0)
     {
       command::RectRotateCommand* cmd =
        new command::RectRotateCommand (tmp, new_angle);
-      m_undoable_commands->push_back (cmd);
-      m_redoable_commands->clear ();
-      cmd->execute ();
+      m_commands->add_undoable (cmd);
     }
   }
 
@@ -385,9 +371,7 @@ namespace widget
         shape::Polygon* tmp = cur_poly->get_poly ();
         command::PolyColorCommand* cmd =
          new command::PolyColorCommand (tmp, new_color);
-        m_undoable_commands->push_back (cmd);
-        m_redoable_commands->clear ();
-        cmd->execute ();
+        m_commands->add_undoable (cmd);
       }
     }
   }
@@ -401,11 +385,35 @@ namespace widget
      tmp->get_nb_sides (), MIN_NB_SIDES, MAX_DIALOG, STEP, &ok);
     if (ok)
     {
-      command::PolyNbSidesCommand cmd =
+      command::PolyNbSidesCommand* cmd =
        new command::PolyNbSidesCommand (tmp, new_nb);
-      m_undoable_commands->push_back (cmd);
-      m_redoable_commands->clear ();
-      cmd->execute ();
+      m_commands->add_undoable (cmd);
+    }
+  }
+
+  void QtDisplay::edit_polygon_side_length ()
+  {
+    shape::Polygon* tmp = cur_poly->get_poly ();
+    double new_length = input_dialog (
+     "Side lentgth : ", tmp->get_side_length (), MIN_LENGTH, MAX_DIALOG);
+    if (new_length > 0)
+    {
+      command::PolySideLengthCommand* cmd =
+       new command::PolySideLengthCommand (tmp, new_length);
+      m_commands->add_undoable (cmd);
+    }
+  }
+
+  void QtDisplay::polygon_rotation ()
+  {
+    shape::Polygon* tmp = cur_poly->get_poly ();
+    double new_angle = input_dialog ("Rotation angle : ", tmp->get_rotation (),
+                                     MIN_DIALOG, MAX_ANGLE);
+    if (new_angle > 0)
+    {
+      command::PolyRotateCommand* cmd =
+       new command::PolyRotateCommand (tmp, new_angle);
+      m_commands->add_undoable (cmd);
     }
   }
 

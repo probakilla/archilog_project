@@ -2,10 +2,8 @@
 
 namespace command
 {
-  PolyNbSidesCommand::PolyNbSidesCommand (shape::Polygon* poly,
-                                          double nb_sides) :
-   m_poly (poly),
-   m_nb_sides (nb_sides)
+  PolyNbSidesCommand::PolyNbSidesCommand (shape::Polygon* poly, int nb_sides) :
+   m_poly (poly), m_nb_sides (nb_sides)
   {}
 
   PolyNbSidesCommand::~PolyNbSidesCommand () {}

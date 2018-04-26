@@ -3,16 +3,8 @@
 #include "AbstractShape.hpp"
 #include "QtDisplay.hpp"
 
-#include <QAction>
-#include <QColorDialog>
-#include <QInputDialog>
 #include <QMenu>
 #include <QRectF>
-
-#define DECIMALS 2
-
-#define MIN_VALUE 1.0
-#define MAX_ROTATION 360.0
 
 namespace widget
 {

@@ -10,8 +10,6 @@
 #include <QMenu>
 #include <QString>
 
-#define MAX_VALUE 1024.0
-
 namespace widget
 {
   class QtRectangle : public QGraphicsRectItem, public ObserverInterface
@@ -20,10 +18,13 @@ namespace widget
     QtRectangle (shape::Rectangle* rect, QWidget* parent = 0);
     ~QtRectangle ();
 
+    //!< Getter on QtRectangle::m_menu
     QMenu* get_menu () const;
 
+    //!< Getter on QtRectangle::m_rect
     shape::Rectangle* get_rect () const;
 
+    //!< Update the shape data
     void update_shape ();
 
     //!< The context menu of the shape, open with right click

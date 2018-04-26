@@ -1,8 +1,8 @@
 #include "QtPolygon.hpp"
 
-#include <QColorDialog>
-#include <QInputDialog>
-#include <QMenu>
+#include "QtDisplay.hpp"
+
+#include <QPointF>
 #include <QPolygonF>
 #include <cmath>
 
@@ -13,13 +13,14 @@
 
 namespace widget
 {
-  static QPolygonF get_point (shape::Polygon poly)
+  static QPolygonF get_point (shape::Polygon* poly)
   {
     QVector<QPointF> points;
-    int n = poly.get_nb_sides ();
+    int n = poly->get_nb_sides ();
     // Radius of the exterior circle
     // ref : https://www.mathopenref.com/polygonradius.html
-    double rad = (poly.get_side_length () / (2 * (sin (180 / n * M_PI / 180))));
+    double rad =
+     (poly->get_side_length () / (2 * (sin (180 / n * M_PI / 180))));
 
     // Searching all points coordinates
     for (int i = 0; i < n; ++i)
@@ -29,7 +30,7 @@ namespace widget
     }
 
     // Adusting position
-    shape::Point pos = poly.get_position ();
+    shape::Point pos = poly->get_position ();
     for (int i = 0; i < n; ++i)
     {
       points[i].setX (points[i].rx () + pos.x ());
@@ -38,25 +39,39 @@ namespace widget
     return QPolygonF (points);
   }
 
-  QtPolygon::QtPolygon (shape::Polygon poly) :
-   QGraphicsPolygonItem (get_point (poly)), m_poly (poly)
+  QtPolygon::QtPolygon (shape::Polygon* poly, QWidget* parent) :
+   QGraphicsPolygonItem (get_point (poly)), m_parent (parent), m_poly (poly)
   {
-    this->setTransformOriginPoint (poly.get_rotation_center ().x (),
-                                   poly.get_rotation_center ().y ());
+    setFlags (ItemIsMovable | ItemIsFocusable | ItemIsSelectable |
+              ItemSendsGeometryChanges);
+    this->setTransformOriginPoint (poly->get_rotation_center ().x (),
+                                   poly->get_rotation_center ().y ());
+    m_menu = new QMenu (parent);
   }
 
   QtPolygon::~QtPolygon () {}
+
+  shape::Polygon* QtPolygon::get_poly () const { return m_poly; }
+
+  QMenu* QtPolygon::get_menu () const { return m_menu; }
+
+  void QtPolygon::update_shape ()
+  {
+    QPolygonF tmp (get_point (m_poly));
+    this->setPolygon (tmp);
+    this->setTransformOriginPoint (m_poly->get_rotation_center ().x (),
+                                   m_poly->get_rotation_center ().y ());
+    this->setBrush (QColor (m_poly->get_color ()));
+    this->setRotation (m_poly->get_rotation ());
+    this->update ();
+  }
 
   void QtPolygon::contextMenuEvent (QGraphicsSceneContextMenuEvent* event)
   {
     if (event->reason () == QGraphicsSceneContextMenuEvent::Mouse)
     {
-      QMenu menu;
-      menu.addAction ("Edit color");
-      menu.addAction ("Edit rotation center");
-      menu.addAction ("Edit number of sides");
-      menu.addAction ("Edit side length");
-      menu.exec (event->screenPos ());
+      QtDisplay::cur_poly = this;
+      m_menu->exec (event->screenPos ());
     }
   }
 }

@@ -7,6 +7,7 @@
 #include "QtPolygon.hpp"
 #include "Rectangle.hpp"
 #include "QtRectangle.hpp"
+#include "AllCommands.hpp"
 
 #include <QPushButton>
 #include <QLabel>
@@ -75,6 +76,10 @@ namespace widget
     void edit_polygon_color ();
     //!< Show a QInputDialog to chose the number of sides of the polygon
     void edit_polygon_nb_sides ();
+    //!< Show a QInputDialog to chose the side length of the polygon
+    void edit_polygon_side_length ();
+    //!< Show a QInputDialog to chose the rotation angle for the polygon
+    void polygon_rotation ();
 
   private:
     /*!
@@ -120,10 +125,8 @@ namespace widget
     QGraphicsView* m_tool;
     //!< Vector containing all shapes
     std::vector<shape::ShapeInterface*>* m_shapes;
-    //!< Vector containing all commands that can be undo
-    std::vector<command::CommandInterface*>* m_undoable_commands;
-    //!< Vector containing all commands that can be redo
-    std::vector<command::CommandInterface*>* m_redoable_commands;
+    //!< Singleton containing all commands.
+    shape::AllCommands* m_commands;
   };
 }
 #endif /* !defined(QTDISPLAY_HPP) */
