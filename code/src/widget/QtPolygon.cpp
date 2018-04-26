@@ -1,5 +1,7 @@
 #include "QtPolygon.hpp"
 
+#include "AllCommands.hpp"
+#include "PolyTranslateCommand.hpp"
 #include "QtDisplay.hpp"
 
 #include <QPointF>
@@ -28,20 +30,16 @@ namespace widget
       points.push_back (
        QPointF (rad * cos (2 * M_PI * i / n), rad * sin (2 * M_PI * i / n)));
     }
-
-    // Adusting position
-    shape::Point pos = poly->get_position ();
-    for (int i = 0; i < n; ++i)
-    {
-      points[i].setX (points[i].rx () + pos.x ());
-      points[i].setY (points[i].ry () + pos.y ());
-    }
     return QPolygonF (points);
   }
 
   QtPolygon::QtPolygon (shape::Polygon* poly, QWidget* parent) :
    QGraphicsPolygonItem (get_point (poly)), m_parent (parent), m_poly (poly)
   {
+    // Adjusting position.
+    this->setX (m_poly->get_position ().x ());
+    this->setY (m_poly->get_position ().y ());
+
     setFlags (ItemIsMovable | ItemIsFocusable | ItemIsSelectable |
               ItemSendsGeometryChanges);
     this->setTransformOriginPoint (poly->get_rotation_center ().x (),
@@ -57,8 +55,10 @@ namespace widget
 
   void QtPolygon::update_shape ()
   {
-    QPolygonF tmp (get_point (m_poly));
-    this->setPolygon (tmp);
+    //QPolygonF tmp (get_point (m_poly));
+    //this->setPolygon (tmp);
+    this->setX (m_poly->get_position ().x ());
+    this->setY (m_poly->get_position ().y ());
     this->setTransformOriginPoint (m_poly->get_rotation_center ().x (),
                                    m_poly->get_rotation_center ().y ());
     this->setBrush (QColor (m_poly->get_color ()));
@@ -73,5 +73,21 @@ namespace widget
       QtDisplay::cur_poly = this;
       m_menu->exec (event->screenPos ());
     }
+  }
+
+  void QtPolygon::mouseReleaseEvent (QGraphicsSceneMouseEvent* event)
+  {
+    QGraphicsPolygonItem::mouseReleaseEvent (event);
+    if (event->button () == Qt::LeftButton)
+      update_position ();
+  }
+
+  void QtPolygon::update_position ()
+  {
+    shape::Point pos = m_poly->get_position ();
+    double dx = x () - pos.x ();
+    double dy = y () - pos.y ();
+    shape::AllCommands* cmd_list = shape::AllCommands::get_instance ();
+    cmd_list->add_undoable (new command::PolyTranslateCommand (m_poly, dx, dy));
   }
 }

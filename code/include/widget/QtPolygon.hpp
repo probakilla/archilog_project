@@ -1,6 +1,7 @@
 #ifndef QTPOLYGON_HPP
 #define QTPOLYGON_HPP
 
+#include "ObserverInterface.hpp"
 #include "Polygon.hpp"
 
 #include <QGraphicsPolygonItem>
@@ -22,6 +23,10 @@ namespace widget
     void update_shape ();
 
     void contextMenuEvent (QGraphicsSceneContextMenuEvent* event);
+
+    void mouseReleaseEvent (QGraphicsSceneMouseEvent* event);
+
+    void update_position ();
 
   private:
     QWidget* m_parent;

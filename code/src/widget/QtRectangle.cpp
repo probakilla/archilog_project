@@ -1,6 +1,5 @@
 #include "QtRectangle.hpp"
 
-#include "AbstractShape.hpp"
 #include "AllCommands.hpp"
 #include "QtDisplay.hpp"
 #include "RectTranslateCommand.hpp"
