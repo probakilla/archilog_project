@@ -14,7 +14,12 @@ namespace command
   {
     m_mem = m_poly->create_memento ();
     m_poly->set_nb_sides (m_nb_sides);
+    m_poly->notify ();
   }
 
-  void PolyNbSidesCommand::undo () { m_poly->set_memento (m_mem); }
+  void PolyNbSidesCommand::undo ()
+  {
+    m_poly->set_memento (m_mem);
+    m_poly->notify ();
+  }
 }

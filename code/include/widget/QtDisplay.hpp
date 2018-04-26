@@ -6,6 +6,7 @@
 #include "QtMainScene.hpp"
 #include "QtPolygon.hpp"
 #include "Rectangle.hpp"
+#include "QtRectangle.hpp"
 
 #include <QtGui>
 #include <vector>
@@ -62,6 +63,8 @@ namespace widget
     void edit_rectangle_width ();
     //!< Show a QInputDialog to chose a height for the rectangle
     void edit_rectangle_height ();
+    //!< Show a QInputDialog to chose a angle for the rotation
+    void rectangle_rotation ();
 
   private:
     /*!
@@ -104,8 +107,10 @@ namespace widget
     QGraphicsView* m_tool;
     //!< Vector containing all shapes
     std::vector<shape::ShapeInterface*>* m_shapes;
-    //!< Vector containing all commands
-    std::vector<command::CommandInterface*>* m_commands;
+    //!< Vector containing all commands that can be undo
+    std::vector<command::CommandInterface*>* m_undoable_commands;
+    //!< Vector containing all commands that can be redo
+    std::vector<command::CommandInterface*>* m_redoable_commands;
   };
 }
 #endif /* !defined(QTDISPLAY_HPP) */

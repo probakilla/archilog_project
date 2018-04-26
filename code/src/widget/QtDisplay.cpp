@@ -4,6 +4,7 @@
 #include "QtRectangle.hpp"
 #include "RectColorCommand.hpp"
 #include "RectHeightCommand.hpp"
+#include "RectRotateCommand.hpp"
 #include "RectWidthCommand.hpp"
 #include "config.hpp"
 
@@ -18,7 +19,7 @@
 #include <typeinfo>
 #include <vector>
 
-//!< The size of the icon IN the QPushButton
+//!< The size of the icon in the QPushButton
 #define ICON_SIZE 32
 //!< The size of the QPushButton, should be greater than ICON_SIZE
 #define BUTTON_SIZE 40
@@ -35,8 +36,8 @@
 
 #define DECIMALS 2
 #define MIN_LENGTH 1.0
-#define MAX_LENGTH 1024.0
-#define MIN_DOUBLE 0.0
+#define MAX_DIALOG 1024.0
+#define MIN_DIALOG 0.0
 
 namespace widget
 {
@@ -77,7 +78,8 @@ namespace widget
     m_tool = new QGraphicsView (m_window);
     m_view = new QGraphicsView (m_window);
     m_view->setDragMode (QGraphicsView::RubberBandDrag);
-    m_commands = new std::vector<command::CommandInterface*>;
+    m_undoable_commands = new std::vector<command::CommandInterface*>;
+    m_redoable_commands = new std::vector<command::CommandInterface*>;
 
     m_scene = new QtMainScene (m_window);
     m_tool_scene = new QGraphicsScene (m_window);
@@ -143,10 +145,8 @@ namespace widget
   void QtDisplay::draw_rectangle (shape::Rectangle& rect)
   {
     QColor color = rect.get_color ();
-    QtRectangle* rect_item = new QtRectangle (rect, this);
-    rect_item->setFlag (QGraphicsItem::ItemIsSelectable);
-    rect_item->setFlag (QGraphicsItem::ItemIsMovable);
-    rect_item->setFlag (QGraphicsItem::ItemSendsGeometryChanges);
+    QtRectangle* rect_item = new QtRectangle (&rect, this);
+    rect.attach (rect_item);
     rect_item->setBrush (color);
     m_scene->addItem (rect_item);
     shape::Point r_center = rect.get_rotation_center ();
@@ -228,6 +228,7 @@ namespace widget
     }
     // Clear existing shapes.
     m_shapes->clear ();
+    m_undoable_commands->clear ();
     m_scene->clear ();
     m_view->viewport ()->update ();
     // Load and draw new shapes
@@ -238,9 +239,25 @@ namespace widget
         draw_polygon (static_cast<shape::Polygon&> (*load_shapes[i]));
   }
 
-  void QtDisplay::undo () { std::cout << "undo" << std::endl; }
+  void QtDisplay::undo ()
+  {
+    if (m_undoable_commands->size () == 0)
+      return;
+    command::CommandInterface* cmd = m_undoable_commands->back ();
+    cmd->undo ();
+    m_redoable_commands->push_back (cmd);
+    m_undoable_commands->pop_back ();
+  }
 
-  void QtDisplay::redo () { std::cout << "redo" << std::endl; }
+  void QtDisplay::redo ()
+  {
+    if (m_redoable_commands->size () == 0)
+      return;
+    command::CommandInterface* cmd = m_redoable_commands->back ();
+    cmd->execute ();
+    m_undoable_commands->push_back (cmd);
+    m_redoable_commands->pop_back ();
+  }
 
   void QtDisplay::connect_rectangle (QtRectangle* rect)
   {
@@ -258,6 +275,11 @@ namespace widget
     connect (height_act, SIGNAL (triggered ()), this,
              SLOT (edit_rectangle_height ()));
     rect->get_menu ()->addAction (height_act);
+
+    QAction* rotate_act = new QAction (tr ("&Rotate"), m_view);
+    connect (rotate_act, SIGNAL (triggered ()), this,
+             SLOT (rectangle_rotation ()));
+    rect->get_menu ()->addAction (rotate_act);
   }
 
   void QtDisplay::edit_rectangle_color ()
@@ -269,43 +291,58 @@ namespace widget
       int new_color = color.name ().replace ("#", "").toInt (&ok, 16);
       if (ok)
       {
-        shape::Rectangle tmp = cur_rect->get_rect ();
+        shape::Rectangle* tmp = cur_rect->get_rect ();
         command::RectColorCommand* cmd =
-         new command::RectColorCommand (&tmp, new_color);
-        m_commands->push_back (cmd);
-        tmp.set_color (new_color);
-        cur_rect->update_shape (tmp);
+         new command::RectColorCommand (tmp, new_color);
+        m_undoable_commands->push_back (cmd);
+        m_redoable_commands->clear ();
+        cmd->execute ();
       }
     }
   }
 
   void QtDisplay::edit_rectangle_width ()
   {
-    shape::Rectangle tmp = cur_rect->get_rect ();
+    shape::Rectangle* tmp = cur_rect->get_rect ();
     double new_width =
-     input_dialog ("Width : ", tmp.get_width (), MIN_LENGTH, MAX_LENGTH);
+     input_dialog ("Width : ", tmp->get_width (), MIN_LENGTH, MAX_DIALOG);
     if (new_width > 0)
     {
       command::RectWidthCommand* cmd =
-       new command::RectWidthCommand (&tmp, new_width);
-      m_commands->push_back (cmd);
-      tmp.set_width (new_width);
-      cur_rect->update_shape (tmp);
+       new command::RectWidthCommand (tmp, new_width);
+      m_undoable_commands->push_back (cmd);
+      m_redoable_commands->clear ();
+      cmd->execute ();
     }
   }
 
   void QtDisplay::edit_rectangle_height ()
   {
-    shape::Rectangle tmp = cur_rect->get_rect ();
+    shape::Rectangle* tmp = cur_rect->get_rect ();
     double new_height =
-     input_dialog ("Height : ", tmp.get_height (), MIN_LENGTH, MAX_LENGTH);
+     input_dialog ("Height : ", tmp->get_height (), MIN_LENGTH, MAX_DIALOG);
     if (new_height > 0)
     {
       command::RectHeightCommand* cmd =
-       new command::RectHeightCommand (&tmp, new_height);
-      m_commands->push_back (cmd);
-      tmp.set_height (new_height);
-      cur_rect->update_shape (tmp);
+       new command::RectHeightCommand (tmp, new_height);
+      m_undoable_commands->push_back (cmd);
+      m_redoable_commands->clear ();
+      cmd->execute ();
+    }
+  }
+
+  void QtDisplay::rectangle_rotation ()
+  {
+    shape::Rectangle* tmp = cur_rect->get_rect ();
+    double new_angle =
+     input_dialog ("Rotation angle : ", 0.0, MIN_DIALOG, MAX_DIALOG);
+    if (new_angle > 0)
+    {
+      command::RectRotateCommand* cmd =
+       new command::RectRotateCommand (tmp, new_angle);
+      m_undoable_commands->push_back (cmd);
+      m_redoable_commands->clear ();
+      cmd->execute ();
     }
   }
 

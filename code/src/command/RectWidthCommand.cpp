@@ -12,7 +12,12 @@ namespace command
   {
     m_mem = m_rect->create_memento ();
     m_rect->set_width (m_width);
+    m_rect->notify ();
   }
 
-  void RectWidthCommand::undo () { m_rect->set_memento (m_mem); }
+  void RectWidthCommand::undo ()
+  {
+    m_rect->set_memento (m_mem);
+    m_rect->notify ();
+  }
 }

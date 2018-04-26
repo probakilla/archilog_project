@@ -12,7 +12,12 @@ namespace command
   {
     m_mem = m_rect->create_memento ();
     m_rect->set_height (m_height);
+    m_rect->notify ();
   }
 
-  void RectHeightCommand::undo () { m_rect->set_memento (m_mem); }
+  void RectHeightCommand::undo ()
+  {
+    m_rect->set_memento (m_mem);
+    m_rect->notify ();
+  }
 }

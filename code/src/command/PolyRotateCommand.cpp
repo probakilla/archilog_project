@@ -12,7 +12,12 @@ namespace command
   {
     m_mem = m_poly->create_memento ();
     m_poly->set_rotation (m_angle);
+    m_poly->notify ();
   }
 
-  void PolyRotateCommand::undo () { m_poly->set_memento (m_mem); }
+  void PolyRotateCommand::undo ()
+  {
+    m_poly->set_memento (m_mem);
+    m_poly->notify ();
+  }
 }
