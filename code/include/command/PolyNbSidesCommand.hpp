@@ -9,7 +9,7 @@ namespace command
   class PolyNbSidesCommand : public CommandInterface
   {
   public:
-    PolyNbSidesCommand (shape::Polygon* poly, double nb_sides);
+    PolyNbSidesCommand (shape::Polygon* poly, int nb_sides);
     ~PolyNbSidesCommand ();
 
     void execute ();
@@ -18,7 +18,7 @@ namespace command
 
   private:
     shape::Polygon* m_poly;
-    double m_nb_sides;
+    int m_nb_sides;
     shape::Memento<shape::Polygon> m_mem;
   };
 }

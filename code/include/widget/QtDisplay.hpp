@@ -9,7 +9,12 @@
 #include "QtRectangle.hpp"
 #include "AllCommands.hpp"
 
-#include <QtGui>
+#include <QPushButton>
+#include <QLabel>
+#include <QGridLayout>
+#include <QScrollArea>
+#include <QMainWindow>
+#include <QGraphicsView>
 #include <vector>
 
 namespace widget
@@ -67,6 +72,15 @@ namespace widget
     //!< Show a QInputDialog to chose a angle for the rotation
     void rectangle_rotation ();
 
+    //!< Show a QColorDialog to chose a color for the polygon
+    void edit_polygon_color ();
+    //!< Show a QInputDialog to chose the number of sides of the polygon
+    void edit_polygon_nb_sides ();
+    //!< Show a QInputDialog to chose the side length of the polygon
+    void edit_polygon_side_length ();
+    //!< Show a QInputDialog to chose the rotation angle for the polygon
+    void polygon_rotation ();
+
   private:
     /*!
      * @brief Show the dialog for shape editing.
@@ -80,8 +94,11 @@ namespace widget
      */
     double input_dialog (const QString& name, double def_val, double min_val,
                          double max_val) const;
-    //!< Create actions of the QtRectangle's context menu
+
+    //!< Create actions for the QtRectangle's context menu
     void connect_rectangle (QtRectangle* rect);
+    //!< Create actions for the QtPolygon's context menu
+    void connect_polygon (QtPolygon* poly);
     //!< The window where the layout is
     QWidget* m_window;
     //!< The layout where all widgets are

@@ -1,5 +1,9 @@
 #include "QtDisplay.hpp"
 
+#include "PolyColorCommand.hpp"
+#include "PolyNbSidesCommand.hpp"
+#include "PolyRotateCommand.hpp"
+#include "PolySideLengthCommand.hpp"
 #include "QtPolygon.hpp"
 #include "QtRectangle.hpp"
 #include "RectColorCommand.hpp"
@@ -8,7 +12,9 @@
 #include "RectWidthCommand.hpp"
 #include "config.hpp"
 
+#include <QColorDialog>
 #include <QFileDialog>
+#include <QInputDialog>
 #include <QMessageBox>
 #include <boost/serialization/vector.hpp>
 #include <cmath>
@@ -35,9 +41,12 @@
 #define _USE_MATH_DEFINES
 
 #define DECIMALS 2
-#define MIN_LENGTH 1.0
 #define MAX_DIALOG 1024.0
+#define MAX_ANGLE 360.0
+#define MIN_LENGTH 1.0
 #define MIN_DIALOG 0.0
+#define MIN_NB_SIDES 3.0
+#define STEP 1
 
 namespace widget
 {
@@ -158,7 +167,8 @@ namespace widget
   void QtDisplay::draw_polygon (shape::Polygon& poly)
   {
     QColor color = poly.get_color ();
-    QtPolygon* poly_item = new QtPolygon (poly);
+    QtPolygon* poly_item = new QtPolygon (&poly, m_view);
+    poly.attach (poly_item);
     poly_item->setFlag (QGraphicsItem::ItemIsSelectable);
     poly_item->setFlag (QGraphicsItem::ItemIsMovable);
     poly_item->setFlag (QGraphicsItem::ItemSendsGeometryChanges);
@@ -167,6 +177,7 @@ namespace widget
     shape::Point r_center = poly.get_rotation_center ();
     poly_item->setTransformOriginPoint (r_center.x (), r_center.y ());
     poly_item->setRotation (poly.get_rotation ());
+    connect_polygon (poly_item);
     m_shapes->push_back (&poly);
   }
 
@@ -242,6 +253,8 @@ namespace widget
 
   void QtDisplay::redo () { m_commands->redo (); }
 
+  // CONNECTING SHAPES
+
   void QtDisplay::connect_rectangle (QtRectangle* rect)
   {
     QAction* color_act = new QAction (tr ("&Edit color"), m_view);
@@ -264,6 +277,31 @@ namespace widget
              SLOT (rectangle_rotation ()));
     rect->get_menu ()->addAction (rotate_act);
   }
+
+  void QtDisplay::connect_polygon (QtPolygon* poly)
+  {
+    QAction* color_act = new QAction (tr ("&Edit color"), m_view);
+    connect (color_act, SIGNAL (triggered ()), this,
+             SLOT (edit_polygon_color ()));
+    poly->get_menu ()->addAction (color_act);
+
+    QAction* nb_sides_act = new QAction (tr ("&Edit nb sides"), m_view);
+    connect (nb_sides_act, SIGNAL (triggered ()), this,
+             SLOT (edit_polygon_nb_sides ()));
+    poly->get_menu ()->addAction (nb_sides_act);
+
+    QAction* side_length_act = new QAction (tr ("&Edit side length"), m_view);
+    connect (side_length_act, SIGNAL (triggered ()), this,
+             SLOT (edit_polygon_side_length ()));
+    poly->get_menu ()->addAction (side_length_act);
+
+    QAction* rotate_act = new QAction (tr ("&Rotate"), m_view);
+    connect (rotate_act, SIGNAL (triggered ()), this,
+             SLOT (polygon_rotation ()));
+    poly->get_menu ()->addAction (rotate_act);
+  }
+
+  // PRIVATE SLOTS
 
   void QtDisplay::edit_rectangle_color ()
   {
@@ -312,7 +350,7 @@ namespace widget
   {
     shape::Rectangle* tmp = cur_rect->get_rect ();
     double new_angle =
-     input_dialog ("Rotation angle : ", 0.0, MIN_DIALOG, MAX_DIALOG);
+     input_dialog ("Rotation angle : ", 0.0, MIN_DIALOG, MAX_ANGLE);
     if (new_angle > 0)
     {
       command::RectRotateCommand* cmd =
@@ -320,6 +358,66 @@ namespace widget
       m_commands->add_undoable (cmd);
     }
   }
+
+  void QtDisplay::edit_polygon_color ()
+  {
+    QColor color = QColorDialog::getColor ();
+    if (color.isValid ())
+    {
+      bool ok;
+      int new_color = color.name ().replace ("#", "").toInt (&ok, 16);
+      if (ok)
+      {
+        shape::Polygon* tmp = cur_poly->get_poly ();
+        command::PolyColorCommand* cmd =
+         new command::PolyColorCommand (tmp, new_color);
+        m_commands->add_undoable (cmd);
+      }
+    }
+  }
+
+  void QtDisplay::edit_polygon_nb_sides ()
+  {
+    shape::Polygon* tmp = cur_poly->get_poly ();
+    bool ok;
+    int new_nb = QInputDialog::getInt (
+     m_view, tr ("QInputDialog::getInt()"), tr ("Number of sides : "),
+     tmp->get_nb_sides (), MIN_NB_SIDES, MAX_DIALOG, STEP, &ok);
+    if (ok)
+    {
+      command::PolyNbSidesCommand* cmd =
+       new command::PolyNbSidesCommand (tmp, new_nb);
+      m_commands->add_undoable (cmd);
+    }
+  }
+
+  void QtDisplay::edit_polygon_side_length ()
+  {
+    shape::Polygon* tmp = cur_poly->get_poly ();
+    double new_length = input_dialog (
+     "Side lentgth : ", tmp->get_side_length (), MIN_LENGTH, MAX_DIALOG);
+    if (new_length > 0)
+    {
+      command::PolySideLengthCommand* cmd =
+       new command::PolySideLengthCommand (tmp, new_length);
+      m_commands->add_undoable (cmd);
+    }
+  }
+
+  void QtDisplay::polygon_rotation ()
+  {
+    shape::Polygon* tmp = cur_poly->get_poly ();
+    double new_angle = input_dialog ("Rotation angle : ", tmp->get_rotation (),
+                                     MIN_DIALOG, MAX_ANGLE);
+    if (new_angle > 0)
+    {
+      command::PolyRotateCommand* cmd =
+       new command::PolyRotateCommand (tmp, new_angle);
+      m_commands->add_undoable (cmd);
+    }
+  }
+
+  // PRIVATE METHODS
 
   double QtDisplay::input_dialog (const QString& name, double def_val,
                                   double min_val, double max_val) const
