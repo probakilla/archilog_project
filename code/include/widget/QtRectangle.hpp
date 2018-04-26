@@ -29,6 +29,10 @@ namespace widget
     //!< The context menu of the shape, open with right click
     void contextMenuEvent (QGraphicsSceneContextMenuEvent* event);
 
+    void mouseReleaseEvent (QGraphicsSceneMouseEvent * event);
+
+    void update_position ();
+
   private:
     QMenu* m_menu;
     QWidget* m_parent;

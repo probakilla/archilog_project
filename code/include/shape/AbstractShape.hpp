@@ -2,6 +2,7 @@
 #define ABSTRACTSHAPE_HPP
 
 #include "ShapeInterface.hpp"
+
 #include <vector>
 
 #define DEFAULT_X 0

@@ -1,7 +1,9 @@
 #include "QtRectangle.hpp"
 
 #include "AbstractShape.hpp"
+#include "AllCommands.hpp"
 #include "QtDisplay.hpp"
+#include "RectTranslateCommand.hpp"
 
 #include <QAction>
 #include <QColorDialog>
@@ -27,7 +29,7 @@ namespace widget
     this->setTransformOriginPoint (QPoint (
      m_rect->get_rotation_center ().x (), m_rect->get_rotation_center ().y ()));
     // Adjust the position.
-    setPos (x () - rect->get_width () / 2, y () - rect->get_height () / 2);
+    setPos (rect->get_position ().x (), rect->get_position ().y ());
   }
 
   QtRectangle::~QtRectangle () {}
@@ -38,9 +40,11 @@ namespace widget
 
   void QtRectangle::update_shape ()
   {
-    QRectF tmp (m_rect->get_position ().x (), m_rect->get_position ().y (),
-                m_rect->get_width (), m_rect->get_height ());
+    QRectF tmp (rect ().x (), rect ().y (), m_rect->get_width (),
+                m_rect->get_height ());
     this->setRect (tmp);
+    this->setX (m_rect->get_position ().x ());
+    this->setY (m_rect->get_position ().y ());
     this->setTransformOriginPoint (m_rect->get_rotation_center ().x (),
                                    m_rect->get_rotation_center ().y ());
     this->setBrush (QColor (m_rect->get_color ()));
@@ -55,5 +59,22 @@ namespace widget
       QtDisplay::cur_rect = this;
       m_menu->exec (event->screenPos ());
     }
+  }
+
+  void QtRectangle::mouseReleaseEvent (QGraphicsSceneMouseEvent* event)
+  {
+    QGraphicsRectItem::mouseReleaseEvent (event);
+    if (event->button () == Qt::LeftButton)
+      update_position ();
+  }
+
+  void QtRectangle::update_position ()
+  {
+    shape::Point pos = m_rect->get_position ();
+    double dx = x () - pos.x ();
+    double dy = y () - pos.y ();
+    shape::AllCommands* cmd_list = shape::AllCommands::get_instance ();
+    cmd_list->add_undoable (
+     new command::RectTranslateCommand (m_rect, dx, dy));
   }
 }
