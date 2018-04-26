@@ -14,7 +14,12 @@ namespace command
   {
     m_mem = m_poly->create_memento ();
     m_poly->set_side_length (m_side_length);
+    m_poly->notify ();
   }
 
-  void PolySideLengthCommand::undo () { m_poly->set_memento (m_mem); }
+  void PolySideLengthCommand::undo ()
+  {
+    m_poly->set_memento (m_mem);
+    m_poly->notify ();
+  }
 }

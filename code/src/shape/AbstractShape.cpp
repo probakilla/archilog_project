@@ -93,7 +93,6 @@ namespace shape
     throw NotImplementedException ();
   }
 
-  // Preprocessor command to avoid unsued compile error.
   bool AbstractShape::remove_shape (const ShapeInterface&)
   {
     throw NotImplementedException ();
@@ -114,6 +113,31 @@ namespace shape
     m_position = shape.get_position ();
     m_rotation_center = shape.get_rotation_center ();
     return *this;
+  }
+
+  void AbstractShape::attach (widget::ObserverInterface* obs)
+  {
+    m_observers.push_back (obs);
+  }
+
+  void AbstractShape::detach (widget::ObserverInterface* obs)
+  {
+    std::vector<widget::ObserverInterface*>::iterator it = m_observers.begin ();
+
+    it = std::find (m_observers.begin (), m_observers.end (), obs);
+    if (it != m_observers.end ())
+    {
+      m_observers.erase (it);
+    }
+  }
+
+  void AbstractShape::notify ()
+  {
+    std::vector<widget::ObserverInterface*>::iterator it;
+    for (it = m_observers.begin (); it != m_observers.end (); it++)
+    {
+      (*it)->update_shape ();
+    }
   }
 }
 BOOST_CLASS_EXPORT_IMPLEMENT (shape::AbstractShape);

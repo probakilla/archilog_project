@@ -2,18 +2,19 @@
 #define QTRECTANGLE_HPP
 
 #include "Rectangle.hpp"
+#include "ObserverInterface.hpp"
 
 #include <QAction>
 #include <QGraphicsRectItem>
 #include <QGraphicsSceneMouseEvent>
-#include <QString>
 #include <QMenu>
+#include <QString>
 
 #define MAX_VALUE 1024.0
 
 namespace widget
 {
-  class QtRectangle : public QGraphicsRectItem
+  class QtRectangle : public QGraphicsRectItem, public ObserverInterface
   {
   public:
     QtRectangle (shape::Rectangle* rect, QWidget* parent = 0);

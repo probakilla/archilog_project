@@ -14,7 +14,12 @@ namespace command
   {
     m_mem = m_rect->create_memento ();
     m_rect->set_color (m_color);
+    m_rect->notify ();
   }
 
-  void RectColorCommand::undo () { m_rect->set_memento (m_mem); }
+  void RectColorCommand::undo ()
+  {
+    m_rect->set_memento (m_mem);
+    m_rect->notify ();
+  }
 }

@@ -2,6 +2,7 @@
 #define ABSTRACTSHAPE_HPP
 
 #include "ShapeInterface.hpp"
+#include <vector>
 
 #define DEFAULT_X 0
 #define DEFAULT_Y 0
@@ -89,6 +90,12 @@ namespace shape
      */
     void translate (double dx, double dy);
 
+    void attach (widget::ObserverInterface* obs);
+
+    void detach (widget::ObserverInterface* obs);
+
+    void notify ();
+
   protected:
     /*!
      * @brief Empty constructor of shape::AbstractShape.
@@ -108,6 +115,7 @@ namespace shape
     Point m_position;        //!< Current position of the shape.
     Point m_rotation_center; //!< Center of rotation of the shape.
     double m_rotation;       //!< Rotation of the shape.
+    std::vector<widget::ObserverInterface*> m_observers;
 
     friend boost::serialization::access;
     template <class Archive> void serialize (Archive& ar, unsigned)

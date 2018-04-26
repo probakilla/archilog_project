@@ -12,7 +12,12 @@ namespace command
   {
     m_mem = m_rect->create_memento ();
     m_rect->set_rotation (m_angle);
+    m_rect->notify ();
   }
 
-  void RectRotateCommand::undo () { m_rect->set_memento (m_mem); }
+  void RectRotateCommand::undo ()
+  {
+    m_rect->set_memento (m_mem);
+    m_rect->notify ();
+  }
 }

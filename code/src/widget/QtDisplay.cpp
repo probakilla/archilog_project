@@ -18,7 +18,7 @@
 #include <typeinfo>
 #include <vector>
 
-//!< The size of the icon IN the QPushButton
+//!< The size of the icon in the QPushButton
 #define ICON_SIZE 32
 //!< The size of the QPushButton, should be greater than ICON_SIZE
 #define BUTTON_SIZE 40
@@ -144,9 +144,7 @@ namespace widget
   {
     QColor color = rect.get_color ();
     QtRectangle* rect_item = new QtRectangle (&rect, this);
-    rect_item->setFlag (QGraphicsItem::ItemIsSelectable);
-    rect_item->setFlag (QGraphicsItem::ItemIsMovable);
-    rect_item->setFlag (QGraphicsItem::ItemSendsGeometryChanges);
+    rect.attach (rect_item);
     rect_item->setBrush (color);
     m_scene->addItem (rect_item);
     shape::Point r_center = rect.get_rotation_center ();
@@ -228,6 +226,7 @@ namespace widget
     }
     // Clear existing shapes.
     m_shapes->clear ();
+    m_commands->clear ();
     m_scene->clear ();
     m_view->viewport ()->update ();
     // Load and draw new shapes
@@ -238,7 +237,13 @@ namespace widget
         draw_polygon (static_cast<shape::Polygon&> (*load_shapes[i]));
   }
 
-  void QtDisplay::undo () { std::cout << "undo" << std::endl; }
+  void QtDisplay::undo ()
+  {
+    if (m_commands->size () == 0)
+      return;
+    m_commands->back ()->undo ();
+    m_commands->pop_back ();
+  }
 
   void QtDisplay::redo () { std::cout << "redo" << std::endl; }
 
@@ -275,7 +280,6 @@ namespace widget
         m_commands->push_back (cmd);
 
         cmd->execute ();
-        cur_rect->update_shape ();
       }
     }
   }
@@ -291,7 +295,6 @@ namespace widget
        new command::RectWidthCommand (tmp, new_width);
       m_commands->push_back (cmd);
       cmd->execute ();
-      cur_rect->update_shape ();
     }
   }
 
@@ -306,7 +309,6 @@ namespace widget
        new command::RectHeightCommand (tmp, new_height);
       m_commands->push_back (cmd);
       cmd->execute ();
-      cur_rect->update_shape ();
     }
   }
 
